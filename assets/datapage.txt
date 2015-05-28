@@ -1,0 +1,53 @@
+﻿{
+    "productid": "000001", 
+    "productname": "石油", 
+    "titlelist": [
+        {
+            "selectionname": "item1"
+        }, 
+        {
+            "selectionname": "item1"
+        }, 
+        {
+            "selectionname": "item1"
+        }, 
+        {
+            "selectionname": "item1"
+        }
+    ], 
+    "group": [
+        {
+            "name": "第一组", 
+            "data": [
+                {
+                    "proName": "石油", 
+                    "todayPrice": "1111rmb/t", 
+                    "yesPrice": "1111rmb/t", 
+                    "route": "+3%"
+                }
+            ]
+        }, 
+        {
+            "name": "第一组", 
+            "data": [
+                {
+                    "proName": "石油", 
+                    "todayPrice": "1111rmb/t", 
+                    "yesPrice": "1111rmb/t", 
+                    "route": "+3%"
+                }
+            ]
+        }, 
+        {
+            "name": "第一组", 
+            "data": [
+                {
+                    "proName": "石油", 
+                    "todayPrice": "1111rmb/t", 
+                    "yesPrice": "1111rmb/t", 
+                    "route": "+3%"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <com.etsy.android.grid.util.DynamicHeightImageView
+        android:id="@+id/iv_item_show"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop" />
+
+    <com.etsy.android.grid.util.DynamicHeightTextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawableRight="@drawable/icon_dir_right"
+        android:gravity="center_vertical"
+        android:padding="3dp"
+        android:text="item"
+        android:textSize="16sp" />
+
+</LinearLayout>

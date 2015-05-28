@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="3dp"
+        android:background="@drawable/shape_item_text"
+        android:orientation="horizontal"
+        android:padding="2dp" >
+
+        <TextView
+            android:id="@+id/tv_userfouce_name"
+            android:layout_width="63dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:paddingTop="2dp"
+            android:text="item" />
+
+        <ImageView
+            android:id="@+id/iv_userfouce_cancel"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical"
+            android:padding="2dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_error_light" />
+    </LinearLayout>
+
+</RelativeLayout>

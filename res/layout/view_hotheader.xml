@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.example.oilclient"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp" >
+
+        <com.oil.weidget.FouceViewPager
+            android:id="@+id/hhp_pager"
+            android:layout_width="match_parent"
+            android:layout_height="170dp" >
+        </com.oil.weidget.FouceViewPager>
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/cp_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="4dp"
+            android:background="#00000000"
+            android:padding="2dp"
+            app:centered="true"
+            app:strokeColor="@color/white" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:background="#20000000"
+        android:padding="2dp"
+        android:text="this is a hotpoint title"
+        android:textColor="@color/whitesmoke"
+        android:textSize="15sp" />
+
+</LinearLayout>

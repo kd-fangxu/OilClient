@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oilxmlns="http://schemas.android.com/apk/res/com.example.oilclient"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.etsy.android.grid.StaggeredGridView
+        android:id="@+id/sgv_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        oilxmlns:column_count="2"
+        oilxmlns:item_margin="8dp" >
+    </com.etsy.android.grid.StaggeredGridView>
+
+    <RelativeLayout
+        android:id="@+id/rt_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null" >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+</FrameLayout>

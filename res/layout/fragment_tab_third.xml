@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oilxmlns="http://schemas.android.com/apk/res/com.example.oilclient"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_data_demo"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/ll_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <com.oil.weidget.PagerSlidingTabStrip
+                android:id="@+id/ps_indicator"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_tab"
+                oilxmlns:pstsIndicatorHeight="4dp"
+                oilxmlns:pstsUnderlineHeight="1dp" >
+            </com.oil.weidget.PagerSlidingTabStrip>
+
+            <ImageView
+                android:id="@+id/iv_userfouce_control"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/background_tab"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_dir_under_white" />
+        </LinearLayout>
+
+        <com.oil.weidget.OilContentViewPager
+            android:id="@+id/vp_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </com.oil.weidget.OilContentViewPager>
+    </LinearLayout>
+
+</FrameLayout>

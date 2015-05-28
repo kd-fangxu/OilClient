@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oilweidget="http://schemas.android.com/apk/res/com.example.oilclient"
+    android:id="@+id/ll_mainmenu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_mainmenu" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal" >
+
+                <com.oil.weidget.CircleImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/icon_userhead"
+                    oilweidget:border_color="#f2f2f2"
+                    oilweidget:border_width="2dp" >
+                </com.oil.weidget.CircleImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30dp"
+                    android:text="测试用户"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lv_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:divider="#60000000"
+            android:dividerHeight="2dp" >
+        </ListView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:gravity="center"
+            android:text="@string/companyInfo"
+            android:textColor="#ffffff"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</RelativeLayout>

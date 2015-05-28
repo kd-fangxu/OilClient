@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00ee3b3b"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/iv_mainback"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/selector_norbutton"
+            android:scaleType="fitXY"
+            android:src="@drawable/biz_main_back_normal" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/selector_searchview"
+            android:cursorVisible="false"
+            android:drawableLeft="@drawable/icon_find"
+            android:gravity="center"
+            android:hint="请输入搜索内容"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="15dp"
+            android:singleLine="true"
+            android:textColorHint="@color/whitesmoke"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_showpage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+    </FrameLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#50F5F5F5"
+        android:orientation="horizontal"
+        android:padding="2dp" >
+
+        <RadioButton
+            android:id="@+id/rb_tab_user"
+            style="@style/radio_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_tab_user"
+            android:text="我" />
+
+        <RadioButton
+            android:id="@+id/rb_tab_info"
+            style="@style/radio_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selecter_tab_info"
+            android:text="资讯" />
+
+        <RadioButton
+            android:id="@+id/rb_tab_data"
+            style="@style/radio_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_tab_data"
+            android:text="数据" />
+
+        <RadioButton
+            android:id="@+id/rb_tab_msg"
+            style="@style/radio_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_tab_msg"
+            android:text="短讯" />
+
+        <RadioButton
+            android:id="@+id/rb_tab_main"
+            style="@style/radio_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_tab_mainpage"
+            android:text="隆众" />
+    </RadioGroup>
+
+</LinearLayout>

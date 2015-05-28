@@ -1,0 +1,56 @@
+﻿{
+  "requestcode": "200", 
+  "reason": "信息获取成功", 
+  "hotpoints": {
+    "adid": "id", 
+    "adposition": "1", 
+    "contents": [
+      {
+        "title": "隆众会议", 
+        "imagelink": "http://www.oilchem.net/upload/adimg/20150409/2015040913482044.jpg", 
+        "link": "http://img.oilchem.net/2015/0422meeting/"
+      }, 
+      {
+        "title": "浙江恒河石油化工", 
+        "imagelink": "http://www.oilchem.net/upload/adimg/20140701/2014070115525869.jpg", 
+        "link": "http://www.hh-sh.com/"
+      },
+      {
+        "title": "隆众会议", 
+        "imagelink": "http://www.oilchem.net/upload/adimg/20150409/2015040913482044.jpg", 
+        "link": "http://img.oilchem.net/2015/0422meeting/"
+      }, 
+      {
+        "title": "浙江恒河石油化工", 
+        "imagelink": "http://www.oilchem.net/upload/adimg/20140701/2014070115525869.jpg", 
+        "link": "http://www.hh-sh.com/"
+      }
+    ]
+  }, 
+  "columns": [
+    {
+      "title": "企业介绍", 
+      "id": "id", 
+      "imageresource": "http://about.oilchem.net/wp-content/themes/lzabout/images/temp/02.jpg", 
+      "newslink": "http://about.oilchem.net/?page_id=2"
+    },
+ {
+      "title": "企业荣誉", 
+      "id": "id", 
+      "imageresource": "http://about.oilchem.net/wp-content/themes/lzabout/images/temp/03.jpg", 
+      "newslink": "http://about.oilchem.net/?page_id=2"
+    },
+ {
+      "title": "产品体系", 
+      "id": "id", 
+      "imageresource": "http://about.oilchem.net/wp-content/themes/lzabout/images/temp/06.jpg", 
+      "newslink": "http://about.oilchem.net/?page_id=2"
+    },
+ {
+      "title": "联系我们", 
+      "id": "id", 
+      "imageresource": "http://about.oilchem.net/wp-content/themes/lzabout/images/temp/07.jpg", 
+      "newslink": "http://about.oilchem.net/?page_id=2"
+    }
+  ]
+}
