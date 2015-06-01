@@ -25,10 +25,9 @@ public class OilUser {
 		if (null != accout_Name && null != account_Pwd) {
 
 			// 实现登陆的网络交互
-			OilUser currentUser = new OilUser(accout_Name, account_Pwd);
-
+            
 			Gson gson = new Gson();
-			String info = gson.toJson(currentUser).toString();
+			String info = gson.toJson(this).toString();
 			Log.e("savejson", info);
 			SharedPreferenceUtils.setParam(context, Shared_Key_currentUser,
 					info);
