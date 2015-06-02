@@ -70,6 +70,18 @@
         </activity>
         <activity android:name="com.oil.activity.SearchPageActivity" >
         </activity>
+        <activity
+            android:name="com.oil.activity.MultiAccount"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="com.oil.activity.RequestFailDialog"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="com.oil.activity.NetworkDialog"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
     </application>
 
 </manifest>

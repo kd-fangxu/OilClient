@@ -1,19 +1,32 @@
 package com.oil.activity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.Volley;
 import com.example.oilclient.R;
+import com.google.gson.JsonArray;
+import com.oil.bean.Constants;
 import com.oil.bean.OilUser;
 import com.oil.bean.OilUser.onLoginListener;
+import com.oil.event.LoginSuccessEvent;
+import com.oil.utils.CommonUtil;
 import com.oil.utils.ToastUtils;
+
+import de.greenrobot.event.EventBus;
+
 
 public class UserLoginActivity extends Activity implements OnClickListener {
 	@Override
@@ -22,8 +35,15 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_userlogin);
 		initWeidget();
+		
+		EventBus.getDefault().register(this);
 	}
 
+	public void onEvent(LoginSuccessEvent event) {
+		finish();
+	}
+
+	
 	EditText et_name, et_pwd;
 	TextView tv_wechatlogin, tv_losspwd;
 	Button btn_register, btn_login;
@@ -38,6 +58,10 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 		btn_register = (Button) findViewById(R.id.btn_register);
 		btn_login.setOnClickListener(this);
 		btn_register.setOnClickListener(this);
+		
+		SharedPreferences mySharedPreferences = getSharedPreferences(
+				Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
+		et_name.setText(mySharedPreferences.getString(Constants.USER_PHONE, ""));
 	}
 
 	@Override
@@ -48,16 +72,14 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 			String name = et_name.getText().toString();
 			String pwd = et_pwd.getText().toString();
 			if (!name.equals("") && !pwd.equals("")) {
-				OilUser oilUser = new OilUser(name, pwd);
-				oilUser.Login(UserLoginActivity.this, new onLoginListener() {
+				OilUser.Login(UserLoginActivity.this,name,pwd, new onLoginListener() {
 
 					@Override
 					public void onSuccess(String resCode, String response) {
 						// TODO Auto-generated method stub
+						CommonUtil.loginSuccess(response,
+								UserLoginActivity.this, "main", "");
 
-						startActivity(new Intent(UserLoginActivity.this,
-								MainActivity.class));
-						finish();
 					}
 
 					@Override
@@ -78,4 +100,6 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
+	
+	
 }

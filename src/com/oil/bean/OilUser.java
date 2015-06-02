@@ -1,63 +1,141 @@
 package com.oil.bean;
 
+import java.io.Serializable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.oil.activity.UserLoginActivity;
+import com.oil.event.FinishEvent;
+import com.oil.inter.OnReturnListener;
+import com.oil.utils.CommonUtil;
+import com.oil.utils.HttpTool;
 import com.oil.utils.SharedPreferenceUtils;
+import com.oilchem.weixin.mp.aes.AesException;
+import com.oilchem.weixin.mp.aes.SHA1;
 
-public class OilUser {
+import de.greenrobot.event.EventBus;
+
+public class OilUser implements Serializable {
 	public static String Error_AccountInfoMiss = "101";
 	public static String Shared_Key_currentUser = "currentUser";
-	onLoginListener onloginListener;
-	onRegistListener registListener;
-	String accout_Name;
-	String account_Pwd;
+	String userName, phone, cuuid, name, corpName, corpprovince;
+	String accountPwd;
 
-	public OilUser(String name, String pwd) {
-
-		this.account_Pwd = pwd;
-		this.accout_Name = name;
+	public OilUser() {
 	};
 
-	public void Login(Context context, onLoginListener loginListener) {
-		this.onloginListener = loginListener;
-		if (null != accout_Name && null != account_Pwd) {
+	public static void Login(Context context, String userName,
+			String accountPwd, final onLoginListener loginListener) {
+		if (null != userName && null != accountPwd) {
 
+			TelephonyManager telephonyManager = (TelephonyManager) context
+					.getSystemService(Context.TELEPHONY_SERVICE);
+			String imei = telephonyManager.getDeviceId();
+
+			MyRequestParams params = new MyRequestParams(context);
+			params.put("phone", userName);
+			params.put("password", accountPwd);
+			params.put("imei", imei);
+			params.put("ver", CommonUtil.getAppInfo(context).get("name"));
 			// 实现登陆的网络交互
-            
-			Gson gson = new Gson();
-			String info = gson.toJson(this).toString();
-			Log.e("savejson", info);
-			SharedPreferenceUtils.setParam(context, Shared_Key_currentUser,
-					info);
-			onloginListener.onSuccess("100", "登陆成功");
+			HttpTool.netRequest(context, params, new OnReturnListener() {
+
+				@Override
+				public void onReturn(String jsString) {
+					// TODO Auto-generated method stub
+					try {
+						JSONObject obj = new JSONObject(jsString)
+								.getJSONObject("data");
+						if (obj.getString("login").equals("1")) {
+							// 登录成功
+
+							loginListener.onSuccess("100", jsString);
+						} else {
+							String errorMessage = obj.getString("message");
+							loginListener.onError(Error_AccountInfoMiss,
+									errorMessage);
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}, Constants.LOGIN, true);
 
 		} else {
-			onloginListener.onError(Error_AccountInfoMiss,
-					"account info missed");
+			loginListener.onError(Error_AccountInfoMiss, "用户名或密码不能为空");
 		}
 	}
 
-	public String getAccout_Name() {
-		return accout_Name;
+	public String getAccountPwd() {
+		return accountPwd;
 	}
 
-	public void setAccout_Name(String accout_Name) {
-		this.accout_Name = accout_Name;
+	public void setAccountPwd(String account_Pwd) {
+		this.accountPwd = account_Pwd;
 	}
 
-	public String getAccount_Pwd() {
-		return account_Pwd;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setAccount_Pwd(String account_Pwd) {
-		this.account_Pwd = account_Pwd;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public void signIn(onRegistListener registListener) {
-		this.registListener = registListener;
-		if (null != accout_Name && null != account_Pwd) {
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getCuuid() {
+		return cuuid;
+	}
+
+	public void setCuuid(String cuuid) {
+		this.cuuid = cuuid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCorpName() {
+		return corpName;
+	}
+
+	public void setCorpName(String corpName) {
+		this.corpName = corpName;
+	}
+
+	public String getCorpprovince() {
+		return corpprovince;
+	}
+
+	public void setCorpprovince(String corpprovince) {
+		this.corpprovince = corpprovince;
+	}
+
+	public static void signIn(String userName, String accountPwd,
+			onRegistListener registListener) {
+		if (null != userName && null != accountPwd) {
 
 			// 实现注册的网络交互
 
@@ -67,20 +145,57 @@ public class OilUser {
 		}
 	}
 
-	public void logOut(Context context) {
-		SharedPreferenceUtils.setParam(context, Shared_Key_currentUser, null);
+	public static void logOut(Context context) {
+		MyRequestParams params = new MyRequestParams(context);
+		SharedPreferences sp = context.getSharedPreferences(
+				Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
+		params.put("cuuid", sp.getString(Constants.CUUID, ""));
+
+		String accessToken = sp.getString(Constants.ACCESS_TOKEN, "");
+		String userName = sp.getString(Constants.USER_NAME, "");
+		params.put("accesstoken", accessToken);
+		String timestamp = String.valueOf(System.currentTimeMillis()
+				+ sp.getLong(Constants.TIME_GAP, 0));
+		params.put("timestamp", timestamp);
+		params.put("username", userName);
+
+		try {
+			params.put(
+					"signature",
+					SHA1.getSHA1(new String[] { userName, timestamp,
+							accessToken }));
+		} catch (AesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HttpTool.netRequest(context, params, null, Constants.LOGOUT, true);
+
+		SharedPreferences.Editor editor = sp.edit();
+		String userPhone = sp.getString(Constants.USER_PHONE, "");
+		editor.clear();
+		editor.commit();
+		editor.putString(Constants.USER_PHONE, userPhone);
+		editor.commit();
+		
+		Intent intent = new Intent();
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.setClass(context, UserLoginActivity.class);
+		context.startActivity(intent);
+		Toast.makeText(context, "注销成功", 1).show();
+		EventBus.getDefault().post(new FinishEvent());
+
 	}
 
-	public static OilUser getCurrentUser(Context context) {
-		// 获取当前用户
-		String json_user = (String) SharedPreferenceUtils.getParam(context,
-				Shared_Key_currentUser, "null");
-		Log.e("getJson", json_user);
-		// JSONObject jo = JSONObject.fromObject(json_user);
-
-		// Log.e("current", msg)
-		return new Gson().fromJson(json_user, OilUser.class);
-	}
+	// public static OilUser getCurrentUser(Context context) {
+	// // 获取当前用户
+	// String json_user = (String) SharedPreferenceUtils.getParam(context,
+	// Shared_Key_currentUser, "null");
+	// Log.e("getJson", json_user);
+	// // JSONObject jo = JSONObject.fromObject(json_user);
+	//
+	// // Log.e("current", msg)
+	// return new Gson().fromJson(json_user, OilUser.class);
+	// }
 
 	public interface onLoginListener {
 		void onSuccess(String resCode, String response);

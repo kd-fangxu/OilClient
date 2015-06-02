@@ -87,9 +87,9 @@ public class MenuFragment extends Fragment {
 							UserSuggestionActivty.class));
 					break;
 				case 5:
-					OilUser.getCurrentUser(getActivity()).logOut(getActivity());
-					startActivity(new Intent(getActivity(),
-							UserLoginActivity.class));
+					OilUser.logOut(getActivity());
+					// startActivity(new Intent(getActivity(),
+					// UserLoginActivity.class));
 					getActivity().finish();
 					break;
 

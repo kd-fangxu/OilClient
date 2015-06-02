@@ -41,6 +41,7 @@
         android:drawableLeft="@drawable/icon_login_pwd"
         android:drawablePadding="20dp"
         android:hint="请输入密码"
+        android:inputType="textPassword"
         android:paddingLeft="10dp"
         android:textSize="15sp" />
 

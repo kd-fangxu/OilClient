@@ -12,9 +12,12 @@ import android.widget.Toast;
 import com.example.oilclient.R;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.oil.event.FinishEvent;
 import com.oil.fragments.MainFragment;
 import com.oil.fragments.MenuFragment;
 import com.oil.utils.ScreenUtils;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * ³ÌÐòÖ÷Ò³
@@ -33,6 +36,13 @@ public class MainActivity extends SlidingFragmentActivity {
 		initSlidingMenu();
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+		EventBus.getDefault().register(this);
+	}
+
+	// ¹Ø±Õ
+	public void onEvent(FinishEvent event) {
+		finish();
 	}
 
 	/**

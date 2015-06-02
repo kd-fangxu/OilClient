@@ -38,8 +38,7 @@ public class UserRegisterActivity extends Activity implements OnClickListener {
 			String name = et_name.getText().toString();
 			String pwd = et_pwd.getText().toString();
 			if (!name.equals("") && !pwd.equals("")) {
-				OilUser oilUser = new OilUser(name, pwd);
-				oilUser.signIn(new onRegistListener() {
+				OilUser.signIn(name,pwd,new onRegistListener() {
 
 					@Override
 					public void onSuccess(String resCode, String response) {

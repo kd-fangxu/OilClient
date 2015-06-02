@@ -10,7 +10,7 @@ public class ToastUtils {
 
 	@SuppressLint("ShowToast")
 	public static ToastUtils getInstance(Context context) {
-		if (null != toast) {
+		if (null == toast) {
 			toastUtils = new ToastUtils();
 			toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
 		}

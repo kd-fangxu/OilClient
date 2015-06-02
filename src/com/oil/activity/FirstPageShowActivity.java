@@ -11,6 +11,7 @@ import android.os.Message;
 import android.view.KeyEvent;
 
 import com.example.oilclient.R;
+import com.oil.bean.Constants;
 import com.oil.bean.OilUser;
 
 public class FirstPageShowActivity extends Activity {
@@ -27,16 +28,13 @@ public class FirstPageShowActivity extends Activity {
 				// TODO Auto-generated method stub
 				switch (msg.what) {
 				case 0:
-					if (null != OilUser
-							.getCurrentUser(FirstPageShowActivity.this)) {
+					if (getSharedPreferences(Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE).getBoolean(Constants.LOGIN_STATE, false)) {
 						startActivity(new Intent(FirstPageShowActivity.this,
 								MainActivity.class));
 					} else {
 						startActivity(new Intent(FirstPageShowActivity.this,
 								UserLoginActivity.class));
 					}
-//					startActivity(new Intent(FirstPageShowActivity.this,
-//							MainActivity.class));
 					finish();
 					break;
 
