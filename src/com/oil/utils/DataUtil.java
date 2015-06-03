@@ -8,9 +8,9 @@ import android.widget.Toast;
 
 public class DataUtil {
 
-	
 	/**
 	 * 验证数据是否异常
+	 * 
 	 * @param isneedtoshow
 	 * @param content
 	 * @param context
@@ -27,22 +27,15 @@ public class DataUtil {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			try {
-				if (js == null) {
-					return false;
+			if (js == null) {
+				if (isneedtoshow) {
+					Toast.makeText(context, "数据异常!", Toast.LENGTH_SHORT).show();
 				}
-				if (js.getString("stat").equals("1")) {
-					return true;
-				} else {
-					if (isneedtoshow) {
-						Toast.makeText(context, js.getString("error"),
-								Toast.LENGTH_SHORT).show();
-					}
-
-				}
-			} catch (JSONException e) {
-				e.printStackTrace();
+				return false;
+			} else {
+				return true;
 			}
+
 		} else {
 			if (isneedtoshow)
 				Toast.makeText(context, "数据异常!", Toast.LENGTH_SHORT).show();

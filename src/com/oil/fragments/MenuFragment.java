@@ -1,5 +1,6 @@
 package com.oil.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.oilclient.R;
 import com.oil.activity.AppAboutActivty;
@@ -19,6 +21,7 @@ import com.oil.activity.UserMsgActivity;
 import com.oil.activity.UserSettingActivity;
 import com.oil.activity.UserSuggestionActivty;
 import com.oil.adapter.MenuAdapter;
+import com.oil.bean.Constants;
 import com.oil.bean.OilUser;
 
 /**
@@ -37,6 +40,7 @@ public class MenuFragment extends Fragment {
 	// mi_usersuggest;
 	ListView lv_menu;
 	MenuAdapter menuAdapter;
+	TextView mUserName;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +49,8 @@ public class MenuFragment extends Fragment {
 		View view = View.inflate(getActivity(), R.layout.fragment_mainmenu,
 				null);
 		lv_menu = (ListView) view.findViewById(R.id.lv_menu);
+		mUserName=(TextView) view.findViewById(R.id.userName);
+		mUserName.setText(getActivity().getSharedPreferences(Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE).getString(Constants.USER_NAME, ""));
 		initMenu();
 		return view;
 	}

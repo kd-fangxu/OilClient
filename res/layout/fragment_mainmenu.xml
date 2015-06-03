@@ -35,11 +35,11 @@
                 </com.oil.weidget.CircleImageView>
 
                 <TextView
+                    android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="30dp"
-                    android:text="测试用户"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
             </LinearLayout>
