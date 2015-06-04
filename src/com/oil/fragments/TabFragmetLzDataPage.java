@@ -1,6 +1,8 @@
 package com.oil.fragments;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.askerov.dynamicgrid.DynamicGridView;
@@ -25,6 +27,9 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.Toast;
 
 import com.example.oilclient.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 import com.oil.adapter.CheeseDynamicAdapter;
 import com.oil.adapter.PagerAdapter;
@@ -77,8 +82,11 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	private void getUserFouce() {
 		// TODO Auto-generated method stub
 		String url = Constants.URL_GETUSERFOUCE;
+		Log.e("url", url);
+		Log.e("cuuid", OilUser.getCurrentUser(getActivity()).getCuuid());
 		RequestParams params = new RequestParams();
-		params.put("UserId", OilUser.getCurrentUser(getActivity()).getCuuid());
+
+		params.put("UserId", "1");
 		HttpTool.netRequestNoCheck(getActivity(), params,
 				new OnReturnListener() {
 
@@ -86,52 +94,72 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 					public void onReturn(String jsString) {
 						// TODO Auto-generated method stub
 						Log.e("info", jsString);
+
+						Gson gson = new Gson();
+						mapList.clear();
+						mapList.addAll((Collection<? extends HashMap<String, String>>) gson.fromJson(
+								new JsonObject().getAsJsonObject("productList"),
+								new TypeToken<List<HashMap<String, String>>>() {
+								}.getType()));
+						pagerAdapter.notifyDataSetChanged();
 					}
 				}, url, true);
 	}
 
 	PagerSlidingTabStrip psts;
 	OilContentViewPager ocvp;
-	PagerAdapter<String> pagerAdapter;
+	PagerAdapter<HashMap<String, String>> pagerAdapter;
 	LinearLayout ll_titlebar;
 	ImageView iv_userfouce;
 	List<String> titleList;
+	List<HashMap<String, String>> mapList = new ArrayList<HashMap<String, String>>();
 
 	private void initWeidget(View view) {
 		// TODO Auto-generated method stub
 		titleList = new ArrayList<String>();
-		titleList.add("ʯ��");
-		titleList.add("ȼ����");
-		titleList.add("����");
-		titleList.add("����");
-		switch (tem_type) {
-		case 0:
-			// pagerAdapter = new PagerAdapter(getFragmentManager(), titleList,
-			// Constants.PageType_data);
-			pagerAdapter = new PagerAdapter<String>(getFragmentManager(),
-					titleList, Constants.PageType_data) {
+		titleList.add("item1");
+		titleList.add("item2");
+		titleList.add("item3");
+		titleList.add("item4");
+		pagerAdapter = new PagerAdapter<HashMap<String, String>>(
+				getFragmentManager(), mapList, Constants.PageType_data) {
 
-				@Override
-				public String getName(String item) {
-					// TODO Auto-generated method stub
-					return item.toString();
-				}
-			};
-			break;
-		case 1:
-			pagerAdapter = new PagerAdapter<String>(getFragmentManager(),
-					titleList, 3) {
+			@Override
+			public String getName(HashMap<String, String> item) {
+				// TODO Auto-generated method stub
+				return item.get("pro_cn_name");
+			}
 
-				@Override
-				public String getName(String item) {
-					// TODO Auto-generated method stub
-					return item.toString();
-				}
-			};
-			break;
-		default:
-			break;
-		}
+		};
+		// switch (tem_type) {
+		// case 0:
+		// // pagerAdapter = new PagerAdapter(getFragmentManager(), titleList,
+		// // Constants.PageType_data);
+		// pagerAdapter = new PagerAdapter<HashMap<String, String>>(
+		// getFragmentManager(), mapList, Constants.PageType_data) {
+		//
+		// @Override
+		// public String getName(HashMap<String, String> item) {
+		// // TODO Auto-generated method stub
+		// return item.get("pro_cn_name");
+		// }
+		//
+		// };
+		// break;
+		// // case 1:
+		// // pagerAdapter = new PagerAdapter<String>(getFragmentManager(),
+		// // titleList, 3) {
+		// //
+		// // @Override
+		// // public String getName(String item) {
+		// // // TODO Auto-generated method stub
+		// // return item.toString();
+		// // }
+		// // };
+		// // break;
+		// default:
+		// break;
+		// }
 
 		ocvp.setAdapter(pagerAdapter);
 		psts.setViewPager(ocvp);
