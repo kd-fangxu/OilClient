@@ -3,10 +3,12 @@ package com.oil.fragments;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +25,18 @@ import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.oil.activity.ProductDetailsActivity;
 import com.oil.adapter.ExpandDataAdapter;
 import com.oil.adapter.SimpleDemoAdapter;
+import com.oil.bean.Constants;
 import com.oil.bean.DataSimple;
+import com.oil.bean.OilUser;
+import com.oil.inter.OnReturnListener;
+import com.oil.utils.HttpTool;
 import com.oil.weidget.HorizontalListView;
 
 public class ItemFragmentData extends Fragment {
 	PullToRefreshExpandableListView ptep_lv;
 	HorizontalListView hlv_type;
 	int type = 0;// 默认“我” 1：数据
+	Map<String, String> map;
 
 	/**
 	 * 
@@ -37,13 +44,15 @@ public class ItemFragmentData extends Fragment {
 	 *            0:wo 1:data
 	 * @return
 	 */
-	public static ItemFragmentData getInstance(int type) {
+	public static ItemFragmentData getInstance(int type,
+			HashMap<String, String> map) {
 
-		return new ItemFragmentData(type);
+		return new ItemFragmentData(type, map);
 
 	}
 
-	public ItemFragmentData(int type) {
+	public ItemFragmentData(int type, HashMap<String, String> map) {
+		this.map = map;
 		this.type = type;
 	};
 
@@ -69,7 +78,8 @@ public class ItemFragmentData extends Fragment {
 			}
 		});
 
-		initTestData();
+		// initTestData();
+		getData();
 		ptep_lv.getRefreshableView().setOnChildClickListener(
 				new OnChildClickListener() {
 
@@ -89,6 +99,23 @@ public class ItemFragmentData extends Fragment {
 					}
 				});
 		return view;
+	}
+
+	private void getData() {
+		// TODO Auto-generated method stub
+		String url = Constants.URL_GETPRODDATA + "/"
+				+ OilUser.getCurrentUser(getActivity()).getCuuid() + "/"
+				+ map.get("wang_id") + "/" + map.get("chan_id") + "/"
+				+ map.get("pro_id");
+		Log.e("url", url);
+		HttpTool.netRequestNoCheck(getActivity(), null, new OnReturnListener() {
+
+			@Override
+			public void onReturn(String jsString) {
+				// TODO Auto-generated method stub
+
+			}
+		}, url, false);
 	}
 
 	List<HashMap<String, List<DataSimple>>> mapList;

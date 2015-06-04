@@ -1,5 +1,6 @@
 package com.oil.adapter;
 
+import java.util.HashMap;
 import java.util.List;
 
 import android.support.v4.app.Fragment;
@@ -42,9 +43,11 @@ public abstract class PagerAdapter<T> extends FragmentStatePagerAdapter {
 		case 1:
 			return ItemFragmentNews.getInstance();
 		case 2:
-			return ItemFragmentData.getInstance(0);
+			return ItemFragmentData.getInstance(0,
+					(HashMap<String, String>) itemList.get(position));
 		case 3:
-			return ItemFragmentData.getInstance(1);
+			return ItemFragmentData.getInstance(1,
+					(HashMap<String, String>) itemList.get(position));
 		case 4:
 			return ProductNewClumnTabFragment.getInstance();
 

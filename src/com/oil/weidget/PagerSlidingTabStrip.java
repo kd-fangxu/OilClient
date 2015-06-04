@@ -63,6 +63,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private LinearLayout tabsContainer;
 	private ViewPager pager;
 
+	public ViewPager getPager() {
+		return pager;
+	}
+
 	private int tabCount;
 
 	private int currentPosition = 0;
@@ -209,17 +213,24 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 			throw new IllegalStateException(
 					"ViewPager does not have adapter instance.");
 		}
+		if (pager.getAdapter().getCount() > 0) {
 
-		pager.setOnPageChangeListener(pageListener);
+			notifyDataSetChanged();
+		}
 
-		notifyDataSetChanged();
 	}
+
+	boolean issetOnPageChangeListener = false;
 
 	public void setOnPageChangeListener(OnPageChangeListener listener) {
 		this.delegatePageListener = listener;
+		issetOnPageChangeListener = true;
 	}
 
 	public void notifyDataSetChanged() {
+		if (!issetOnPageChangeListener) {
+			pager.setOnPageChangeListener(pageListener);
+		}
 
 		tabsContainer.removeAllViews();
 
@@ -404,20 +415,23 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		@Override
 		public void onPageScrolled(int position, float positionOffset,
 				int positionOffsetPixels) {
+			if (pager.getAdapter().getCount() > 0) {
+				currentPosition = position;
+				currentPositionOffset = positionOffset;
+				// Log.e("show", "position=" + position + "  " +
+				// "positionoffset="
+				// + positionOffset + "  ");
+				scrollToChild(position, (int) (positionOffset * tabsContainer
+						.getChildAt(position).getWidth()));
 
-			currentPosition = position;
-			currentPositionOffset = positionOffset;
-			// Log.e("show", "position=" + position + "  " + "positionoffset="
-			// + positionOffset + "  ");
-			scrollToChild(position, (int) (positionOffset * tabsContainer
-					.getChildAt(position).getWidth()));
+				invalidate();
 
-			invalidate();
-
-			if (delegatePageListener != null) {
-				delegatePageListener.onPageScrolled(position, positionOffset,
-						positionOffsetPixels);
+				if (delegatePageListener != null) {
+					delegatePageListener.onPageScrolled(position,
+							positionOffset, positionOffsetPixels);
+				}
 			}
+
 		}
 
 		@Override

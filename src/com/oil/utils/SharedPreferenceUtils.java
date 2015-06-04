@@ -8,8 +8,8 @@ public class SharedPreferenceUtils {
 	/**
 	 * 保存在手机里面的文件名
 	 */
-	private static final String FILE_NAME = "share_date";
-	
+	// private static final String FILE_NAME = "share_date";
+
 	/**
 	 * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
 	 * 
@@ -17,8 +17,9 @@ public class SharedPreferenceUtils {
 	 * @param key
 	 * @param object
 	 */
-	public static void setParam(Context context, String key, Object object) {
-		SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
+	public static void setParam(Context context, String fileName, String key,
+			Object object) {
+		SharedPreferences sp = context.getSharedPreferences(fileName,
 				Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
 
@@ -51,11 +52,11 @@ public class SharedPreferenceUtils {
 	 * @param defaultObject
 	 * @return
 	 */
-	public static Object getParam(Context context, String key,
+	public static Object getParam(Context context, String fileName, String key,
 			Object defaultObject) {
 		try {
 			String type = defaultObject.getClass().getSimpleName();
-			SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
+			SharedPreferences sp = context.getSharedPreferences(fileName,
 					Context.MODE_PRIVATE);
 
 			if ("String".equals(type)) {

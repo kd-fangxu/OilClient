@@ -46,7 +46,7 @@ public class OilUser implements Serializable {
 			params.put("password", accountPwd);
 			params.put("imei", imei);
 			params.put("ver", CommonUtil.getAppInfo(context).get("name"));
-			// ʵ�ֵ�½�����罻��
+			// 实锟街碉拷陆锟斤拷锟斤拷锟界交锟斤拷
 			HttpTool.netRequest(context, params, new OnReturnListener() {
 
 				@Override
@@ -56,7 +56,7 @@ public class OilUser implements Serializable {
 						JSONObject obj = new JSONObject(jsString)
 								.getJSONObject("data");
 						if (obj.getString("login").equals("1")) {
-							// ��¼�ɹ�
+							// 锟斤拷录锟缴癸拷
 
 							loginListener.onSuccess("100", jsString);
 
@@ -74,7 +74,7 @@ public class OilUser implements Serializable {
 			}, Constants.LOGIN, true);
 
 		} else {
-			loginListener.onError(Error_AccountInfoMiss, "�û�������벻��Ϊ��");
+			loginListener.onError(Error_AccountInfoMiss, "");
 		}
 	}
 
@@ -138,7 +138,7 @@ public class OilUser implements Serializable {
 			onRegistListener registListener) {
 		if (null != userName && null != accountPwd) {
 
-			// ʵ��ע������罻��
+			// 实锟斤拷注锟斤拷锟斤拷锟斤拷缃伙拷锟�
 
 		} else {
 			registListener
@@ -182,19 +182,19 @@ public class OilUser implements Serializable {
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.setClass(context, UserLoginActivity.class);
 		context.startActivity(intent);
-		Toast.makeText(context, "ע��ɹ�", 1).show();
+		Toast.makeText(context, "注锟斤拷晒锟�", 1).show();
 		EventBus.getDefault().post(new FinishEvent());
 
 	}
 
 	/**
-	 * 获取 当前用户
+	 * 鑾峰彇 褰撳墠鐢ㄦ埛
 	 * 
 	 * @param context
 	 * @return
 	 */
 	public static OilUser getCurrentUser(Context context) {
-		// ��ȡ��ǰ�û�
+		// 锟斤拷取锟斤拷前锟矫伙拷
 		// String json_user = (String) SharedPreferenceUtils.getParam(context,
 		// Shared_Key_currentUser, "null");
 		// Log.e("getJson", json_user);
@@ -204,18 +204,18 @@ public class OilUser implements Serializable {
 		// return new Gson().fromJson(json_user, OilUser.class);
 		OilUser oilUser = new OilUser();
 		String name = (String) SharedPreferenceUtils.getParam(context,
-				Constants.NAME, "");
+				Constants.USER_INFO_SHARED, Constants.NAME, "");
 		String corpName = (String) SharedPreferenceUtils.getParam(context,
-				Constants.CORP_NAME, "");
+				Constants.USER_INFO_SHARED, Constants.CORP_NAME, "");
 		String userPhone = (String) SharedPreferenceUtils.getParam(context,
-				Constants.USER_PHONE, "");
+				Constants.USER_INFO_SHARED, Constants.USER_PHONE, "");
 		String userName = (String) SharedPreferenceUtils.getParam(context,
-				Constants.USER_NAME, "");
+				Constants.USER_INFO_SHARED, Constants.USER_NAME, "");
 		String cuuid = (String) SharedPreferenceUtils.getParam(context,
-				Constants.CUUID, "");
+				Constants.USER_INFO_SHARED, Constants.CUUID, "");
 		oilUser.setName(name);
 		oilUser.setCorpName(corpName);
-		oilUser.setCuuid(corpName);
+		oilUser.setCuuid(cuuid);
 		oilUser.setPhone(userPhone);
 		oilUser.setUserName(userName);
 		return oilUser;

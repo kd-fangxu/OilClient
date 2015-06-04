@@ -9,14 +9,16 @@ public class Constants {
 	/**
 	 * url
 	 */
-	public static final String IP = "http://192.168.1.86:8080/oilWeb/"; // "http://192.168.1.234:8080/oilWeb/";
+	public static final String IP = "http://192.168.1.91:8080/oilWeb/"; // "http://192.168.1.234:8080/oilWeb/";
 	public static final String LOGIN = IP + "app/user/mobileLogin";// 登录
 	public static final String MULTI_ACCOUNT_LOGIN = IP + "app/user/selLogUser"; // 多用户选择登录
 	public static final String LOGOUT = IP + "app/user/userLogout"; // 注销
 	public static final String URL_GETPROSTRUCTURE = IP
-			+ "/oilWeb/passport/getProStructure";// 获取产品结构
+			+ "passport/getProStructure";// 获取产品结构
 	public static final String URL_GETUSERFOUCE = IP
-			+ "/oilWeb/passport/getUserFoucedProduct";// 获取用户关注产品
+			+ "passport/getUserFoucedProduct";// 获取用户关注产品
+	public static final String URL_GETPRODDATA = IP// 获取产品数据详情
+			+ "productChain/getProductChainAll";
 	/**
 	 * sharedPreference
 	 */

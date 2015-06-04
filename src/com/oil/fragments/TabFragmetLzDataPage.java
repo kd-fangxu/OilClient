@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.askerov.dynamicgrid.DynamicGridView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.ColorDrawable;
@@ -34,6 +37,7 @@ import com.loopj.android.http.RequestParams;
 import com.oil.adapter.CheeseDynamicAdapter;
 import com.oil.adapter.PagerAdapter;
 import com.oil.bean.Constants;
+import com.oil.bean.HotPoint;
 import com.oil.bean.OilUser;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
@@ -93,15 +97,22 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 					@Override
 					public void onReturn(String jsString) {
 						// TODO Auto-generated method stub
-						Log.e("info", jsString);
+						// Log.e("info", jsString);
 
-						Gson gson = new Gson();
-						mapList.clear();
-						mapList.addAll((Collection<? extends HashMap<String, String>>) gson.fromJson(
-								new JsonObject().getAsJsonObject("productList"),
-								new TypeToken<List<HashMap<String, String>>>() {
-								}.getType()));
-						pagerAdapter.notifyDataSetChanged();
+						try {
+							JSONObject js = new JSONObject(jsString);
+							mapList.addAll((Collection<? extends HashMap<String, String>>) new Gson().fromJson(
+									js.getString("productList"),
+									new TypeToken<List<HashMap<String, String>>>() {
+									}.getType()));
+
+							pagerAdapter.notifyDataSetChanged();
+							psts.notifyDataSetChanged();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
 					}
 				}, url, true);
 	}

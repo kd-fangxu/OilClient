@@ -35,7 +35,7 @@ import android.widget.Toast;
 public class CommonUtil {
 
 	/**
-	 * 得到应用信息
+	 * 寰楀埌搴旂敤淇℃伅
 	 * 
 	 * @param context
 	 * @return
@@ -56,7 +56,7 @@ public class CommonUtil {
 	}
 
 	/**
-	 * 得到自定义的progressDialog
+	 * 寰楀埌鑷畾涔夌殑progressDialog
 	 * 
 	 * @param context
 	 * @param msg
@@ -67,24 +67,24 @@ public class CommonUtil {
 	public static Dialog createLoadingDialog(Context context, String msg) {
 
 		LayoutInflater inflater = LayoutInflater.from(context);
-		View v = inflater.inflate(R.layout.loading_dialog, null);// 得到加载view
-		LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_view);// 加载布局
-		// main.xml中的ImageView
+		View v = inflater.inflate(R.layout.loading_dialog, null);// 寰楀埌鍔犺浇view
+		LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_view);// 鍔犺浇甯冨眬
+		// main.xml涓殑ImageView
 		ImageView spaceshipImage = (ImageView) v.findViewById(R.id.img);
-		TextView tipTextView = (TextView) v.findViewById(R.id.tipTextView);// 提示文字
-		// 加载动画
+		TextView tipTextView = (TextView) v.findViewById(R.id.tipTextView);// 鎻愮ず鏂囧瓧
+		// 鍔犺浇鍔ㄧ敾
 		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(
 				context, R.anim.loading_animation);
-		// 使用ImageView显示动画
+		// 浣跨敤ImageView鏄剧ず鍔ㄧ敾
 		spaceshipImage.startAnimation(hyperspaceJumpAnimation);
-		tipTextView.setText(msg);// 设置加载信息
+		tipTextView.setText(msg);// 璁剧疆鍔犺浇淇℃伅
 
-		Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 创建自定义样式dialog
+		Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 鍒涘缓鑷畾涔夋牱寮廳ialog
 
-		loadingDialog.setCancelable(true);// 不可以用“返回键”取�?
+		loadingDialog.setCancelable(true);// 涓嶅彲浠ョ敤鈥滆繑鍥為敭鈥濆彇锟�?
 		loadingDialog.setContentView(layout, new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.FILL_PARENT));// 设置布局
+				LinearLayout.LayoutParams.FILL_PARENT));// 璁剧疆甯冨眬
 		LoadingDialog = loadingDialog;
 		return loadingDialog;
 	}
@@ -97,7 +97,7 @@ public class CommonUtil {
 	}
 
 	/**
-	 * 判断网络连接状态
+	 * 鍒ゆ柇缃戠粶杩炴帴鐘舵��
 	 */
 
 	public static boolean isNetAvailable(Context context) {
@@ -105,8 +105,8 @@ public class CommonUtil {
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (cm == null) {
 		} else {
-			// 如果仅仅是用来判断网络连接
-			// 则可以使用 cm.getActiveNetworkInfo().isAvailable();
+			// 濡傛灉浠呬粎鏄敤鏉ュ垽鏂綉缁滆繛鎺�
+			// 鍒欏彲浠ヤ娇鐢� cm.getActiveNetworkInfo().isAvailable();
 			NetworkInfo[] info = cm.getAllNetworkInfo();
 			if (info != null) {
 				for (int i = 0; i < info.length; i++) {
@@ -121,7 +121,7 @@ public class CommonUtil {
 	}
 
 	/**
-	 * 登录返回
+	 * 鐧诲綍杩斿洖
 	 * 
 	 * @param jsString
 	 * @param context
@@ -139,11 +139,11 @@ public class CommonUtil {
 					.getJSONArray("users"));
 
 			if (accountList.size() == 1) {
-				Toast.makeText(context, "登录成功", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "鐧诲綍鎴愬姛", Toast.LENGTH_SHORT).show();
 				saveUserInfo(context, accessToken, timeStamp,
 						accountList.get(0), destination);
 			} else {
-				// 选择用户
+				// 閫夋嫨鐢ㄦ埛
 
 				Intent intent = new Intent(context, MultiAccount.class);
 				intent.putExtra("accountList", (Serializable) accountList);
@@ -181,7 +181,7 @@ public class CommonUtil {
 	}
 
 	/**
-	 * 保存用户信息并登录
+	 * 
 	 */
 	public static void saveUserInfo(Context context, String accessToken,
 			String timeStamp, OilUser user, String destination) {
@@ -194,7 +194,7 @@ public class CommonUtil {
 		editor.putString(Constants.CORP_NAME, user.getCorpName());
 		editor.putString(Constants.USER_PHONE, user.getPhone());
 		editor.putString(Constants.USER_NAME, user.getUserName());
-		editor.putString(Constants.CUUID, user.getCuuid()); // 用户关键字段
+		editor.putString(Constants.CUUID, user.getCuuid()); // 鐢ㄦ埛鍏抽敭瀛楁
 		long timeGap = Long.parseLong(timeStamp) - System.currentTimeMillis();
 		editor.putLong(Constants.TIME_GAP, timeGap);
 		editor.commit();
