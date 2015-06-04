@@ -4,7 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
@@ -19,7 +18,6 @@ import com.oil.activity.RequestFailDialog;
 import com.oil.bean.AsyncHttpClientUtil;
 import com.oil.bean.Constants;
 import com.oil.bean.OilUser;
-import com.oil.bean.OilUser.onLoginListener;
 import com.oil.event.FinishDialog;
 import com.oil.inter.OnReturnListener;
 
@@ -59,14 +57,15 @@ public class HttpTool {
 							JSONObject obj = new JSONObject(content);
 							if (obj.has("login")
 									&& obj.getString("login").equals("0")) {
-								Toast.makeText(context, "µ±Ç°µÇÂ¼ÒÑÊ§Ð§£¬ÇëÖØÐÂµÇÂ¼",
-										Toast.LENGTH_SHORT).show();
+								// Toast.makeText(context,
+								// "ï¿½ï¿½Ç°ï¿½ï¿½Â¼ï¿½ï¿½Ê§Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Â¼",
+								// Toast.LENGTH_SHORT).show();
 								OilUser.logOut(context);
 
 							} else if (obj.has("data")
 									&& obj.getJSONObject("data").has(
 											"accessToken")) {
-                                //¸üÐÂaccessToken
+								// ï¿½ï¿½ï¿½ï¿½accessToken
 								Editor editor = context.getSharedPreferences(
 										Constants.USER_INFO_SHARED,
 										Activity.MODE_PRIVATE).edit();
@@ -123,4 +122,84 @@ public class HttpTool {
 		}
 
 	}
+
+	/**
+	 * ÎÞÑéÖ¤ÍøÂçÇëÇó
+	 * 
+	 * @param context
+	 * @param params
+	 * @param listener
+	 * @param url
+	 * @param showDia
+	 */
+	public static void netRequestNoCheck(final Context context,
+			com.loopj.android.http.RequestParams params,
+			final OnReturnListener listener, final String url,
+			final boolean showDia) {
+
+		AsyncHttpClient client = AsyncHttpClientUtil.getInstance(context);
+		AsyncHttpResponseHandler hd = new AsyncHttpResponseHandler() {
+			@Override
+			public void onStart() {
+				if (showDia) {
+					CommonUtil.createLoadingDialog(
+							context,
+							context.getResources().getString(
+									R.string.loadingtext)).show();
+				}
+
+				super.onStart();
+			}
+
+			@Override
+			public void onSuccess(int statusCode, String content) {
+				Log.d("value", "success==" + content);
+				CommonUtil.cancleDialog();
+
+				if (null != content) {
+					if (new JsonValidator().validate(content)) {
+						if (null != listener) {
+							listener.onReturn(content);
+						}
+
+					} else {
+						if (!Constants.isRequestFailDialogExist) {
+							Intent intent = new Intent(context,
+									RequestFailDialog.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							context.startActivity(intent);
+						}
+					}
+				}
+
+				super.onSuccess(statusCode, content);
+			}
+
+			@Override
+			public void onFailure(Throwable error, String content) {
+				Log.d("value", "fail==" + content);
+				CommonUtil.cancleDialog();
+				if (!Constants.isRequestFailDialogExist) {
+					Intent intent = new Intent(context, RequestFailDialog.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					context.startActivity(intent);
+				}
+				super.onFailure(error, content);
+			}
+		};
+
+		if (CommonUtil.isNetAvailable(context)) {
+			client.get(url, params, hd);
+
+			if (Constants.isNetWorkDialogExist) {
+				EventBus.getDefault().post(new FinishDialog());
+			}
+		} else if (!Constants.isNetWorkDialogExist) {
+			Intent intent = new Intent(context, NetworkDialog.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			context.startActivity(intent);
+		}
+
+	}
+
 }

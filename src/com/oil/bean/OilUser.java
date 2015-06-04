@@ -5,15 +5,14 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.string;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.oil.activity.UserLoginActivity;
 import com.oil.event.FinishEvent;
 import com.oil.inter.OnReturnListener;
@@ -47,7 +46,7 @@ public class OilUser implements Serializable {
 			params.put("password", accountPwd);
 			params.put("imei", imei);
 			params.put("ver", CommonUtil.getAppInfo(context).get("name"));
-			// ÊµÏÖµÇÂ½µÄÍøÂç½»»¥
+			// Êµï¿½Öµï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½ç½»ï¿½ï¿½
 			HttpTool.netRequest(context, params, new OnReturnListener() {
 
 				@Override
@@ -57,9 +56,10 @@ public class OilUser implements Serializable {
 						JSONObject obj = new JSONObject(jsString)
 								.getJSONObject("data");
 						if (obj.getString("login").equals("1")) {
-							// µÇÂ¼³É¹¦
+							// ï¿½ï¿½Â¼ï¿½É¹ï¿½
 
 							loginListener.onSuccess("100", jsString);
+
 						} else {
 							String errorMessage = obj.getString("message");
 							loginListener.onError(Error_AccountInfoMiss,
@@ -70,10 +70,11 @@ public class OilUser implements Serializable {
 						e.printStackTrace();
 					}
 				}
+
 			}, Constants.LOGIN, true);
 
 		} else {
-			loginListener.onError(Error_AccountInfoMiss, "ÓÃ»§Ãû»òÃÜÂë²»ÄÜÎª¿Õ");
+			loginListener.onError(Error_AccountInfoMiss, "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Îªï¿½ï¿½");
 		}
 	}
 
@@ -137,7 +138,7 @@ public class OilUser implements Serializable {
 			onRegistListener registListener) {
 		if (null != userName && null != accountPwd) {
 
-			// ÊµÏÖ×¢²áµÄÍøÂç½»»¥
+			// Êµï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç½»ï¿½ï¿½
 
 		} else {
 			registListener
@@ -176,26 +177,49 @@ public class OilUser implements Serializable {
 		editor.commit();
 		editor.putString(Constants.USER_PHONE, userPhone);
 		editor.commit();
-		
+
 		Intent intent = new Intent();
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.setClass(context, UserLoginActivity.class);
 		context.startActivity(intent);
-		Toast.makeText(context, "×¢Ïú³É¹¦", 1).show();
+		Toast.makeText(context, "×¢ï¿½ï¿½É¹ï¿½", 1).show();
 		EventBus.getDefault().post(new FinishEvent());
 
 	}
 
-	// public static OilUser getCurrentUser(Context context) {
-	// // »ñÈ¡µ±Ç°ÓÃ»§
-	// String json_user = (String) SharedPreferenceUtils.getParam(context,
-	// Shared_Key_currentUser, "null");
-	// Log.e("getJson", json_user);
-	// // JSONObject jo = JSONObject.fromObject(json_user);
-	//
-	// // Log.e("current", msg)
-	// return new Gson().fromJson(json_user, OilUser.class);
-	// }
+	/**
+	 * è·å– å½“å‰ç”¨æˆ·
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static OilUser getCurrentUser(Context context) {
+		// ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½Ã»ï¿½
+		// String json_user = (String) SharedPreferenceUtils.getParam(context,
+		// Shared_Key_currentUser, "null");
+		// Log.e("getJson", json_user);
+		// // JSONObject jo = JSONObject.fromObject(json_user);
+		//
+		// // Log.e("current", msg)
+		// return new Gson().fromJson(json_user, OilUser.class);
+		OilUser oilUser = new OilUser();
+		String name = (String) SharedPreferenceUtils.getParam(context,
+				Constants.NAME, "");
+		String corpName = (String) SharedPreferenceUtils.getParam(context,
+				Constants.CORP_NAME, "");
+		String userPhone = (String) SharedPreferenceUtils.getParam(context,
+				Constants.USER_PHONE, "");
+		String userName = (String) SharedPreferenceUtils.getParam(context,
+				Constants.USER_NAME, "");
+		String cuuid = (String) SharedPreferenceUtils.getParam(context,
+				Constants.CUUID, "");
+		oilUser.setName(name);
+		oilUser.setCorpName(corpName);
+		oilUser.setCuuid(corpName);
+		oilUser.setPhone(userPhone);
+		oilUser.setUserName(userName);
+		return oilUser;
+	}
 
 	public interface onLoginListener {
 		void onSuccess(String resCode, String response);

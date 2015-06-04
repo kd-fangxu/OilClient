@@ -6,12 +6,17 @@ public class Constants {
 
 	public static boolean isNetWorkDialogExist = false; // 网络提醒的对话框是否已经启动
 	public static boolean isRequestFailDialogExist = false; // 请求失败的提醒对话框是否已经弹出
-
-	public static final String IP =   "http://info.oilchem.net/"; //"http://192.168.1.234:8080/oilWeb/";
+	/**
+	 * url
+	 */
+	public static final String IP = "http://192.168.1.86:8080/oilWeb/"; // "http://192.168.1.234:8080/oilWeb/";
 	public static final String LOGIN = IP + "app/user/mobileLogin";// 登录
-	public static final String MULTI_ACCOUNT_LOGIN=IP+"app/user/selLogUser"; //多用户选择登录
+	public static final String MULTI_ACCOUNT_LOGIN = IP + "app/user/selLogUser"; // 多用户选择登录
 	public static final String LOGOUT = IP + "app/user/userLogout"; // 注销
-
+	public static final String URL_GETPROSTRUCTURE = IP
+			+ "/oilWeb/passport/getProStructure";// 获取产品结构
+	public static final String URL_GETUSERFOUCE = IP
+			+ "/oilWeb/passport/getUserFoucedProduct";// 获取用户关注产品
 	/**
 	 * sharedPreference
 	 */
@@ -22,8 +27,8 @@ public class Constants {
 	public static final String LOGIN_STATE = "isLogin"; // 登录状态 true:已登录
 	public static final String CUUID = "cuuid";
 	public static final String TIME_GAP = "timeGap";
-	public static final String NAME="name";
-	public static final String CORP_NAME="corpName";
-	public static final String CORP_PROVINCE="corpProvince";
+	public static final String NAME = "name";
+	public static final String CORP_NAME = "corpName";
+	public static final String CORP_PROVINCE = "corpProvince";
 
 }

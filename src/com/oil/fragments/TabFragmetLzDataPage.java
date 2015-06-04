@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,14 +25,18 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.Toast;
 
 import com.example.oilclient.R;
+import com.loopj.android.http.RequestParams;
 import com.oil.adapter.CheeseDynamicAdapter;
 import com.oil.adapter.PagerAdapter;
 import com.oil.bean.Constants;
+import com.oil.bean.OilUser;
+import com.oil.inter.OnReturnListener;
+import com.oil.utils.HttpTool;
 import com.oil.weidget.OilContentViewPager;
 import com.oil.weidget.PagerSlidingTabStrip;
 
 /**
- * Êý¾Ý½çÃæ
+ * data
  * 
  * @author user
  *
@@ -65,7 +70,24 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		iv_userfouce.setOnClickListener(this);
 		initUserFoucePopu();
 		initWeidget(view);
+		getUserFouce();
 		return view;
+	}
+
+	private void getUserFouce() {
+		// TODO Auto-generated method stub
+		String url = Constants.URL_GETUSERFOUCE;
+		RequestParams params = new RequestParams();
+		params.put("UserId", OilUser.getCurrentUser(getActivity()).getCuuid());
+		HttpTool.netRequestNoCheck(getActivity(), params,
+				new OnReturnListener() {
+
+					@Override
+					public void onReturn(String jsString) {
+						// TODO Auto-generated method stub
+						Log.e("info", jsString);
+					}
+				}, url, true);
 	}
 
 	PagerSlidingTabStrip psts;
@@ -78,10 +100,10 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	private void initWeidget(View view) {
 		// TODO Auto-generated method stub
 		titleList = new ArrayList<String>();
-		titleList.add("Ê¯ÓÍ");
-		titleList.add("È¼ÁÏÓÍ");
-		titleList.add("Á¤Çà");
-		titleList.add("Èó»¬ÓÍ");
+		titleList.add("Ê¯ï¿½ï¿½");
+		titleList.add("È¼ï¿½ï¿½ï¿½ï¿½");
+		titleList.add("ï¿½ï¿½ï¿½ï¿½");
+		titleList.add("ï¿½ï¿½ï¿½ï¿½");
 		switch (tem_type) {
 		case 0:
 			// pagerAdapter = new PagerAdapter(getFragmentManager(), titleList,

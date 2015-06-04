@@ -185,8 +185,9 @@ public class CommonUtil {
 	 */
 	public static void saveUserInfo(Context context, String accessToken,
 			String timeStamp, OilUser user, String destination) {
-		
-		SharedPreferences.Editor editor =context.getSharedPreferences(Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE).edit();
+
+		SharedPreferences.Editor editor = context.getSharedPreferences(
+				Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE).edit();
 		editor.putBoolean(Constants.LOGIN_STATE, true);
 		editor.putString(Constants.ACCESS_TOKEN, accessToken);
 		editor.putString(Constants.NAME, user.getName());

@@ -1,15 +1,9 @@
 package com.oil.activity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.oilclient.R;
-import com.google.gson.JsonArray;
 import com.oil.bean.Constants;
 import com.oil.bean.OilUser;
 import com.oil.bean.OilUser.onLoginListener;

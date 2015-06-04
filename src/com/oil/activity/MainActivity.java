@@ -20,7 +20,7 @@ import com.oil.utils.ScreenUtils;
 import de.greenrobot.event.EventBus;
 
 /**
- * ³ÌĞòÖ÷Ò³
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³
  * 
  * @author user
  *
@@ -40,13 +40,13 @@ public class MainActivity extends SlidingFragmentActivity {
 		EventBus.getDefault().register(this);
 	}
 
-	// ¹Ø±Õ
+	// ï¿½Ø±ï¿½
 	public void onEvent(FinishEvent event) {
 		finish();
 	}
 
 	/**
-	 * ³õÊ¼»¯²à»¬À¸
+	 * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½à»¬ï¿½ï¿½
 	 */
 	private void initSlidingMenu() {
 		// TODO Auto-generated method stub
@@ -81,7 +81,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			if (!isQuit) {
-				Toast.makeText(getApplicationContext(), "ÔÙ°´Ò»´ÎÍË³ö", 1).show();
+				Toast.makeText(getApplicationContext(), "å†æŒ‰ä¸€ä¸‹é€€å‡º", 1).show();
 				isQuit = true;
 				new Timer().schedule(new TimerTask() {
 					@Override

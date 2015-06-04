@@ -22,13 +22,16 @@ public class FirstPageShowActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_firstpage);
+
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				// TODO Auto-generated method stub
 				switch (msg.what) {
 				case 0:
-					if (getSharedPreferences(Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE).getBoolean(Constants.LOGIN_STATE, false)) {
+					if (getSharedPreferences(Constants.USER_INFO_SHARED,
+							Activity.MODE_PRIVATE).getBoolean(
+							Constants.LOGIN_STATE, false)) {
 						startActivity(new Intent(FirstPageShowActivity.this,
 								MainActivity.class));
 					} else {
