@@ -14,7 +14,7 @@ import com.example.oilclient.R;
 import com.oil.adapter.PagerAdapter;
 import com.oil.bean.NewsClumns;
 import com.oil.datamodel.InfoPage;
-import com.oil.utils.GsonUtils;
+import com.oil.utils.GsonParserFactory;
 import com.oil.utils.StringUtils;
 import com.oil.weidget.OilContentViewPager;
 import com.oil.weidget.PagerSlidingTabStrip;
@@ -70,7 +70,7 @@ public class ProductTabDataFragment extends Fragment {
 
 	private void initDemoData() {
 		// TODO Auto-generated method stub
-		GsonUtils gsonUtils = new GsonUtils();
+		GsonParserFactory gsonUtils = new GsonParserFactory();
 		InfoPage infoPage;
 		try {
 			infoPage = gsonUtils.getInfoPage(StringUtils

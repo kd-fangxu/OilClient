@@ -3,46 +3,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#20ffffff"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tv_item_content1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_item_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="2dp"
-        android:text="item"
-        android:textColor="@color/whitesmoke" />
+        android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/tv_item_content2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="2dp"
-        android:text="item"
-        android:textColor="@color/whitesmoke" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="时间"
+            android:textColor="@color/whitesmoke" />
 
-    <TextView
-        android:id="@+id/tv_item_content3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="2dp"
-        android:text="item"
-        android:textColor="@color/whitesmoke" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="数据"
+            android:textColor="@color/whitesmoke" />
 
-    <TextView
-        android:id="@+id/tv_item_content4"
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="单位"
+            android:textColor="@color/whitesmoke" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="2dp"
-        android:text="item"
-        android:textColor="@color/whitesmoke" />
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tv_item_content1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="item"
+            android:textColor="@color/whitesmoke" />
+
+        <TextView
+            android:id="@+id/tv_item_content2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="item"
+            android:textColor="@color/whitesmoke" />
+
+        <TextView
+            android:id="@+id/tv_item_content3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="item"
+            android:textColor="@color/whitesmoke" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -25,7 +25,7 @@ import com.oil.adapter.StaggeredAdapter;
 import com.oil.bean.HotPoint;
 import com.oil.bean.NewsClumns;
 import com.oil.datamodel.MainPage;
-import com.oil.utils.GsonUtils;
+import com.oil.utils.GsonParserFactory;
 import com.oil.utils.StringUtils;
 import com.oil.weidget.HotHeaderPager;
 
@@ -167,7 +167,7 @@ public class TabFragmentMainPage extends Fragment {
 			Gson gson = new Gson();
 			String content = StringUtils.convertStreamToString(getActivity()
 					.getAssets().open("mainpage.txt"));
-			GsonUtils gUtils = new GsonUtils();
+			GsonParserFactory gUtils = new GsonParserFactory();
 			MainPage mPage = gUtils.converMainPage(content);
 			newsList.clear();
 			newsList.addAll(mPage.getNewsList());

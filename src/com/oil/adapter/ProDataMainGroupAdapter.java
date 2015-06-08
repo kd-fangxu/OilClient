@@ -1,6 +1,7 @@
 package com.oil.adapter;
 
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.view.View;
@@ -10,11 +11,12 @@ import android.widget.TextView;
 
 import com.example.oilclient.R;
 
-public class SimpleDemoAdapter extends BaseAdapter {
-	List<String> dataList;
+public class ProDataMainGroupAdapter extends BaseAdapter {
+	List<Map<String, String>> dataList;
 	Context context;
 
-	public SimpleDemoAdapter(Context context, List<String> dataList) {
+	public ProDataMainGroupAdapter(Context context,
+			List<Map<String, String>> dataList) {
 		this.context = context;
 		this.dataList = dataList;
 	}
@@ -37,11 +39,15 @@ public class SimpleDemoAdapter extends BaseAdapter {
 		return position;
 	}
 
-	int selectedPosition = -1;
+	int selectedPosition = 0;
 
 	public void SetSelectedPosition(int position) {
 		// TODO Auto-generated method stub
 		this.selectedPosition = position;
+	}
+
+	public int getSelectionPositon() {
+		return selectedPosition;
 	}
 
 	@Override
@@ -57,7 +63,7 @@ public class SimpleDemoAdapter extends BaseAdapter {
 			convertView.setTag(dHolder);
 		}
 		dHolder = (DemoViewHolder) convertView.getTag();
-		dHolder.tv_content.setText(dataList.get(position));
+		dHolder.tv_content.setText(dataList.get(position).get("temp_name"));
 		if (position == selectedPosition) {
 			dHolder.tv_content.setSelected(true);
 		} else {

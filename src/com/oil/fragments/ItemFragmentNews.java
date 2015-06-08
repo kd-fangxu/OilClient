@@ -26,7 +26,7 @@ import com.oil.adapter.NewsClumnAdapter;
 import com.oil.bean.HotPoint;
 import com.oil.bean.NewsClumns;
 import com.oil.datamodel.InfoPage;
-import com.oil.utils.GsonUtils;
+import com.oil.utils.GsonParserFactory;
 import com.oil.utils.StringUtils;
 import com.oil.weidget.HotHeaderPager;
 
@@ -81,7 +81,7 @@ public class ItemFragmentNews extends Fragment {
 	private void initDemoData() {
 		// TODO Auto-generated method stub
 		try {
-			infoPage = new GsonUtils().getInfoPage(StringUtils
+			infoPage = new GsonParserFactory().getInfoPage(StringUtils
 					.convertStreamToString(getActivity().getAssets().open(
 							"info.txt")));
 			if (null != infoPage) {

@@ -23,7 +23,7 @@ import com.oil.adapter.CommonAdapter;
 import com.oil.adapter.CommonViewHolder;
 import com.oil.bean.HotPoint;
 import com.oil.datamodel.NewsListPage;
-import com.oil.utils.GsonUtils;
+import com.oil.utils.GsonParserFactory;
 import com.oil.utils.StringUtils;
 
 public class BaseListActivity extends Activity {
@@ -97,7 +97,7 @@ public class BaseListActivity extends Activity {
 		// TODO Auto-generated method stub
 		NewsListPage newsListPage;
 		try {
-			newsListPage = new GsonUtils().getNewsListPage(StringUtils
+			newsListPage = new GsonParserFactory().getNewsListPage(StringUtils
 					.convertStreamToString(getAssets().open("newslist.txt")));
 			beanList = newsListPage.getPointList();
 			commonAdapter = new CommonAdapter<Object>(BaseListActivity.this,

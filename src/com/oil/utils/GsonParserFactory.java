@@ -1,8 +1,13 @@
 package com.oil.utils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,7 +17,7 @@ import com.oil.datamodel.InfoPage;
 import com.oil.datamodel.MainPage;
 import com.oil.datamodel.NewsListPage;
 
-public class GsonUtils {
+public class GsonParserFactory {
 	/**
 	 * 初始化首页信息内容
 	 * 
@@ -116,4 +121,28 @@ public class GsonUtils {
 		}
 		return nlisListPage;
 	}
+
+	/**
+	 * 解析产品数据详情界面
+	 * 
+	 * @param json
+	 * @return
+	 */
+	public List<HashMap<String, Object>> getProDataDatails(String json) {
+		List<HashMap<String, Object>> mapList = new ArrayList<HashMap<String, Object>>();
+		try {
+			JSONObject js = new JSONObject(json);
+			Gson gson = new Gson();
+			mapList.addAll((Collection<? extends HashMap<String, Object>>) gson
+					.fromJson(js.getString("data"),
+							new TypeToken<List<HashMap<String, Object>>>() {
+							}.getType()));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return mapList;
+	}
+
 }

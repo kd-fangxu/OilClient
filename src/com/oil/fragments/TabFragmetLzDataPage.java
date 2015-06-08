@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.askerov.dynamicgrid.DynamicGridView;
 import org.json.JSONArray;
@@ -34,6 +35,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
+import com.oil.activity.FirstPageShowActivity;
 import com.oil.adapter.CheeseDynamicAdapter;
 import com.oil.adapter.PagerAdapter;
 import com.oil.bean.Constants;
@@ -101,10 +103,24 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 						try {
 							JSONObject js = new JSONObject(jsString);
-							mapList.addAll((Collection<? extends HashMap<String, String>>) new Gson().fromJson(
-									js.getString("productList"),
-									new TypeToken<List<HashMap<String, String>>>() {
-									}.getType()));
+							List<Map<String, String>> templeMaplist = new ArrayList<Map<String, String>>();
+
+							templeMaplist
+									.addAll((Collection<? extends HashMap<String, String>>) new Gson().fromJson(
+											js.getString("productList"),
+											new TypeToken<List<HashMap<String, String>>>() {
+											}.getType()));
+							if (templeMaplist.size() > 0) {
+								for (int i = 0; i < templeMaplist.size(); i++) {
+									if (checkMapList(templeMaplist.get(i).get(
+											"pro_cn_name"))) {
+
+										mapList.add((HashMap<String, String>) templeMaplist
+												.get(i));
+									}
+									;
+								}
+							}
 
 							pagerAdapter.notifyDataSetChanged();
 							psts.notifyDataSetChanged();
@@ -113,6 +129,23 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 							e.printStackTrace();
 						}
 
+					}
+
+					/**
+					 * 校验重复性
+					 * 
+					 * @param proName
+					 * @return
+					 */
+					private boolean checkMapList(String proName) {
+						// TODO Auto-generated method stub
+						for (int j = 0; j < mapList.size(); j++) {
+							if (proName.equals(mapList.get(j)
+									.get("pro_cn_name"))) {
+								return false;
+							}
+						}
+						return true;
 					}
 				}, url, true);
 	}
