@@ -35,7 +35,7 @@ import android.widget.Toast;
 public class CommonUtil {
 
 	/**
-	 * 寰楀埌搴旂敤淇℃伅
+	 * 获取应用信息
 	 * 
 	 * @param context
 	 * @return
@@ -97,7 +97,7 @@ public class CommonUtil {
 	}
 
 	/**
-	 * 鍒ゆ柇缃戠粶杩炴帴鐘舵��
+	 * 判断网络连接状况
 	 */
 
 	public static boolean isNetAvailable(Context context) {
@@ -105,8 +105,6 @@ public class CommonUtil {
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (cm == null) {
 		} else {
-			// 濡傛灉浠呬粎鏄敤鏉ュ垽鏂綉缁滆繛鎺�
-			// 鍒欏彲浠ヤ娇鐢� cm.getActiveNetworkInfo().isAvailable();
 			NetworkInfo[] info = cm.getAllNetworkInfo();
 			if (info != null) {
 				for (int i = 0; i < info.length; i++) {
@@ -139,11 +137,11 @@ public class CommonUtil {
 					.getJSONArray("users"));
 
 			if (accountList.size() == 1) {
-				Toast.makeText(context, "鐧诲綍鎴愬姛", Toast.LENGTH_SHORT).show();
+				ToastUtils.getInstance(context).showText(context.getResources().getString(R.string.loginSuccess));
 				saveUserInfo(context, accessToken, timeStamp,
 						accountList.get(0), destination);
 			} else {
-				// 閫夋嫨鐢ㄦ埛
+				// 存在多个用户
 
 				Intent intent = new Intent(context, MultiAccount.class);
 				intent.putExtra("accountList", (Serializable) accountList);
@@ -194,7 +192,7 @@ public class CommonUtil {
 		editor.putString(Constants.CORP_NAME, user.getCorpName());
 		editor.putString(Constants.USER_PHONE, user.getPhone());
 		editor.putString(Constants.USER_NAME, user.getUserName());
-		editor.putString(Constants.CUUID, user.getCuuid()); // 鐢ㄦ埛鍏抽敭瀛楁
+		editor.putString(Constants.CUUID, user.getCuuid()); 
 		long timeGap = Long.parseLong(timeStamp) - System.currentTimeMillis();
 		editor.putLong(Constants.TIME_GAP, timeGap);
 		editor.commit();

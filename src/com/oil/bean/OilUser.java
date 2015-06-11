@@ -13,12 +13,14 @@ import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
+import com.example.oilclient.R;
 import com.oil.activity.UserLoginActivity;
 import com.oil.event.FinishEvent;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.CommonUtil;
 import com.oil.utils.HttpTool;
 import com.oil.utils.SharedPreferenceUtils;
+import com.oil.utils.ToastUtils;
 import com.oilchem.weixin.mp.aes.AesException;
 import com.oilchem.weixin.mp.aes.SHA1;
 
@@ -46,7 +48,6 @@ public class OilUser implements Serializable {
 			params.put("password", accountPwd);
 			params.put("imei", imei);
 			params.put("ver", CommonUtil.getAppInfo(context).get("name"));
-			// 实锟街碉拷陆锟斤拷锟斤拷锟界交锟斤拷
 			HttpTool.netRequest(context, params, new OnReturnListener() {
 
 				@Override
@@ -56,11 +57,11 @@ public class OilUser implements Serializable {
 						JSONObject obj = new JSONObject(jsString)
 								.getJSONObject("data");
 						if (obj.getString("login").equals("1")) {
-							// 锟斤拷录锟缴癸拷
 
 							loginListener.onSuccess("100", jsString);
 
 						} else {
+							// 登录失败
 							String errorMessage = obj.getString("message");
 							loginListener.onError(Error_AccountInfoMiss,
 									errorMessage);
@@ -138,7 +139,7 @@ public class OilUser implements Serializable {
 			onRegistListener registListener) {
 		if (null != userName && null != accountPwd) {
 
-			// 实锟斤拷注锟斤拷锟斤拷锟斤拷缃伙拷锟�
+			// 瀹為敓鏂ゆ嫹娉ㄩ敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹缂冧紮鎷烽敓锟�
 
 		} else {
 			registListener
@@ -182,19 +183,19 @@ public class OilUser implements Serializable {
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.setClass(context, UserLoginActivity.class);
 		context.startActivity(intent);
-		Toast.makeText(context, "注锟斤拷晒锟�", 1).show();
+		ToastUtils.getInstance(context).showText(context.getResources().getString(R.string.logoutSuccess));
 		EventBus.getDefault().post(new FinishEvent());
 
 	}
 
 	/**
-	 * 鑾峰彇 褰撳墠鐢ㄦ埛
+	 * 閼惧嘲褰� 瑜版挸澧犻悽銊﹀煕
 	 * 
 	 * @param context
 	 * @return
 	 */
 	public static OilUser getCurrentUser(Context context) {
-		// 锟斤拷取锟斤拷前锟矫伙拷
+		// 閿熸枻鎷峰彇閿熸枻鎷峰墠閿熺煫浼欐嫹
 		// String json_user = (String) SharedPreferenceUtils.getParam(context,
 		// Shared_Key_currentUser, "null");
 		// Log.e("getJson", json_user);
