@@ -87,7 +87,7 @@ public class ProductNewClumnTabFragment extends Fragment {
 				Gson gson = new Gson();
 
 				@Override
-				public void convert(CommonViewHolder helper, Object item) {
+				public void convert(CommonViewHolder helper, Object item,int positon) {
 					// TODO Auto-generated method stub
 					HotPoint hotPoint = gson.fromJson(gson.toJson(item),
 							new TypeToken<HotPoint>() {

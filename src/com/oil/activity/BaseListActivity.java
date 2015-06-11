@@ -56,21 +56,23 @@ public class BaseListActivity extends Activity {
 
 		initDemodata();
 
-		
 		prListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(BaseListActivity.this,WebViewShowActivity.class);
-				Gson gson=new Gson();
-				HotPoint hotPoint = gson.fromJson(gson.toJson(commonAdapter.getItem(position)),
+				Intent intent = new Intent(BaseListActivity.this,
+						WebViewShowActivity.class);
+				Gson gson = new Gson();
+				HotPoint hotPoint = gson.fromJson(
+						gson.toJson(commonAdapter.getItem(position)),
 						new TypeToken<HotPoint>() {
 						}.getType());
 				;
-			intent.putExtra(WebViewShowActivity.PAGE_URL, hotPoint.getLink());
-						startActivity(intent);
+				intent.putExtra(WebViewShowActivity.PAGE_URL,
+						hotPoint.getLink());
+				startActivity(intent);
 			}
 		});
 	}
@@ -105,7 +107,8 @@ public class BaseListActivity extends Activity {
 				Gson gson = new Gson();
 
 				@Override
-				public void convert(CommonViewHolder helper, Object item) {
+				public void convert(CommonViewHolder helper, Object item,
+						int positon) {
 					// TODO Auto-generated method stub
 					HotPoint hotPoint = gson.fromJson(gson.toJson(item),
 							new TypeToken<HotPoint>() {

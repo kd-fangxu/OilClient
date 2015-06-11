@@ -14,11 +14,13 @@ public class Constants {
 	public static final String MULTI_ACCOUNT_LOGIN = IP + "app/user/selLogUser"; // 多用户选择登录
 	public static final String LOGOUT = IP + "app/user/userLogout"; // 注销
 	public static final String URL_GETPROSTRUCTURE = IP
-			+ "passport/getProStructure";// 获取产品结构
+			+ "app/oilinfo/getProStructure";// 获取产品结构
 	public static final String URL_GETUSERFOUCE = IP
-			+ "passport/getUserFoucedProduct";// 获取用户关注产品
+			+ "app/oilinfo/getUserFoucedProduct";// 获取用户关注产品
 	public static final String URL_GETPRODDATA = IP// 获取产品数据详情
-			+ "productChain/getProductChainAll";
+			+ "app/oilinfo/getProductChainAll";
+	public static final String URL_GETPRODATALIST = IP
+			+ "app/oilinfo/getProDataHisList";// 获取产品历史数据列表
 	/**
 	 * sharedPreference
 	 */

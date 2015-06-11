@@ -49,12 +49,12 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 		final CommonViewHolder viewHolder = getViewHolder(position,
 				convertView, parent);
 		Log.e("commonadapter", getItem(position).toString());
-		convert(viewHolder, getItem(position));
+		convert(viewHolder, getItem(position), position);
 		return viewHolder.getConvertView();
 
 	}
 
-	public abstract void convert(CommonViewHolder helper, T item);
+	public abstract void convert(CommonViewHolder helper, T item, int Position);
 
 	private CommonViewHolder getViewHolder(int position, View convertView,
 			ViewGroup parent) {

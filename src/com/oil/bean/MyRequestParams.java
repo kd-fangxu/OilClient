@@ -12,10 +12,12 @@ import com.oilchem.weixin.mp.aes.SHA1;
 public class MyRequestParams extends RequestParams {
 
 	public MyRequestParams(Context context) {
-		SharedPreferences sp=context.getSharedPreferences(Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
+		SharedPreferences sp = context.getSharedPreferences(
+				Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
+		this.put("appname", "2");
 		if (sp.getBoolean(Constants.LOGIN_STATE, false)) { // ÒÑµÇÂ¼
-          
-			this.put("cuuid",sp.getString(Constants.CUUID, ""));
+
+			this.put("cuuid", sp.getString(Constants.CUUID, ""));
 
 			String accessToken = sp.getString(Constants.ACCESS_TOKEN, "");
 			String userName = sp.getString(Constants.USER_NAME, "");
@@ -35,9 +37,9 @@ public class MyRequestParams extends RequestParams {
 				e.printStackTrace();
 			}
 		}
-		
+
 		this.put("appIdentify", "oilclient");
-		
+
 	}
 
 }

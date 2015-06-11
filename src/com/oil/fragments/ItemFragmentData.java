@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,9 +22,12 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 import com.example.oilclient.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
+import com.oil.activity.ProHisDataListActivity;
 import com.oil.activity.ProductDetailsActivity;
 import com.oil.adapter.ExpandDataAdapter;
 import com.oil.adapter.ProDataMainGroupAdapter;
@@ -57,12 +63,12 @@ public class ItemFragmentData extends Fragment {
 		this.type = type;
 	};
 
-	HashMap<String, Object> currentDataMap = new HashMap<String, Object>();
+	// HashMap<String, Object> currentDataMap = new HashMap<String, Object>();
 	List<HashMap<String, Object>> mapContentList = new ArrayList<HashMap<String, Object>>();
 	ExpandDataAdapter edAdapter;
 
 	// List<HashMap<String, List<DataSimple>>> mapList;
-	List<Map<String, String>> groupTitleList = new ArrayList<Map<String, String>>();
+	List<Map<String, Object>> groupTitleList = new ArrayList<Map<String, Object>>();
 	ProDataMainGroupAdapter sdAdapter;// 主分组
 
 	// List<String> keyList = new ArrayList<String>();
@@ -103,10 +109,16 @@ public class ItemFragmentData extends Fragment {
 						Toast.makeText(getActivity(),
 								"groupid:" + groupPosition + "child",
 								Toast.LENGTH_SHORT).show();
+						//
 						// startActivity(new Intent(getActivity(),
-						// ProductDataDetailActivity.class));
-						startActivity(new Intent(getActivity(),
-								ProductDetailsActivity.class));
+						// ProductDetailsActivity.class));
+						String unitId = ((Map<String, Object>) edAdapter
+								.getChild(groupPosition, childPosition)).get(
+								"unit_id").toString();
+						Intent intent = new Intent(getActivity(),
+								ProHisDataListActivity.class);
+						intent.putExtra("unitId", unitId);
+						startActivity(intent);
 						return false;
 					}
 				});
@@ -115,7 +127,7 @@ public class ItemFragmentData extends Fragment {
 
 	private void initWeidgetAdapters() {
 		// TODO Auto-generated method stub
-		edAdapter = new ExpandDataAdapter(getActivity(), currentDataMap);
+		edAdapter = new ExpandDataAdapter(getActivity(), currentGroupMapList);
 		sdAdapter = new ProDataMainGroupAdapter(getActivity(), groupTitleList);
 		hlv_type.setAdapter(sdAdapter);
 		ptep_lv.getRefreshableView().setAdapter(edAdapter);
@@ -149,6 +161,17 @@ public class ItemFragmentData extends Fragment {
 				GsonParserFactory gpf = new GsonParserFactory();
 				mapContentList.clear();
 				mapContentList.addAll(gpf.getProDataDatails(jsString));
+				ObjectConvertUtils<List<Map<String, Object>>> convertUtils = new ObjectConvertUtils<List<Map<String, Object>>>();
+				groupTitleList.clear();
+				try {
+					groupTitleList.addAll(convertUtils.convert(new JSONObject(
+							jsString).getString("productTempClassList")));
+					filterEmptyGroupList();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 				updateMainTitleAdapter();
 				updateProDataAdapter();
 			}
@@ -159,100 +182,66 @@ public class ItemFragmentData extends Fragment {
 	private void updateMainTitleAdapter() {
 		// TODO Auto-generated method stub
 
-		groupTitleList.clear();
-		for (int i = 0; i < mapContentList.size(); i++) {
-			groupTitleList.add(new ObjectConvertUtils<Map<String, String>>()
-					.convert(mapContentList.get(i).get("productTemplate")));
-			// Gson gson = new Gson();
-			// gson.fromJson(gson.toJson(mapContentList.get(i)),
-			// new TypeToken<HashMap<String, String>>() {
-			// }.getType());
-		}
+		// groupTitleList.clear();
+		// for (int i = 0; i < mapContentList.size(); i++) {
+		// groupTitleList.add(new ObjectConvertUtils<Map<String, String>>()
+		// .convert(new Gson().toJson(mapContentList.get(i).get(
+		// "productTemplate"))));
+		// // Gson gson = new Gson();
+		// // gson.fromJson(gson.toJson(mapContentList.get(i)),
+		// // new TypeToken<HashMap<String, String>>() {
+		// // }.getType());
+		// }
 		sdAdapter.SetSelectedPosition(0);
 		sdAdapter.notifyDataSetChanged();
 
 	}
+
+	List<Map<String, Object>> currentGroupMapList = new ArrayList<Map<String, Object>>();
 
 	/**
 	 * 更新产品数据
 	 */
 	private void updateProDataAdapter() {
 
-		currentDataMap.clear();
-		currentDataMap
-				.putAll((Map<? extends String, ? extends Object>) mapContentList
-						.get(sdAdapter.getSelectionPositon()));
+		// currentDataMap.clear();
+		// currentDataMap
+		// .putAll((Map<? extends String, ? extends Object>) mapContentList
+		// .get(sdAdapter.getSelectionPositon()));
+		// edAdapter.notifyDataSetChanged();
+		currentGroupMapList.clear();
+		for (int i = 0; i < mapContentList.size(); i++) {
+			String s = ((Map<String, Object>) sdAdapter.getItem(sdAdapter
+					.getSelectionPositon())).get("clas_id").toString();
+			String s1 = ((Map<String, Object>) mapContentList.get(i).get(
+					"productTemplate")).get("clas_order").toString();
+			if (s.equals(s1)) {
+				currentGroupMapList.add(mapContentList.get(i));
+			}
+		}
 		edAdapter.notifyDataSetChanged();
 	}
 
-	// private void initTestData() {
-	// // TODO Auto-generated method stub
-	// mapList = new ArrayList<HashMap<String, List<DataSimple>>>();
-	// contentMap = new HashMap<String, List<DataSimple>>();
-	// keyList = new ArrayList<String>();
-	// keyList.add("华北公司报价");
-	// keyList.add("华东公司报价");
-	// keyList.add("西北公司报价");
-	// keyList.add("华南公司报价");
-	//
-	// // List<String> TitleList = new ArrayList<String>();
-	// // TitleList.add("产品名称");
-	// // TitleList.add("今日报价");
-	// // TitleList.add("漲跌幅");
-	//
-	// DataSimple dataSimple = new DataSimple();
-	// dataSimple.setDataName("石油");
-	// dataSimple.setTodayData("1000rmb/t");
-	// dataSimple.setYestData("970rmb/t");
-	// dataSimple.setPrice("+3%");
-	// DataSimple ds_header = new DataSimple();
-	// ds_header.setDataName("产品名称");
-	// ds_header.setTodayData("今日价格");
-	// ds_header.setYestData("昨日价格");
-	// ds_header.setPrice("涨跌幅");
-	// List<DataSimple> contentList = new ArrayList<DataSimple>();
-	// contentList.add(ds_header);
-	// contentList.add(dataSimple);
-	// contentList.add(dataSimple);
-	// contentList.add(dataSimple);
-	// contentMap.put("content", contentList);
-	// for (int i = 0; i < keyList.size(); i++) {
-	// mapList.add(contentMap);
-	// }
-	// edAdapter = new ExpandDataAdapter(getActivity(), mapList, keyList);
-	// ptep_lv.getRefreshableView().setAdapter(edAdapter);
-	// ptep_lv.getRefreshableView().setGroupIndicator(null);
-	//
-	// List<String> titleList = new ArrayList<String>();
-	// if (type == 0) {
-	// titleList.add("产量");
-	// titleList.add("开工率");
-	// titleList.add("利润");
-	// titleList.add("库存");
-	// titleList.add("零售量");
-	// } else if (type == 1) {
-	// titleList.add("企业出厂价");
-	// titleList.add("国内市场价");
-	// titleList.add("国际市场价");
-	// titleList.add("国际原油");
-	// titleList.add("主营批发价");
-	// }
-	//
-	// SimpleDemoAdapter sdAdapter = new SimpleDemoAdapter(getActivity(),
-	// titleList);
-	// hlv_type.setAdapter(sdAdapter);
-	// hlv_type.setOnItemClickListener(new OnItemClickListener() {
-	//
-	// @Override
-	// public void onItemClick(AdapterView<?> parent, View view,
-	// int position, long id) {
-	// // TODO Auto-generated method stub
-	//
-	// ((SimpleDemoAdapter) hlv_type.getAdapter())
-	// .SetSelectedPosition(position);
-	// ((SimpleDemoAdapter) hlv_type.getAdapter())
-	// .notifyDataSetChanged();
-	// }
-	// });
-	// }
+	private boolean filterEmptyGroupList() {
+		for (int i = 0; i < groupTitleList.size(); i++) {
+			String s = groupTitleList.get(i).get("clas_id").toString();
+			if (!clasIdcheck(s)) {
+				groupTitleList.remove(i);
+			}
+		}
+		return false;
+	}
+
+	public boolean clasIdcheck(String s) {
+		for (int j = 0; j < mapContentList.size(); j++) {
+
+			String s1 = ((Map<String, Object>) mapContentList.get(j).get(
+					"productTemplate")).get("clas_order").toString();
+			if (s.equals(s1)) {
+				return true;
+			}
+		}
+		return false;
+
+	}
 }

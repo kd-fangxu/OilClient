@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.askerov.dynamicgrid.DynamicGridView;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -16,10 +14,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
@@ -32,14 +31,11 @@ import android.widget.Toast;
 
 import com.example.oilclient.R;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
-import com.oil.activity.FirstPageShowActivity;
 import com.oil.adapter.CheeseDynamicAdapter;
 import com.oil.adapter.PagerAdapter;
 import com.oil.bean.Constants;
-import com.oil.bean.HotPoint;
 import com.oil.bean.OilUser;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
@@ -238,6 +234,23 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		View popuView = View.inflate(getActivity(),
 				R.layout.view_popu_userfouce, null);
 		dgView = (DynamicGridView) popuView.findViewById(R.id.dynamic_grid);
+		dgView.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_MOVE:
+					dgView.requestDisallowInterceptTouchEvent(true);
+					break;
+
+				default:
+					break;
+				}
+				return false;
+			}
+		});
+
 		btn_edit_com = (Button) popuView.findViewById(R.id.btn_edit_com);
 		ll_item1 = (LinearLayout) popuView.findViewById(R.id.ll_pro_item1);
 		ll_item2 = (LinearLayout) popuView.findViewById(R.id.ll_pro_item2);
@@ -306,10 +319,10 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 				pWindow.dismiss();
 
 			} else {
-				// pWindow.showAsDropDown(ll_titlebar, 0, 0, Gravity.top);
-				pWindow.showAsDropDown(ll_titlebar, 0,
-						-ll_titlebar.getHeight(), Gravity.TOP);
-				// pWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0);
+
+				// pWindow.showAsDropDown(ll_titlebar, 0,
+				// -ll_titlebar.getHeight(), Gravity.TOP);
+				pWindow.showAsDropDown(ll_titlebar);
 				isPopuShow = true;
 			}
 

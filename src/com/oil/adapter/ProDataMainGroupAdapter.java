@@ -12,11 +12,11 @@ import android.widget.TextView;
 import com.example.oilclient.R;
 
 public class ProDataMainGroupAdapter extends BaseAdapter {
-	List<Map<String, String>> dataList;
+	List<Map<String, Object>> dataList;
 	Context context;
 
 	public ProDataMainGroupAdapter(Context context,
-			List<Map<String, String>> dataList) {
+			List<Map<String, Object>> dataList) {
 		this.context = context;
 		this.dataList = dataList;
 	}
@@ -44,6 +44,7 @@ public class ProDataMainGroupAdapter extends BaseAdapter {
 	public void SetSelectedPosition(int position) {
 		// TODO Auto-generated method stub
 		this.selectedPosition = position;
+
 	}
 
 	public int getSelectionPositon() {
@@ -53,27 +54,17 @@ public class ProDataMainGroupAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		DemoViewHolder dHolder = null;
-		if (convertView == null) {
-			dHolder = new DemoViewHolder();
-			convertView = View.inflate(context, R.layout.item_simpledatademo,
-					null);
-			dHolder.tv_content = (TextView) convertView
-					.findViewById(R.id.tv_content);
-			convertView.setTag(dHolder);
-		}
-		dHolder = (DemoViewHolder) convertView.getTag();
-		dHolder.tv_content.setText(dataList.get(position).get("temp_name"));
+
+		convertView = View.inflate(context, R.layout.item_simpledatademo, null);
+		TextView tv = (TextView) convertView.findViewById(R.id.tv_content);
+		tv.setText(dataList.get(position).get("clas_name").toString());
 		if (position == selectedPosition) {
-			dHolder.tv_content.setSelected(true);
+			tv.setSelected(true);
 		} else {
-			dHolder.tv_content.setSelected(false);
+			tv.setSelected(false);
 		}
 
 		return convertView;
 	}
 
-	private class DemoViewHolder {
-		TextView tv_content;
-	}
 }

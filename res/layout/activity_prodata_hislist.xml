@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   xmlns:oil="http://schemas.android.com/apk/res/com.example.oilclient"
+    xmlns:oil="http://schemas.android.com/apk/res/com.example.oilclient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_main"
@@ -34,12 +34,14 @@
             android:textSize="18sp" />
     </LinearLayout>
 
+    <include layout="@layout/item_data_simple" />
+
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/prlv_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="#00000000"
-        android:divider="@color/lu_gray"
+        android:divider="#00000000"
         android:dividerHeight="2dp"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"

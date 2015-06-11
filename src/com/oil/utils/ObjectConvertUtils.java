@@ -8,9 +8,9 @@ import com.google.gson.reflect.TypeToken;
 public class ObjectConvertUtils<T> {
 	T t;
 
-	public T convert(Object object) {
+	public T convert(String json) {
 		Gson gson = new Gson();
-		String json = gson.toJson(object);
+
 		Log.e("json", json);
 		t = gson.fromJson(json, new TypeToken<T>() {
 		}.getType());

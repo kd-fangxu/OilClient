@@ -81,7 +81,8 @@ public class MainActivity extends SlidingFragmentActivity {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			if (!isQuit) {
-				Toast.makeText(getApplicationContext(), "再按一下退出", 1).show();
+				Toast.makeText(getApplicationContext(),
+						getResources().getText(R.string.demo1), 1).show();
 				isQuit = true;
 				new Timer().schedule(new TimerTask() {
 					@Override

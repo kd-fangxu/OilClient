@@ -83,3 +83,6 @@ project.properties
 *.properties
 *.properties
 *.properties
+*.properties
+project.properties
+*.properties

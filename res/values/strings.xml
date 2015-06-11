@@ -4,7 +4,10 @@
     <string name="app_details">版本介绍：\n1.更新了新的UI\n2.解决上版本出现的部分bug</string>
     <string name="companyInfo">copy right  隆众资讯</string>
     <string name="loadingtext">数据加载中...</string>
-
+    <!-- 交互常用 -->
+    <string name="demo1">再按一下退出</string>
+    <string name="demo2">网络不给力</string>
+    <!-- 交互常用 -->
     <string-array name="menu">
         <item>会员中心</item>
         <item>消息</item>

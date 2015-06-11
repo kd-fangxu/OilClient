@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oil="http://schemas.android.com/apk/res/com.example.oilclient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -17,7 +18,9 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:padding="3dp"
-        android:smoothScrollbar="true" >
+        android:smoothScrollbar="true"
+        oil:ptrHeaderSubTextColor="@color/whitesmoke"
+        oil:ptrHeaderTextColor="@color/whitesmoke" >
     </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
 
     <com.oil.weidget.HorizontalListView

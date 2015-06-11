@@ -43,7 +43,8 @@ public class SearchPageActivity extends Activity implements OnClickListener {
 				R.layout.item_searchview) {
 
 			@Override
-			public void convert(CommonViewHolder helper, String item) {
+			public void convert(CommonViewHolder helper, String item,
+					int positon) {
 				// TODO Auto-generated method stub
 				helper.setText(R.id.tv_item_content, item.toString());
 			}
@@ -60,7 +61,8 @@ public class SearchPageActivity extends Activity implements OnClickListener {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(SearchPageActivity.this,ProductDetailsActivity.class));
+				startActivity(new Intent(SearchPageActivity.this,
+						ProductDetailsActivity.class));
 			}
 		});
 		et_edit.addTextChangedListener(new TextWatcher() {

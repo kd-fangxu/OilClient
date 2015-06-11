@@ -19,8 +19,9 @@ import com.example.oilclient.R;
 import com.oil.bean.DataSimple;
 
 public class ExpandDataAdapter extends BaseExpandableListAdapter {
-	List<HashMap<String, List<DataSimple>>> mapList = new ArrayList<HashMap<String, List<DataSimple>>>();
-	List<String> keyList = new ArrayList<String>();
+	// List<HashMap<String, List<DataSimple>>> mapList = new
+	// ArrayList<HashMap<String, List<DataSimple>>>();
+	// List<String> keyList = new ArrayList<String>();
 	Context context;
 	String unit = "";
 
@@ -40,11 +41,12 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 	List<Map<String, String>> dataTimeHeadList = new ArrayList<Map<String, String>>();
 	List<Map<String, Object>> productUnitList = new ArrayList<Map<String, Object>>();
 	HashMap<String, Object> currentDataMap;
+	List<Map<String, Object>> currentGroupMapList;
 
 	public ExpandDataAdapter(Context context,
-			HashMap<String, Object> currentDataMap) {
+			List<Map<String, Object>> currentGroupMapList) {
 		this.context = context;
-		this.currentDataMap = currentDataMap;
+		this.currentGroupMapList = currentGroupMapList;
 		// TODO Auto-generated constructor stub
 		// unit = ((HashMap<String, String>)
 		// currentDataMap.get("productTemplate"))
@@ -63,40 +65,50 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 	@Override
 	public void notifyDataSetChanged() {
 		// TODO Auto-generated method stub
-		unit = ((Map<String, String>) currentDataMap.get("productTemplate"))
-				.get("temp_unit");
-		dataTimeHeadList.clear();
-		dataTimeHeadList.addAll((List<Map<String, String>>) currentDataMap
-				.get("dataTimeHeadList"));
-		productUnitList.clear();
-		productUnitList.addAll((List<Map<String, Object>>) currentDataMap
-				.get("productUnitList"));
+		// unit = ((Map<String, String>) currentDataMap.get("productTemplate"))
+		// .get("temp_unit");
+		// dataTimeHeadList.clear();
+		// dataTimeHeadList.addAll((List<Map<String, String>>) currentDataMap
+		// .get("dataTimeHeadList"));
+		// productUnitList.clear();
+		// productUnitList.addAll();
 		super.notifyDataSetChanged();
 	}
+
+	// /**
+	// * ·µ»Øµ¥Ôªid
+	// *
+	// * @return
+	// */
+	// public String getProductTemplate() {
+	// return this.unit;
+	// }
 
 	@Override
 	public int getGroupCount() {
 		// TODO Auto-generated method stub
-		return productUnitList.size();
+		return currentGroupMapList.size();
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		// TODO Auto-generated method stub
-		return dataTimeHeadList.size();
+		return ((List<Map<String, Object>>) currentGroupMapList.get(
+				groupPosition).get("productUnitList")).size();
 	}
 
 	@Override
 	public Object getGroup(int groupPosition) {
 		// TODO Auto-generated method stub
-		return productUnitList.get(groupPosition);
+		return (Map<String, Object>) currentGroupMapList.get(groupPosition)
+				.get("productTemplate");
 	}
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		// TODO Auto-generated method stub
-		return productUnitList.get(groupPosition).get(
-				dataTimeHeadList.get(childPosition).get("data_time_col"));
+		return ((List<Map<String, Object>>) currentGroupMapList.get(
+				groupPosition).get("productUnitList")).get(childPosition);
 	}
 
 	@Override
@@ -127,8 +139,9 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 			convertView.setTag(gHolder);
 		}
 		gHolder = (GroupHolder) convertView.getTag();
-		gHolder.tv_content.setText(productUnitList.get(groupPosition)
-				.get("unit_name").toString());
+		gHolder.tv_content.setText(((Map<String, Object>) currentGroupMapList
+				.get(groupPosition).get("productTemplate")).get("temp_name")
+				.toString());
 		if (isExpanded) {
 			gHolder.iv_indicator.setImageResource(R.drawable.icon_arrow_up);
 		} else {
@@ -152,21 +165,23 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.tv_item_content2);
 			cHolder.tv_content3 = (TextView) convertView
 					.findViewById(R.id.tv_item_content3);
+			cHolder.tv_content3.setVisibility(View.GONE);
 			cHolder.ll_header = (LinearLayout) convertView
 					.findViewById(R.id.ll_item_title);
 			convertView.setTag(cHolder);
 		}
 		cHolder = (ChildHolder) convertView.getTag();
-		String time = dataTimeHeadList.get(childPosition).get("data_time_in");
-		String timeTag = dataTimeHeadList.get(childPosition).get(
-				"data_time_col");
+		String name = ((Map<String, Object>) getChild(groupPosition,
+				childPosition)).get("unit_name").toString();
+		String timeTag = ((Map<String, Object>) getChild(groupPosition,
+				childPosition)).get("data_times").toString();
 		Log.e("timetag", timeTag);
-		String data = productUnitList.get(groupPosition).get(timeTag) + "";
+		// String data = productUnitList.get(groupPosition).get(timeTag) + "";
 
-		cHolder.tv_conten1.setText(time.trim());
+		cHolder.tv_conten1.setText(timeTag.trim());
 
-		cHolder.tv_content2.setText(data.trim());
-		cHolder.tv_content3.setText(unit.trim());
+		cHolder.tv_content2.setText(name.trim());
+		// cHolder.tv_content3.setText(unit.trim());
 		if (childPosition == 0) {
 			cHolder.ll_header.setVisibility(View.VISIBLE);
 		} else {
