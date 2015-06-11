@@ -57,15 +57,12 @@ public class HttpTool {
 							JSONObject obj = new JSONObject(content);
 							if (obj.has("login")
 									&& obj.getString("login").equals("0")) {
-								// Toast.makeText(context,
-								// "��ǰ��¼��ʧЧ�������µ�¼",
-								// Toast.LENGTH_SHORT).show();
+								// ��¼ʧЧ
 								OilUser.logOut(context);
 
 							} else if (obj.has("data")
 									&& obj.getJSONObject("data").has(
 											"accessToken")) {
-								// ����accessToken
 								Editor editor = context.getSharedPreferences(
 										Constants.USER_INFO_SHARED,
 										Activity.MODE_PRIVATE).edit();
