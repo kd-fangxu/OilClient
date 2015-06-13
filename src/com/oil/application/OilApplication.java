@@ -8,6 +8,7 @@ import android.view.View.OnCreateContextMenuListener;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.oil.workmodel.AppInit;
 
 public class OilApplication extends Application {
 	private Map<String, String> TempleDataMap = new HashMap<String, String>();
@@ -26,6 +27,7 @@ public class OilApplication extends Application {
 		super.onCreate();
 		ImageLoader.getInstance().init(
 				ImageLoaderConfiguration.createDefault(this));
+		new AppInit(this).initProductStruct();
 	}
 
 	public Map<String, String> getTempleDataMap() {

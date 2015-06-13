@@ -10,6 +10,7 @@ import org.askerov.dynamicgrid.DynamicGridView;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,14 +34,18 @@ import com.example.oilclient.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
+import com.oil.activity.ProductSelectActivity;
 import com.oil.adapter.CheeseDynamicAdapter;
 import com.oil.adapter.PagerAdapter;
 import com.oil.bean.Constants;
 import com.oil.bean.OilUser;
+import com.oil.event.UserFouceChangeEvent;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
 import com.oil.weidget.OilContentViewPager;
 import com.oil.weidget.PagerSlidingTabStrip;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * data
@@ -75,10 +80,33 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		psts.setTextColorResource(R.color.whitesmoke);
 		ocvp = (OilContentViewPager) view.findViewById(R.id.vp_content);
 		iv_userfouce.setOnClickListener(this);
-		initUserFoucePopu();
+		// initUserFoucePopu();
 		initWeidget(view);
 		getUserFouce();
+		EventBus.getDefault().register(this);
 		return view;
+	}
+
+	public void onEvent(UserFouceChangeEvent event) {
+		int changedPosition = event.getChangedPosition();
+		if (event.isAdded()) {
+			// tianjia
+		} else {
+			// shanchu
+			fouceRemoveChanged(changedPosition, 0);
+		}
+
+	}
+
+	private void fouceRemoveChanged(int changedPosition, int actionType) {
+		String proId = mapList.remove(changedPosition).get("pro_id").toString();
+		String userId = OilUser.getCurrentUser(getActivity()).getCuuid();
+		String url = Constants.URL_USERFOUCECHANGE + "/" + 1 + "/" + proId
+				+ "/" + 0;
+		HttpTool.netRequestNoCheck(getActivity(), null, null, url, false);
+		pagerAdapter.notifyDataSetChanged();
+		psts.notifyDataSetChanged();
+
 	}
 
 	private void getUserFouce() {
@@ -156,11 +184,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 	private void initWeidget(View view) {
 		// TODO Auto-generated method stub
-		titleList = new ArrayList<String>();
-		titleList.add("item1");
-		titleList.add("item2");
-		titleList.add("item3");
-		titleList.add("item4");
+
 		pagerAdapter = new PagerAdapter<HashMap<String, String>>(
 				getFragmentManager(), mapList, Constants.PageType_data) {
 
@@ -171,35 +195,6 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 			}
 
 		};
-		// switch (tem_type) {
-		// case 0:
-		// // pagerAdapter = new PagerAdapter(getFragmentManager(), titleList,
-		// // Constants.PageType_data);
-		// pagerAdapter = new PagerAdapter<HashMap<String, String>>(
-		// getFragmentManager(), mapList, Constants.PageType_data) {
-		//
-		// @Override
-		// public String getName(HashMap<String, String> item) {
-		// // TODO Auto-generated method stub
-		// return item.get("pro_cn_name");
-		// }
-		//
-		// };
-		// break;
-		// // case 1:
-		// // pagerAdapter = new PagerAdapter<String>(getFragmentManager(),
-		// // titleList, 3) {
-		// //
-		// // @Override
-		// // public String getName(String item) {
-		// // // TODO Auto-generated method stub
-		// // return item.toString();
-		// // }
-		// // };
-		// // break;
-		// default:
-		// break;
-		// }
 
 		ocvp.setAdapter(pagerAdapter);
 		psts.setViewPager(ocvp);
@@ -215,22 +210,15 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	CheeseDynamicAdapter cDynamicAdapter;
 	Button btn_edit_com;
 	LinearLayout ll_item1, ll_item2, ll_item3, ll_item4, ll_item5, ll_item6,
-			ll_item7, ll_item8;
+			ll_item7, ll_item8, ll_item9;;
+	List<String> fouceList = new ArrayList<String>();
 
 	private void initUserFoucePopu() {
 		// TODO Auto-generated method stub
-
-		List<String> fouceList = new ArrayList<String>();
-		fouceList.add("item1");
-		fouceList.add("item2");
-		fouceList.add("item3");
-		fouceList.add("item4");
-		fouceList.add("item5");
-		fouceList.add("item6");
-		fouceList.add("item7");
-		fouceList.add("item8");
-		fouceList.add("item9");
-
+		fouceList.clear();
+		for (int i = 0; i < mapList.size(); i++) {
+			fouceList.add(mapList.get(i).get("pro_cn_name"));
+		}
 		View popuView = View.inflate(getActivity(),
 				R.layout.view_popu_userfouce, null);
 		dgView = (DynamicGridView) popuView.findViewById(R.id.dynamic_grid);
@@ -260,6 +248,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		ll_item6 = (LinearLayout) popuView.findViewById(R.id.ll_pro_item6);
 		ll_item7 = (LinearLayout) popuView.findViewById(R.id.ll_pro_item7);
 		ll_item8 = (LinearLayout) popuView.findViewById(R.id.ll_pro_item8);
+		ll_item9 = (LinearLayout) popuView.findViewById(R.id.ll_pro_item9);
 		ll_item1.setOnClickListener(this);
 		ll_item2.setOnClickListener(this);
 		ll_item3.setOnClickListener(this);
@@ -268,7 +257,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		ll_item6.setOnClickListener(this);
 		ll_item7.setOnClickListener(this);
 		ll_item8.setOnClickListener(this);
-
+		ll_item9.setOnClickListener(this);
 		cDynamicAdapter = new CheeseDynamicAdapter(getActivity(), fouceList, 3);
 		dgView.setAdapter(cDynamicAdapter);
 
@@ -322,33 +311,56 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 				// pWindow.showAsDropDown(ll_titlebar, 0,
 				// -ll_titlebar.getHeight(), Gravity.TOP);
+				initUserFoucePopu();
 				pWindow.showAsDropDown(ll_titlebar);
+				updataUserfouce();
+
 				isPopuShow = true;
 			}
 
 			break;
 		case R.id.ll_pro_item1:
-			Toast.makeText(getActivity(), "on click", Toast.LENGTH_SHORT)
-					.show();
+			proSelect(1 + "");
 
 			break;
 		case R.id.ll_pro_item2:
+			proSelect(2 + "");
 			break;
 		case R.id.ll_pro_item3:
+			proSelect(3 + "");
 			break;
 		case R.id.ll_pro_item4:
+			proSelect(4 + "");
 			break;
 		case R.id.ll_pro_item5:
+			proSelect(8 + "");
 			break;
 		case R.id.ll_pro_item6:
+			proSelect(5 + "");
 			break;
 		case R.id.ll_pro_item7:
+			proSelect(6 + "");
 			break;
 		case R.id.ll_pro_item8:
+			proSelect(9 + "");
 			break;
-
+		case R.id.ll_pro_item9:
+			proSelect(7 + "");
+			break;
 		default:
 			break;
 		}
+	}
+
+	public void proSelect(String wang_id) {
+		Intent intent = new Intent(getActivity(), ProductSelectActivity.class);
+		intent.putExtra("wangId", wang_id);
+		startActivity(intent);
+	}
+
+	private void updataUserfouce() {
+		// TODO Auto-generated method stub
+
+		cDynamicAdapter.notifyDataSetChanged();
 	}
 }

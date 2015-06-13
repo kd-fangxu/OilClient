@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.oilclient.R;
+import com.oil.event.UserFouceChangeEvent;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Author: alex askerov Date: 9/7/13 Time: 10:56 PM
@@ -29,6 +32,7 @@ public class CheeseDynamicAdapter extends BaseDynamicGridAdapter {
 	public CheeseDynamicAdapter(Context context, List<?> items, int columnCount) {
 		super(context, items, columnCount);
 		this.context = context;
+
 	}
 
 	@Override
@@ -44,7 +48,7 @@ public class CheeseDynamicAdapter extends BaseDynamicGridAdapter {
 		} else {
 			holder = (CheeseViewHolder) convertView.getTag();
 		}
-		holder.build(getItem(position).toString());
+		holder.build(position);
 		return convertView;
 	}
 
@@ -57,14 +61,20 @@ public class CheeseDynamicAdapter extends BaseDynamicGridAdapter {
 			image = (ImageView) view.findViewById(R.id.iv_userfouce_cancel);
 		}
 
-		void build(String title) {
-			titleText.setText(title);
+		void build(final int position) {
+			titleText.setText(getItem(position).toString());
 			image.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Toast.makeText(getContext(), "onivclick", 1).show();
+					// Toast.makeText(getContext(), "onivclick", 1).show();
+
+					remove(getItem(position));
+					UserFouceChangeEvent event = new UserFouceChangeEvent();
+					event.setAdded(false);
+					event.setChangedPosition(position);
+					EventBus.getDefault().post(event);
 				}
 			});
 			//

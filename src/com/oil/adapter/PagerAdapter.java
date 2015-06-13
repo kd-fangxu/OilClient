@@ -58,6 +58,12 @@ public abstract class PagerAdapter<T> extends FragmentStatePagerAdapter {
 	}
 
 	@Override
+	public int getItemPosition(Object object) {
+		// TODO Auto-generated method stub
+		return POSITION_NONE;
+	}
+
+	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return itemList.size();

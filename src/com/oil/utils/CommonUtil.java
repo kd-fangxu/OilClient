@@ -8,14 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.oilclient.R;
-import com.oil.activity.MainActivity;
-import com.oil.activity.MultiAccount;
-import com.oil.bean.Constants;
-import com.oil.bean.OilUser;
-import com.oil.event.LoginSuccessEvent;
-
-import de.greenrobot.event.EventBus;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -31,6 +23,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.oilclient.R;
+import com.oil.activity.MainActivity;
+import com.oil.activity.MultiAccount;
+import com.oil.bean.Constants;
+import com.oil.bean.OilUser;
+import com.oil.event.LoginSuccessEvent;
+
+import de.greenrobot.event.EventBus;
 
 public class CommonUtil {
 
@@ -139,7 +140,9 @@ public class CommonUtil {
 					.getJSONArray("users"));
 
 			if (accountList.size() == 1) {
-				Toast.makeText(context, "鐧诲綍鎴愬姛", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context,
+						context.getResources().getText(R.string.demo3),
+						Toast.LENGTH_SHORT).show();
 				saveUserInfo(context, accessToken, timeStamp,
 						accountList.get(0), destination);
 			} else {

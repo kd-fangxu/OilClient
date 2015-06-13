@@ -1,5 +1,7 @@
 package com.oil.bean;
 
+import android.os.Environment;
+
 public class Constants {
 	public static int PageType_info = 1;// 资讯
 	public static int PageType_data = 2;// 数据
@@ -21,6 +23,8 @@ public class Constants {
 			+ "app/oilinfo/getProductChainAll";
 	public static final String URL_GETPRODATALIST = IP
 			+ "app/oilinfo/getProDataHisList";// 获取产品历史数据列表
+	public static final String URL_USERFOUCECHANGE = IP
+			+ "app/oilinfo/proGzViaApp";// 关注与取消关注
 	/**
 	 * sharedPreference
 	 */
@@ -34,5 +38,11 @@ public class Constants {
 	public static final String NAME = "name";
 	public static final String CORP_NAME = "corpName";
 	public static final String CORP_PROVINCE = "corpProvince";
+	/**
+	 * path
+	 */
+	public static final String BasePath = Environment
+			.getExternalStorageDirectory().getAbsolutePath();// 基地址
+	public static final String PathAppInit = BasePath + "/init";// 初始化文件地址
 
 }
