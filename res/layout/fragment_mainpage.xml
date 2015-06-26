@@ -65,7 +65,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:drawableTop="@drawable/selector_tab_user"
-            android:text="我" />
+            android:text="我"
+            android:textColor="@color/white" />
 
         <RadioButton
             android:id="@+id/rb_tab_info"
@@ -75,7 +76,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:drawableTop="@drawable/selecter_tab_info"
-            android:text="资讯" />
+            android:text="资讯"
+            android:textColor="@color/white" />
 
         <RadioButton
             android:id="@+id/rb_tab_data"
@@ -85,7 +87,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:drawableTop="@drawable/selector_tab_data"
-            android:text="数据" />
+            android:text="数据"
+            android:textColor="@color/white" />
 
         <RadioButton
             android:id="@+id/rb_tab_msg"
@@ -95,7 +98,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:drawableTop="@drawable/selector_tab_msg"
-            android:text="短讯" />
+            android:text="短讯"
+            android:textColor="@color/white" />
 
         <RadioButton
             android:id="@+id/rb_tab_main"
@@ -105,7 +109,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:drawableTop="@drawable/selector_tab_mainpage"
-            android:text="隆众" />
+            android:text="隆众"
+            android:textColor="@color/white" />
     </RadioGroup>
 
 </LinearLayout>

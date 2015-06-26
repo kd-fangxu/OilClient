@@ -25,6 +25,9 @@ public class AppInit {
 		this.context = context;
 	}
 
+	/**
+	 * 获取产品结构
+	 */
 	public void initProductStruct() {
 		final File file = new File(Constants.PathAppInit, fileName_proStruct);
 		if (file.exists()) {

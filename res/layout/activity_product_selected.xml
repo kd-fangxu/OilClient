@@ -44,7 +44,8 @@
             android:background="@drawable/shape_foucebutton"
             android:padding="5dp"
             android:text="关注"
-            android:textColor="@color/whitesmoke" />
+            android:textColor="@color/whitesmoke"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,6 +57,7 @@
             android:id="@+id/lv_chainlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
             android:layout_weight="1" >
         </ListView>
 
@@ -63,6 +65,7 @@
             android:id="@+id/lv_prolist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
             android:layout_weight="1" >
         </ListView>
     </LinearLayout>

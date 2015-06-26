@@ -63,6 +63,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	 */
 	public TabFragmetLzDataPage(int type) {
 		this.tem_type = type;
+		// Log
 	};
 
 	public static TabFragmetLzDataPage getInstance(int type) {
@@ -87,10 +88,16 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		return view;
 	}
 
+	boolean isNeedUpdate = false;
+	UserFouceChangeEvent event;
+
 	public void onEvent(UserFouceChangeEvent event) {
+		this.event = event;
 		int changedPosition = event.getChangedPosition();
 		if (event.isAdded()) {
 			// tianjia
+			isNeedUpdate = true;
+
 		} else {
 			// shanchu
 			fouceRemoveChanged(changedPosition, 0);
@@ -98,10 +105,36 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 	}
 
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		if (isNeedUpdate && event != null) {
+			// fouceAdd();
+			pWindow.dismiss();
+			getUserFouce();
+		}
+		super.onResume();
+
+	}
+
+	// private void fouceAdd(List<String> addedProIds) {
+	// // TODO Auto-generated method stub
+	// for (int i = 0; i < addedProIds.size(); i++) {
+	// int proId = Double.valueOf(addedProIds.get(i)).intValue();
+	// String userId = OilUser.getCurrentUser(getActivity()).getCuuid();
+	// String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/"
+	// + proId + "/" + 1;
+	// HttpTool.netRequestNoCheck(getActivity(), null, null, url, false);
+	// }
+	//
+	// getUserFouce();
+	// isNeedUpdate = false;
+	// }
+
 	private void fouceRemoveChanged(int changedPosition, int actionType) {
 		String proId = mapList.remove(changedPosition).get("pro_id").toString();
 		String userId = OilUser.getCurrentUser(getActivity()).getCuuid();
-		String url = Constants.URL_USERFOUCECHANGE + "/" + 1 + "/" + proId
+		String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/" + proId
 				+ "/" + 0;
 		HttpTool.netRequestNoCheck(getActivity(), null, null, url, false);
 		pagerAdapter.notifyDataSetChanged();
@@ -112,11 +145,11 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	private void getUserFouce() {
 		// TODO Auto-generated method stub
 		String url = Constants.URL_GETUSERFOUCE;
-		Log.e("url", url);
-		Log.e("cuuid", OilUser.getCurrentUser(getActivity()).getCuuid());
+		// Log.e("url", url);
+		// Log.e("cuuid", OilUser.getCurrentUser(getActivity()).getCuuid());
 		RequestParams params = new RequestParams();
 
-		params.put("UserId", "1");
+		params.put("UserId", OilUser.getCurrentUser(getActivity()).getCuuid());
 		HttpTool.netRequestNoCheck(getActivity(), params,
 				new OnReturnListener() {
 
@@ -148,6 +181,9 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 							pagerAdapter.notifyDataSetChanged();
 							psts.notifyDataSetChanged();
+							if (cDynamicAdapter != null) {
+								cDynamicAdapter.notifyDataSetChanged();
+							}
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -320,32 +356,32 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.ll_pro_item1:
-			proSelect(1 + "");
+			proSelect(1.0 + "");
 
 			break;
 		case R.id.ll_pro_item2:
-			proSelect(2 + "");
+			proSelect(2.0 + "");
 			break;
 		case R.id.ll_pro_item3:
-			proSelect(3 + "");
+			proSelect(3.0 + "");
 			break;
 		case R.id.ll_pro_item4:
-			proSelect(4 + "");
+			proSelect(4.0 + "");
 			break;
 		case R.id.ll_pro_item5:
-			proSelect(8 + "");
+			proSelect(8.0 + "");
 			break;
 		case R.id.ll_pro_item6:
-			proSelect(5 + "");
+			proSelect(5.0 + "");
 			break;
 		case R.id.ll_pro_item7:
-			proSelect(6 + "");
+			proSelect(6.0 + "");
 			break;
 		case R.id.ll_pro_item8:
-			proSelect(9 + "");
+			proSelect(9.0 + "");
 			break;
 		case R.id.ll_pro_item9:
-			proSelect(7 + "");
+			proSelect(7.0 + "");
 			break;
 		default:
 			break;
@@ -360,7 +396,6 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 	private void updataUserfouce() {
 		// TODO Auto-generated method stub
-
 		cDynamicAdapter.notifyDataSetChanged();
 	}
 }

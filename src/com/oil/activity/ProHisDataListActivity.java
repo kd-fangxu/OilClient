@@ -9,12 +9,12 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceActivity.Header;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.oilclient.R;
 import com.google.gson.Gson;
@@ -33,7 +33,10 @@ import com.oil.utils.ObjectConvertUtils;
 
 public class ProHisDataListActivity extends Activity {
 	String unitId = "";
+	String title = "";
 	TextView tv_content1, tv_content2, tv_content3;
+	TextView tv_pagetitle;
+	ImageView iv_back;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class ProHisDataListActivity extends Activity {
 		setContentView(R.layout.activity_prodata_hislist);
 		Intent intent = getIntent();
 		unitId = intent.getStringExtra("unitId");
+		title = intent.getStringExtra("title");
 		initWeideget();
 		initData();
 	}
@@ -50,6 +54,17 @@ public class ProHisDataListActivity extends Activity {
 
 	private void initWeideget() {
 		// TODO Auto-generated method stub
+		iv_back = (ImageView) findViewById(R.id.iv_pageback);
+		iv_back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+		tv_pagetitle = (TextView) findViewById(R.id.tv_page_title);
+		tv_pagetitle.setText(title);
 		tv_content1 = (TextView) findViewById(R.id.tv_item_content1);
 		tv_content2 = (TextView) findViewById(R.id.tv_item_content2);
 		tv_content3 = (TextView) findViewById(R.id.tv_item_content3);

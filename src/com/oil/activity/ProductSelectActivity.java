@@ -1,22 +1,41 @@
 package com.oil.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.oilclient.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.oil.adapter.CommonAdapter;
 import com.oil.adapter.CommonViewHolder;
+import com.oil.bean.Constants;
+import com.oil.bean.OilUser;
 import com.oil.datamodel.OilProductStrucModel;
+import com.oil.event.UserFouceChangeEvent;
+import com.oil.inter.OnReturnListener;
+import com.oil.utils.HttpTool;
+import com.oil.utils.ScreenUtils;
+
+import de.greenrobot.event.EventBus;
 
 public class ProductSelectActivity extends Activity implements OnClickListener {
 	ListView lv_chain, lv_product;
@@ -24,7 +43,12 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 	ImageView iv_back;
 	String wang_id;
 	CommonAdapter<Map<String, Object>> chainAdapter, proAdapter;
-	List<Map<String, Object>> chainList, proList;
+	List<Map<String, Object>> chainList = new ArrayList<Map<String, Object>>(),
+			proList = new ArrayList<Map<String, Object>>();
+	OilProductStrucModel opsm = new OilProductStrucModel();
+	int chainSelectionPositon = 0;
+	String currentChainId = "";
+	Toast toast;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,42 +57,155 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_product_selected);
 		initWeidget();
+		InitCommonAdapter();
 		Intent intent = getIntent();
 		if (intent != null) {
 			wang_id = intent.getStringExtra("wangId");
 			initChainData();
 		}
+
 	}
 
 	private void initChainData() {
 		// TODO Auto-generated method stub
-		chainList = new OilProductStrucModel().getChainListByWangId(Integer
-				.valueOf(wang_id));
+		chainList.addAll(opsm.getChainListByWangId(wang_id));
+		chainAdapter.notifyDataSetChanged();
+		if (chainList.size() > 0) {
+			updateProdate(chainList.get(chainSelectionPositon).get("chan_id")
+					.toString());
+		}
+
+	}
+
+	private void updateProdate(String chainId) {
+		proList.clear();
+		proList.addAll(opsm.getProductListByChainId(chainId));
+		proAdapter.notifyDataSetChanged();
+	}
+
+	private void InitCommonAdapter() {
 		chainAdapter = new CommonAdapter<Map<String, Object>>(
 				ProductSelectActivity.this, chainList,
 				R.layout.item_simple_text) {
 
 			@Override
 			public void convert(CommonViewHolder helper,
-					Map<String, Object> item, int Position) {
+					final Map<String, Object> item, final int Position) {
 				// TODO Auto-generated method stub
+				TextView tv_content = helper.getView(R.id.tv_item_simple);
+				// tv_content.setTextSize(ScreenUtils.dip2px(mContext, 12));
 				if (Position == chainSelectionPositon) {
-
+					tv_content.setSelected(true);
+					tv_content.setTextColor(getResources().getColor(
+							R.color.white));
+				} else {
+					tv_content.setSelected(false);
+					tv_content.setTextColor(getResources().getColor(
+							R.color.gray));
 				}
+				tv_content.setText(item.get("chan_name").toString());
+				tv_content.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						chainSelectionPositon = Position;
+						updateProdate(item.get("chan_id").toString());
+						chainAdapter.notifyDataSetChanged();
+					}
+				});
 			}
 		};
+
+		proAdapter = new CommonAdapter<Map<String, Object>>(
+				ProductSelectActivity.this, proList,
+				R.layout.item_simple_checktext) {
+
+			@Override
+			public void convert(CommonViewHolder helper,
+					final Map<String, Object> item, int Position) {
+				// TODO Auto-generated method stub
+				helper.setText(R.id.tv_item_simple, item.get("pro_cn_name")
+						.toString());
+				final ImageView iv_select = helper.getView(R.id.iv_item_select);
+				iv_select.setImageResource(R.drawable.icon_add);
+				// iv_select.setOnClickListener(new OnClickListener() {
+				//
+				// @Override
+				// public void onClick(View v) {
+				// // TODO Auto-generated method stub
+				// if (iv_select.isSelected()) {
+				// iv_select.setSelected(false);
+				// item.put("isSelected", false);
+				// } else {
+				// iv_select.setSelected(true);
+				// item.put("isSelected", true);
+				// }
+				// }
+				// });
+			}
+		};
+
+		lv_chain.setAdapter(chainAdapter);
+		lv_product.setAdapter(proAdapter);
 	}
 
-	int chainSelectionPositon = 0;
+	private void showToast(String content) {
+		if (toast != null) {
+			toast.setText(content);
+			toast.show();
+		}
+
+	}
 
 	private void initWeidget() {
 		// TODO Auto-generated method stub
+		toast = Toast.makeText(ProductSelectActivity.this, "",
+				Toast.LENGTH_SHORT);
 		lv_chain = (ListView) findViewById(R.id.lv_chainlist);
 		lv_product = (ListView) findViewById(R.id.lv_prolist);
 		btn_fouce = (Button) findViewById(R.id.btn_fouce);
-		iv_back = (ImageView) findViewById(R.id.iv_mainback);
+		iv_back = (ImageView) findViewById(R.id.iv_pageback);
 		btn_fouce.setOnClickListener(this);
 		iv_back.setOnClickListener(this);
+
+		lv_product.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+
+				int proId = Double.valueOf(
+						proList.get(position).get("pro_id").toString())
+						.intValue();
+				String userId = OilUser.getCurrentUser(
+						ProductSelectActivity.this).getCuuid();
+				String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/"
+						+ proId + "/" + 1;
+				HttpTool.netRequestNoCheck(ProductSelectActivity.this, null,
+						new OnReturnListener() {
+
+							@Override
+							public void onReturn(String jsString) {
+								// TODO Auto-generated method stub
+								try {
+									if (new JSONObject(jsString).get("status")
+											.equals("1")) {
+										showToast("¹Ø×¢³É¹¦");
+										UserFouceChangeEvent event = new UserFouceChangeEvent();
+										event.setAdded(true);
+										EventBus.getDefault().post(event);
+									}
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}, url, false);
+
+			}
+		});
 	}
 
 	@Override
@@ -76,10 +213,24 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.btn_fouce:
-
+			List<String> proFocusList = new ArrayList<String>();
+			for (int i = 0; i < proList.size(); i++) {
+				boolean isSelected;
+				if (proList.get(i).get("isSelected") != null) {
+					isSelected = (Boolean) proList.get(i).get("isSelected");
+					if (isSelected) {
+						proFocusList.add(proList.get(i).get("pro_id")
+								.toString());
+						UserFouceChangeEvent userFouceChangeEvent = new UserFouceChangeEvent();
+						userFouceChangeEvent.setAdded(true);
+						userFouceChangeEvent.setAddedProIds(proFocusList);
+						EventBus.getDefault().post(userFouceChangeEvent);
+					}
+				}
+			}
 			break;
-		case R.id.iv_mainback:
-
+		case R.id.iv_pageback:
+			finish();
 			break;
 		default:
 			break;

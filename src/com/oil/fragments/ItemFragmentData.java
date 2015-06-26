@@ -106,18 +106,16 @@ public class ItemFragmentData extends Fragment {
 							View v, int groupPosition, int childPosition,
 							long id) {
 						// TODO Auto-generated method stub
-						Toast.makeText(getActivity(),
-								"groupid:" + groupPosition + "child",
-								Toast.LENGTH_SHORT).show();
-						//
-						// startActivity(new Intent(getActivity(),
-						// ProductDetailsActivity.class));
+						String title = ((Map<String, Object>) edAdapter
+								.getChild(groupPosition, childPosition)).get(
+								"unit_name").toString();
 						String unitId = ((Map<String, Object>) edAdapter
 								.getChild(groupPosition, childPosition)).get(
 								"unit_id").toString();
 						Intent intent = new Intent(getActivity(),
 								ProHisDataListActivity.class);
 						intent.putExtra("unitId", unitId);
+						intent.putExtra("title", title);
 						startActivity(intent);
 						return false;
 					}

@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@color/Themecolor" android:state_selected="true"></item>
-    <item android:drawable="@color/lu_gray"></item>
+    <item android:drawable="@color/whitesmoke"></item>
 
 </selector>

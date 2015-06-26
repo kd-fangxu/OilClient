@@ -1,13 +1,13 @@
 package com.oil.datamodel;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.integer;
+import android.util.Log;
 
 import com.oil.bean.Constants;
 import com.oil.utils.FileUtils;
@@ -26,28 +26,29 @@ public class OilProductStrucModel {
 	public List<Map<String, Object>> productList;
 	public List<Map<String, Object>> productChainList;
 
-	public void OilProductStrucMode() {
+	public OilProductStrucModel() {
 		init();
 	}
 
 	private void init() {
 		// TODO Auto-generated method stub
 
+		String jsonContent = StringUtils.convertStreamToString(FileUtils
+				.openFile(Constants.PathAppInit + "/"
+						+ AppInit.fileName_proStruct));
+		Log.e(jsonContent, jsonContent);
+		ObjectConvertUtils<List<Map<String, Object>>> ocu = new ObjectConvertUtils<List<Map<String, Object>>>();
+		JSONObject jo;
 		try {
-			String jsonContent = StringUtils.convertStreamToString(FileUtils
-					.openFile(new File(Constants.PathAppInit,
-							AppInit.fileName_proStruct).getAbsolutePath()));
-
-			ObjectConvertUtils<List<Map<String, Object>>> ocu = new ObjectConvertUtils<List<Map<String, Object>>>();
-			JSONObject jo = new JSONObject(jsonContent);
+			jo = new JSONObject(jsonContent);
 			setProductWangList(ocu.convert(jo.getString("productWangList")));
 			setProductList(ocu.convert(jo.getString("productList")));
 			setProductChainList(ocu.convert(jo.getString("productChainList")));
-			// productChainLis = ocu.convert(jo.getString("productChainList"));
-
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
 	public List<Map<String, Object>> getProductWangList() {
@@ -74,7 +75,7 @@ public class OilProductStrucModel {
 		this.productChainList = productChainList;
 	}
 
-	public Map<String, Object> getItemFromWangList(int wang_id) {
+	public Map<String, Object> getItemFromWangList(String wang_id) {
 		for (int i = 0; i < productWangList.size(); i++) {
 			if (productWangList.get(i).get("wang_id").toString()
 					.equals(wang_id + "")) {
@@ -85,7 +86,7 @@ public class OilProductStrucModel {
 		return null;
 	}
 
-	public Map<String, Object> getItemFromChainList(int chan_id) {
+	public Map<String, Object> getItemFromChainList(String chan_id) {
 		for (int i = 0; i < productChainList.size(); i++) {
 			if (productChainList.get(i).get("chan_id").toString()
 					.equals(chan_id + "")) {
@@ -95,7 +96,7 @@ public class OilProductStrucModel {
 		return null;
 	}
 
-	public Map<String, Object> getItemFromProductList(int pro_id) {
+	public Map<String, Object> getItemFromProductList(String pro_id) {
 
 		for (int i = 0; i < productList.size(); i++) {
 			if (productList.get(i).get("pro_id").toString().equals(pro_id + "")) {
@@ -107,18 +108,18 @@ public class OilProductStrucModel {
 
 	}
 
-	public List<Map<String, Object>> getChainListByWangId(int wang_id) {
+	public List<Map<String, Object>> getChainListByWangId(String wang_id) {
 		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < productChainList.size(); i++) {
 			if (productChainList.get(i).get("wang_id").toString()
-					.equals(wang_id + "")) {
+					.equals(wang_id)) {
 				mapList.add(productChainList.get(i));
 			}
 		}
 		return mapList;
 	}
 
-	public List<Map<String, Object>> getProductListByChainId(int chain_id) {
+	public List<Map<String, Object>> getProductListByChainId(String chain_id) {
 		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < productList.size(); i++) {
 			if (productList.get(i).get("chan_id").toString()
