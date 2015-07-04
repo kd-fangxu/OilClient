@@ -22,6 +22,12 @@ import com.example.oilclient.R;
 import com.oil.weidget.OilContentViewPager;
 import com.oil.weidget.PagerSlidingTabStrip;
 
+/**
+ * Êý¾ÝÍ¼±íÒ³ (!!!!·ÏÆú)
+ * 
+ * @author Administrator
+ *
+ */
 public class ProductDataDetailActivity extends Activity implements
 		OnClickListener {
 	ImageView iv_back;

@@ -19,7 +19,6 @@ public class AppAboutActivty extends Activity {
 		setContentView(R.layout.activity_appabout);
 		initBaseWeidget();
 		initWeidget();
-
 	}
 
 	ImageView iv_appicon;

@@ -22,6 +22,7 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:paddingTop="2dp"
+            android:singleLine="true"
             android:text="item" />
 
         <ImageView

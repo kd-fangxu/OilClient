@@ -7,9 +7,7 @@
     <!-- 交互常用 -->
     <string name="demo1">再按一下退出</string>
     <string name="demo2">网络不给力</string>
-
     <string name="demo3">登录成功</string>
-
     <string name="logoutSuccess">注销成功</string>
     <string name="loginSuccess">登录成功</string>
 
@@ -22,5 +20,15 @@
         <item>意见反馈</item>
         <item>注销</item>
     </string-array>
+
+    <!-- 注册 /登录 -->
+    <string name="inputAccount">请输入账号</string>
+    <string name="inputPhone">请输入手机号</string>
+    <string name="phoneNumInvalid">输入的手机号不合法</string>
+    <string name="inputPass">请输入密码</string>
+    <string name="passwordInvalid">密码长度不应少于6位</string>
+    <string name="inputName">请输入您的姓名</string>
+    <string name="inputCompanyName">请输入企业名称</string>
+    <string name="passwordNotSame">密码不一致</string>
 
 </resources>

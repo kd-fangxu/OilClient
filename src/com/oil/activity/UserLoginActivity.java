@@ -20,7 +20,6 @@ import com.oil.utils.ToastUtils;
 
 import de.greenrobot.event.EventBus;
 
-
 public class UserLoginActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,7 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_userlogin);
 		initWeidget();
-		
+
 		EventBus.getDefault().register(this);
 	}
 
@@ -36,7 +35,6 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 		finish();
 	}
 
-	
 	EditText et_name, et_pwd;
 	TextView tv_wechatlogin, tv_losspwd;
 	Button btn_register, btn_login;
@@ -51,7 +49,7 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 		btn_register = (Button) findViewById(R.id.btn_register);
 		btn_login.setOnClickListener(this);
 		btn_register.setOnClickListener(this);
-		
+
 		SharedPreferences mySharedPreferences = getSharedPreferences(
 				Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
 		et_name.setText(mySharedPreferences.getString(Constants.USER_PHONE, ""));
@@ -62,37 +60,61 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.btn_Login:
-			String name = et_name.getText().toString();
-			String pwd = et_pwd.getText().toString();
-			if (!name.equals("") && !pwd.equals("")) {
-				OilUser.Login(UserLoginActivity.this,name,pwd, new onLoginListener() {
-
-					@Override
-					public void onSuccess(String resCode, String response) {
-						// TODO Auto-generated method stub
-						CommonUtil.loginSuccess(response,
-								UserLoginActivity.this, "main", "");
-
-					}
-
-					@Override
-					public void onError(String resCode, String errorReason) {
-						// TODO Auto-generated method stub
-						ToastUtils.getInstance(UserLoginActivity.this)
-								.showText(errorReason);
-					}
-				});
-			}
+			doLogin();
 
 			break;
 		case R.id.btn_register:
-			startActivity(new Intent(UserLoginActivity.this,
-					UserRegisterActivity.class));
+			startActivityForResult(new Intent(UserLoginActivity.this,
+					UserRegisterActivity.class), 1);
+
 			break;
 		default:
 			break;
 		}
 	}
-	
-	
+
+	private void doLogin() {
+		String name = et_name.getText().toString();
+		String pwd = et_pwd.getText().toString();
+		if (!name.equals("") && !pwd.equals("")) {
+			OilUser.Login(UserLoginActivity.this, name, pwd,
+					new onLoginListener() {
+
+						@Override
+						public void onSuccess(String resCode, String response) {
+							// TODO Auto-generated method stub
+							CommonUtil.loginSuccess(response,
+									UserLoginActivity.this, "main", "");
+
+						}
+
+						@Override
+						public void onError(String resCode, String errorReason) {
+							// TODO Auto-generated method stub
+							ToastUtils.getInstance(UserLoginActivity.this)
+									.showText(errorReason);
+						}
+					});
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		switch (requestCode) {
+		case 1:
+
+			if (data.getBooleanExtra("autoLogin", false)) {// 注册成功，自动登录
+				et_name.setText(data.getStringExtra("userAccount"));
+				et_pwd.setText(data.getStringExtra("pass"));
+				doLogin();
+			}
+
+			break;
+
+		default:
+			break;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 }

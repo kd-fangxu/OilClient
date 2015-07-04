@@ -20,6 +20,12 @@ import android.widget.Button;
 
 import com.example.oilclient.R;
 
+/**
+ * ²úÆ·Í¼±êÒ³ £¡£¡·ÏÆú
+ * 
+ * @author Administrator
+ *
+ */
 public class ProductTableTabFragment extends Fragment {
 	LineChartView lineChart;
 	Button btn_test;

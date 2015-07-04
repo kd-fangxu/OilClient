@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res/com.example.oilclient"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="170dp" >
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
 
         <com.oil.weidget.FouceViewPager
             android:id="@+id/hhp_pager"
             android:layout_width="match_parent"
-            android:layout_height="170dp" >
+            android:layout_height="match_parent" >
         </com.oil.weidget.FouceViewPager>
 
         <com.viewpagerindicator.CirclePageIndicator
@@ -36,7 +37,7 @@
         android:background="#20000000"
         android:padding="2dp"
         android:text="this is a hotpoint title"
-        android:textColor="@color/whitesmoke"
+        android:textColor="#ffffff"
         android:textSize="15sp" />
 
 </LinearLayout>

@@ -5,15 +5,14 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.string;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
-import android.widget.Toast;
 
 import com.example.oilclient.R;
+import com.loopj.android.http.AsyncHttpClient;
 import com.oil.activity.UserLoginActivity;
 import com.oil.event.FinishEvent;
 import com.oil.inter.OnReturnListener;
@@ -135,16 +134,44 @@ public class OilUser implements Serializable {
 		this.corpprovince = corpprovince;
 	}
 
-	public static void signIn(String userName, String accountPwd,
-			onRegistListener registListener) {
-		if (null != userName && null != accountPwd) {
+	public static void signIn(final Context context, final String userName,
+			String name, final String password, String phone, String corpName,
+			final onRegistListener registListener) {
+		AsyncHttpClient client = AsyncHttpClientUtil.getInstance(context);
+		com.loopj.android.http.RequestParams params = new com.loopj.android.http.RequestParams();
 
-			// 瀹為敓鏂ゆ嫹娉ㄩ敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹缂冧紮鎷烽敓锟�
+		params.put("userName", userName);
+		params.put("phone", phone);
+		params.put("passWord", password);
+		params.put("name",
+				java.net.URLEncoder.encode(java.net.URLEncoder.encode(name)));
+		params.put("corpName", java.net.URLEncoder.encode(java.net.URLEncoder
+				.encode(corpName)));
+		HttpTool.netRequest(context, params, new OnReturnListener() {
 
-		} else {
-			registListener
-					.onError(Error_AccountInfoMiss, "account info missed");
-		}
+			@Override
+			public void onReturn(String jsString) {
+				// TODO Auto-generated method stub
+
+				try {
+					JSONObject js = new JSONObject(jsString)
+							.getJSONObject("data");
+
+					if (js.getString("register").equals("1")) {
+						registListener.onSuccess(1 + "", "regSuccess");
+					} else {
+						registListener.onError(Error_AccountInfoMiss,
+								js.getString("message"));
+
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}, Constants.REGIST, true);
+
 	}
 
 	public static void logOut(Context context) {
@@ -183,7 +210,8 @@ public class OilUser implements Serializable {
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.setClass(context, UserLoginActivity.class);
 		context.startActivity(intent);
-		ToastUtils.getInstance(context).showText(context.getResources().getString(R.string.logoutSuccess));
+		ToastUtils.getInstance(context).showText(
+				context.getResources().getString(R.string.logoutSuccess));
 		EventBus.getDefault().post(new FinishEvent());
 
 	}
@@ -233,4 +261,5 @@ public class OilUser implements Serializable {
 
 		void onError(String resCode, String errorReason);
 	}
+
 }

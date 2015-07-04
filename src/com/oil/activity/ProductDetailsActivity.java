@@ -15,6 +15,12 @@ import com.oil.fragments.ProductTabDataFragment;
 import com.oil.fragments.ProductTableTabFragment;
 import com.oil.weidget.OilContentViewPager;
 
+/**
+ * Êý¾ÝÍ¼±íÒ³ (!!!!·ÏÆú)
+ * 
+ * @author Administrator
+ *
+ */
 public class ProductDetailsActivity extends FragmentActivity implements
 		OnClickListener {
 	RadioGroup rg_tab;

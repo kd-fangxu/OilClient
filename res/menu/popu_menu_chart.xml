@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/item_showlable"
+        android:title="显示数据">
+    </item>
+    <item
+        android:id="@+id/item_screentrans"
+        android:title="横竖屏切换">
+    </item>
+    <item
+        android:id="@+id/item_totalchartshow"
+        android:title="总视图显示">
+    </item>
+
+</menu>

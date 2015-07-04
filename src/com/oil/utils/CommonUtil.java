@@ -139,7 +139,10 @@ public class CommonUtil {
 
 			if (accountList.size() == 1) {
 
-				ToastUtils.getInstance(context).showText(context.getResources().getString(R.string.loginSuccess));
+				ToastUtils.getInstance(context)
+						.showText(
+								context.getResources().getString(
+										R.string.loginSuccess));
 
 				saveUserInfo(context, accessToken, timeStamp,
 						accountList.get(0), destination);
@@ -195,7 +198,7 @@ public class CommonUtil {
 		editor.putString(Constants.CORP_NAME, user.getCorpName());
 		editor.putString(Constants.USER_PHONE, user.getPhone());
 		editor.putString(Constants.USER_NAME, user.getUserName());
-		editor.putString(Constants.CUUID, user.getCuuid()); 
+		editor.putString(Constants.CUUID, user.getCuuid());
 		long timeGap = Long.parseLong(timeStamp) - System.currentTimeMillis();
 		editor.putLong(Constants.TIME_GAP, timeGap);
 		editor.commit();

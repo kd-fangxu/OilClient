@@ -16,10 +16,8 @@ public class UserCentenrActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_usercenter);
 		initWeidget();
-
 	}
 
-	
 	private void initWeidget() {
 		// TODO Auto-generated method stub
 		ImageView iv_back;

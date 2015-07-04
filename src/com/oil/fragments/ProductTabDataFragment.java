@@ -19,6 +19,12 @@ import com.oil.utils.StringUtils;
 import com.oil.weidget.OilContentViewPager;
 import com.oil.weidget.PagerSlidingTabStrip;
 
+/**
+ * 出品数据页！！废弃
+ * 
+ * @author Administrator
+ *
+ */
 public class ProductTabDataFragment extends Fragment {
 	public ProductTabDataFragment() {
 	};

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.askerov.dynamicgrid.DynamicGridView;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -14,7 +15,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
-import android.widget.Toast;
 
 import com.example.oilclient.R;
 import com.google.gson.Gson;
@@ -85,6 +84,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		initWeidget(view);
 		getUserFouce();
 		EventBus.getDefault().register(this);
+
 		return view;
 	}
 
@@ -97,6 +97,8 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		if (event.isAdded()) {
 			// tianjia
 			isNeedUpdate = true;
+			// pWindow.dismiss();
+			// getUserFouce();
 
 		} else {
 			// shanchu
@@ -158,8 +160,9 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 						// TODO Auto-generated method stub
 						// Log.e("info", jsString);
 
+						JSONObject js;
 						try {
-							JSONObject js = new JSONObject(jsString);
+							js = new JSONObject(jsString);
 							List<Map<String, String>> templeMaplist = new ArrayList<Map<String, String>>();
 
 							templeMaplist
@@ -168,6 +171,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 											new TypeToken<List<HashMap<String, String>>>() {
 											}.getType()));
 							if (templeMaplist.size() > 0) {
+								mapList.clear();
 								for (int i = 0; i < templeMaplist.size(); i++) {
 									if (checkMapList(templeMaplist.get(i).get(
 											"pro_cn_name"))) {
@@ -184,7 +188,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 							if (cDynamicAdapter != null) {
 								cDynamicAdapter.notifyDataSetChanged();
 							}
-						} catch (Exception e) {
+						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}

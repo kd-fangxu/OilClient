@@ -29,7 +29,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name="com.oil.application.OilApplication"
@@ -37,42 +37,78 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.oil.activity.MainActivity" >
+        <activity
+            android:name="com.oil.activity.MainActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.ProductDataDetailActivity" >
+        <activity
+            android:name="com.oil.activity.ProductDataDetailActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.ProductDetailsActivity" >
+        <activity
+            android:name="com.oil.activity.ProductDetailsActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.UserCentenrActivity" >
+        <activity
+            android:name="com.oil.activity.UserCentenrActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.UserMsgActivity" >
+        <activity
+            android:name="com.oil.activity.UserMsgActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.UserSettingActivity" >
+        <activity
+            android:name="com.oil.activity.UserSettingActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.UserSuggestionActivty" >
+        <activity
+            android:name="com.oil.activity.UserSuggestionActivty"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.AppAboutActivty" >
+        <activity
+            android:name="com.oil.activity.AppAboutActivty"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.FirstPageShowActivity" >
+        <activity
+            android:name="com.oil.activity.FirstPageShowActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.oil.activity.UserLoginActivity" >
+        <activity
+            android:name="com.oil.activity.UserLoginActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.UserRegisterActivity" >
+        <activity
+            android:name="com.oil.activity.UserRegisterActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.BaseListActivity" >
+        <activity
+            android:name="com.oil.activity.BaseListActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.WebViewShowActivity" >
+        <activity
+            android:name="com.oil.activity.WebViewShowActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.SearchPageActivity" >
+        <activity
+            android:name="com.oil.activity.SearchPageActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.ProHisDataListActivity" >
+        <activity
+            android:name="com.oil.activity.ProHisDataListActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.oil.activity.ProductSelectActivity" >
+        <activity
+            android:name="com.oil.activity.ProductSelectActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.oil.activity.CommonLineChartActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="com.oil.activity.MultiAccount"

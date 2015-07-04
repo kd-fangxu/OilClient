@@ -25,13 +25,91 @@
         <TextView
             android:id="@+id/tv_page_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:padding="3dp"
             android:text="title"
             android:textColor="@color/white"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_linechart"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/selector_norbutton"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_linechart" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="8dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_arrow_down_white" />
+
+        <TextView
+            android:id="@+id/tv_time_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="开始时间"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="8dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_arrow_down_white" />
+
+        <TextView
+            android:id="@+id/tv_time_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="结束时间"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="当前数据跨度："
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_time_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint=""
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
     </LinearLayout>
 
     <include layout="@layout/item_data_simple" />

@@ -127,8 +127,9 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 				// TODO Auto-generated method stub
 				helper.setText(R.id.tv_item_simple, item.get("pro_cn_name")
 						.toString());
-				final ImageView iv_select = helper.getView(R.id.iv_item_select);
-				iv_select.setImageResource(R.drawable.icon_add);
+				// final ImageView iv_select =
+				// helper.getView(R.id.iv_item_select);
+				// iv_select.setImageResource(R.drawable.icon_add);
 				// iv_select.setOnClickListener(new OnClickListener() {
 				//
 				// @Override
@@ -175,34 +176,68 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-
 				int proId = Double.valueOf(
 						proList.get(position).get("pro_id").toString())
 						.intValue();
 				String userId = OilUser.getCurrentUser(
 						ProductSelectActivity.this).getCuuid();
-				String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/"
-						+ proId + "/" + 1;
-				HttpTool.netRequestNoCheck(ProductSelectActivity.this, null,
-						new OnReturnListener() {
+				final ImageView iv_add = (ImageView) view
+						.findViewById(R.id.iv_item_select);
+				if (iv_add.isSelected()) {// 取消关注
+					// 添加关注
+					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
+							+ "/" + proId + "/" + 0;
+					HttpTool.netRequestNoCheck(ProductSelectActivity.this,
+							null, new OnReturnListener() {
 
-							@Override
-							public void onReturn(String jsString) {
-								// TODO Auto-generated method stub
-								try {
-									if (new JSONObject(jsString).get("status")
-											.equals("1")) {
-										showToast("关注成功");
-										UserFouceChangeEvent event = new UserFouceChangeEvent();
-										event.setAdded(true);
-										EventBus.getDefault().post(event);
+								@Override
+								public void onReturn(String jsString) {
+									// TODO Auto-generated method stub
+									try {
+										if (new JSONObject(jsString).get(
+												"status").equals("1")) {
+											showToast("取消成功");
+											UserFouceChangeEvent event = new UserFouceChangeEvent();
+											event.setAdded(true);
+											EventBus.getDefault().post(event);
+											iv_add.setSelected(false);
+										} else {
+											showToast("取消失败");
+										}
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
 									}
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
 								}
-							}
-						}, url, false);
+							}, url, false);
+
+				} else {// 添加关注
+					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
+							+ "/" + proId + "/" + 1;
+					HttpTool.netRequestNoCheck(ProductSelectActivity.this,
+							null, new OnReturnListener() {
+
+								@Override
+								public void onReturn(String jsString) {
+									// TODO Auto-generated method stub
+									try {
+										if (new JSONObject(jsString).get(
+												"status").equals("1")) {
+											showToast("关注成功");
+											UserFouceChangeEvent event = new UserFouceChangeEvent();
+											event.setAdded(true);
+											EventBus.getDefault().post(event);
+											iv_add.setSelected(true);
+										} else {
+											showToast("已关注");
+										}
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+							}, url, false);
+				}
 
 			}
 		});

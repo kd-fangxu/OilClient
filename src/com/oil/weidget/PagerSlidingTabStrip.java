@@ -32,6 +32,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -267,6 +268,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 						}
 
 						currentPosition = pager.getCurrentItem();
+						Log.e("currentPosition", currentPosition + "");
 						scrollToChild(currentPosition, 0);
 					}
 				});
@@ -415,21 +417,27 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		@Override
 		public void onPageScrolled(int position, float positionOffset,
 				int positionOffsetPixels) {
-			if (pager.getAdapter().getCount() > 0) {
-				currentPosition = position;
-				currentPositionOffset = positionOffset;
-				// Log.e("show", "position=" + position + "  " +
-				// "positionoffset="
-				// + positionOffset + "  ");
-				scrollToChild(position, (int) (positionOffset * tabsContainer
-						.getChildAt(position).getWidth()));
+			try {
+				if (pager.getAdapter().getCount() > 0
+						&& position <= pager.getAdapter().getCount() - 1) {
+					currentPosition = position;
+					currentPositionOffset = positionOffset;
+					Log.e("show", "position=" + position + "  "
+							+ "positionoffset=" + positionOffset + "  ");
+					scrollToChild(
+							position,
+							(int) (positionOffset * tabsContainer.getChildAt(
+									position).getWidth()));
 
-				invalidate();
+					invalidate();
 
-				if (delegatePageListener != null) {
-					delegatePageListener.onPageScrolled(position,
-							positionOffset, positionOffsetPixels);
+					if (delegatePageListener != null) {
+						delegatePageListener.onPageScrolled(position,
+								positionOffset, positionOffsetPixels);
+					}
 				}
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 
 		}
