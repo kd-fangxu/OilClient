@@ -19,16 +19,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.Toast;
 
 import com.example.oilclient.R;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.oil.activity.ProHisDataListActivity;
-import com.oil.activity.ProductDetailsActivity;
 import com.oil.adapter.ExpandDataAdapter;
 import com.oil.adapter.ProDataMainGroupAdapter;
 import com.oil.bean.Constants;
@@ -42,7 +38,7 @@ import com.oil.weidget.HorizontalListView;
 public class ItemFragmentData extends Fragment {
 	PullToRefreshExpandableListView ptep_lv;
 	HorizontalListView hlv_type;
-	int type = 0;// Ä¬ÈÏ¡°ÎÒ¡± 1£ºÊý¾Ý
+	int type = 0;// Ä¬ï¿½Ï¡ï¿½ï¿½Ò¡ï¿½ 1ï¿½ï¿½ï¿½ï¿½ï¿½
 	Map<String, String> map;
 
 	/**
@@ -69,11 +65,11 @@ public class ItemFragmentData extends Fragment {
 
 	// List<HashMap<String, List<DataSimple>>> mapList;
 	List<Map<String, Object>> groupTitleList = new ArrayList<Map<String, Object>>();
-	ProDataMainGroupAdapter sdAdapter;// Ö÷·Ö×é
+	ProDataMainGroupAdapter sdAdapter;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	// List<String> keyList = new ArrayList<String>();
 
-	// HashMap<String, List<DataSimple>> contentMap;// ×ÜÊý¾Ý
+	// HashMap<String, List<DataSimple>> contentMap;// ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -198,7 +194,7 @@ public class ItemFragmentData extends Fragment {
 	List<Map<String, Object>> currentGroupMapList = new ArrayList<Map<String, Object>>();
 
 	/**
-	 * ¸üÐÂ²úÆ·Êý¾Ý
+	 * ï¿½ï¿½ï¿½Â²ï¿½Æ·ï¿½ï¿½ï¿½
 	 */
 	private void updateProDataAdapter() {
 

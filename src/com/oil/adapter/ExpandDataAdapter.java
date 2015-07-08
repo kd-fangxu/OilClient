@@ -1,7 +1,6 @@
 package com.oil.adapter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.oilclient.R;
-import com.oil.bean.DataSimple;
 
 public class ExpandDataAdapter extends BaseExpandableListAdapter {
 	// List<HashMap<String, List<DataSimple>>> mapList = new
@@ -76,7 +74,7 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 	}
 
 	// /**
-	// * ·µ»Øµ¥Ôªid
+	// * ï¿½ï¿½ï¿½Øµï¿½Ôªid
 	// *
 	// * @return
 	// */

@@ -12,7 +12,6 @@ import android.view.KeyEvent;
 
 import com.example.oilclient.R;
 import com.oil.bean.Constants;
-import com.oil.bean.OilUser;
 
 public class FirstPageShowActivity extends Activity {
 	Handler handler;

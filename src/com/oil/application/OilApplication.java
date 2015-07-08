@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Application;
-import android.view.View.OnCreateContextMenuListener;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -33,11 +32,11 @@ public class OilApplication extends Application {
 	}
 
 	private void initCrashReport() {
-		String appId = "900004672"; // ÉÏBugly(bugly.qq.com)×¢²á²úÆ·»ñÈ¡µÄAppId
+		String appId = "900004672"; // ï¿½ï¿½Bugly(bugly.qq.com)×¢ï¿½ï¿½ï¿½Æ·ï¿½ï¿½È¡ï¿½ï¿½AppId
 
-		boolean isDebug = false; // true´ú±íApp´¦ÓÚµ÷ÊÔ½×¶Î£¬false´ú±íApp·¢²¼½×¶Î
+		boolean isDebug = false; // trueï¿½ï¿½ï¿½Appï¿½ï¿½ï¿½Úµï¿½ï¿½Ô½×¶Î£ï¿½falseï¿½ï¿½ï¿½Appï¿½ï¿½ï¿½ï¿½ï¿½×¶ï¿½
 
-		CrashReport.initCrashReport(this, appId, isDebug); // ³õÊ¼»¯SDK
+		CrashReport.initCrashReport(this, appId, isDebug); // ï¿½ï¿½Ê¼ï¿½ï¿½SDK
 	}
 
 	public Map<String, String> getTempleDataMap() {

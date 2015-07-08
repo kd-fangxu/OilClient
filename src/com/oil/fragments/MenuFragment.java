@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.example.oilclient.R;
 import com.oil.activity.AppAboutActivty;
 import com.oil.activity.UserCentenrActivity;
-import com.oil.activity.UserLoginActivity;
 import com.oil.activity.UserMsgActivity;
 import com.oil.activity.UserSettingActivity;
 import com.oil.activity.UserSuggestionActivty;
@@ -25,7 +24,7 @@ import com.oil.bean.Constants;
 import com.oil.bean.OilUser;
 
 /**
- * ×ó²à²Ëµ¥½çÃæ
+ * ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
  * 
  * @author user
  *
@@ -110,19 +109,19 @@ public class MenuFragment extends Fragment {
 	// // TODO Auto-generated method stub
 	// switch (mi.getId()) {
 	// case R.id.mi_usercenter:
-	// mi.init(R.drawable.ic_launcher, "ÓÃ»§ÖÐÐÄ");
+	// mi.init(R.drawable.ic_launcher, "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½");
 	// break;
 	// case R.id.mi_usermsg:
-	// mi.init(R.drawable.ic_launcher, "ÏûÏ¢");
+	// mi.init(R.drawable.ic_launcher, "ï¿½ï¿½Ï¢");
 	// break;
 	// case R.id.mi_usersetting:
-	// mi.init(R.drawable.ic_launcher, "ÉèÖÃ");
+	// mi.init(R.drawable.ic_launcher, "ï¿½ï¿½ï¿½ï¿½");
 	// break;
 	// case R.id.mi_userabout:
-	// mi.init(R.drawable.ic_launcher, "¹ØÓÚ");
+	// mi.init(R.drawable.ic_launcher, "ï¿½ï¿½ï¿½ï¿½");
 	// break;
 	// case R.id.mi_suggest:
-	// mi.init(R.drawable.ic_launcher, "ÓÃ»§·´À¡");
+	// mi.init(R.drawable.ic_launcher, "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½");
 	// break;
 	// default:
 	// break;

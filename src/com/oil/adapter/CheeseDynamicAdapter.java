@@ -16,7 +16,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.oilclient.R;
 import com.oil.event.UserFouceChangeEvent;

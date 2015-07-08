@@ -1,18 +1,18 @@
 package com.oil.activity;
 
-import com.example.oilclient.R;
-import com.oil.bean.Constants;
-import com.oil.event.FinishDialog;
-
-import de.greenrobot.event.EventBus;
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+
+import com.example.oilclient.R;
+import com.oil.bean.Constants;
+import com.oil.event.FinishDialog;
+
+import de.greenrobot.event.EventBus;
 
 public class NetworkDialog extends Activity {
 	private Button set, cancel;

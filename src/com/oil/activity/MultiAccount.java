@@ -5,16 +5,6 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.oilclient.R;
-import com.oil.bean.Constants;
-import com.oil.bean.MyRequestParams;
-import com.oil.bean.OilUser;
-import com.oil.event.LoginSuccessEvent;
-import com.oil.inter.OnReturnListener;
-import com.oil.utils.CommonUtil;
-import com.oil.utils.HttpTool;
-
-import de.greenrobot.event.EventBus;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +18,18 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MultiAccount extends Activity { // ¶àÓÃ»§µÇÂ¼½çÃæ
+import com.example.oilclient.R;
+import com.oil.bean.Constants;
+import com.oil.bean.MyRequestParams;
+import com.oil.bean.OilUser;
+import com.oil.event.LoginSuccessEvent;
+import com.oil.inter.OnReturnListener;
+import com.oil.utils.CommonUtil;
+import com.oil.utils.HttpTool;
+
+import de.greenrobot.event.EventBus;
+
+public class MultiAccount extends Activity { // ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½
 	private GridView accountGV;
 	private ArrayList<OilUser> accountList;
 	private MyAdapter adapter;
@@ -72,7 +73,7 @@ public class MultiAccount extends Activity { // ¶àÓÃ»§µÇÂ¼½çÃæ
 											.getJSONObject("data");
 									if (obj.getString("login").equals("1")) {
 										Toast.makeText(MultiAccount.this,
-												"µÇÂ¼³É¹¦", 1).show();
+												"ï¿½ï¿½Â¼ï¿½É¹ï¿½", 1).show();
 										CommonUtil.saveUserInfo(
 												MultiAccount.this,
 												obj.getString("accessToken"),

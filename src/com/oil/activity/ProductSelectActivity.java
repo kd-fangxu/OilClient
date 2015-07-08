@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -23,8 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.oilclient.R;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.oil.adapter.CommonAdapter;
 import com.oil.adapter.CommonViewHolder;
 import com.oil.bean.Constants;
@@ -33,7 +30,6 @@ import com.oil.datamodel.OilProductStrucModel;
 import com.oil.event.UserFouceChangeEvent;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
-import com.oil.utils.ScreenUtils;
 
 import de.greenrobot.event.EventBus;
 
@@ -183,8 +179,8 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 						ProductSelectActivity.this).getCuuid();
 				final ImageView iv_add = (ImageView) view
 						.findViewById(R.id.iv_item_select);
-				if (iv_add.isSelected()) {// È¡Ïû¹Ø×¢
-					// Ìí¼Ó¹Ø×¢
+				if (iv_add.isSelected()) {// È¡ï¿½ï¿½ï¿½×¢
+					// ï¿½ï¿½Ó¹ï¿½×¢
 					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
 							+ "/" + proId + "/" + 0;
 					HttpTool.netRequestNoCheck(ProductSelectActivity.this,
@@ -196,13 +192,13 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 									try {
 										if (new JSONObject(jsString).get(
 												"status").equals("1")) {
-											showToast("È¡Ïû³É¹¦");
+											showToast("È¡ï¿½ï¿½É¹ï¿½");
 											UserFouceChangeEvent event = new UserFouceChangeEvent();
 											event.setAdded(true);
 											EventBus.getDefault().post(event);
 											iv_add.setSelected(false);
 										} else {
-											showToast("È¡ÏûÊ§°Ü");
+											showToast("È¡ï¿½ï¿½Ê§ï¿½ï¿½");
 										}
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
@@ -211,7 +207,7 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 								}
 							}, url, false);
 
-				} else {// Ìí¼Ó¹Ø×¢
+				} else {// ï¿½ï¿½Ó¹ï¿½×¢
 					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
 							+ "/" + proId + "/" + 1;
 					HttpTool.netRequestNoCheck(ProductSelectActivity.this,
@@ -223,13 +219,13 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 									try {
 										if (new JSONObject(jsString).get(
 												"status").equals("1")) {
-											showToast("¹Ø×¢³É¹¦");
+											showToast("ï¿½ï¿½×¢ï¿½É¹ï¿½");
 											UserFouceChangeEvent event = new UserFouceChangeEvent();
 											event.setAdded(true);
 											EventBus.getDefault().post(event);
 											iv_add.setSelected(true);
 										} else {
-											showToast("ÒÑ¹Ø×¢");
+											showToast("ï¿½Ñ¹ï¿½×¢");
 										}
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
