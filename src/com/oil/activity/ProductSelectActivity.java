@@ -179,8 +179,8 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 						ProductSelectActivity.this).getCuuid();
 				final ImageView iv_add = (ImageView) view
 						.findViewById(R.id.iv_item_select);
-				if (iv_add.isSelected()) {// ȡ���ע
-					// ��ӹ�ע
+				if (iv_add.isSelected()) {// 取锟斤拷锟阶�
+					// 锟斤拷庸锟阶�
 					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
 							+ "/" + proId + "/" + 0;
 					HttpTool.netRequestNoCheck(ProductSelectActivity.this,
@@ -192,13 +192,17 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 									try {
 										if (new JSONObject(jsString).get(
 												"status").equals("1")) {
-											showToast("ȡ��ɹ�");
+											showToast(getResources().getText(
+													R.string.unMarkSucceed)
+													.toString());
 											UserFouceChangeEvent event = new UserFouceChangeEvent();
 											event.setAdded(true);
 											EventBus.getDefault().post(event);
 											iv_add.setSelected(false);
 										} else {
-											showToast("ȡ��ʧ��");
+											showToast(getResources().getText(
+													R.string.unMarkUnSucceed)
+													.toString());
 										}
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
@@ -207,7 +211,7 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 								}
 							}, url, false);
 
-				} else {// ��ӹ�ע
+				} else {// 锟斤拷庸锟阶�
 					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
 							+ "/" + proId + "/" + 1;
 					HttpTool.netRequestNoCheck(ProductSelectActivity.this,
@@ -219,13 +223,17 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 									try {
 										if (new JSONObject(jsString).get(
 												"status").equals("1")) {
-											showToast("��ע�ɹ�");
+											showToast(getResources().getText(
+													R.string.markSucceed)
+													.toString());
 											UserFouceChangeEvent event = new UserFouceChangeEvent();
 											event.setAdded(true);
 											EventBus.getDefault().post(event);
 											iv_add.setSelected(true);
 										} else {
-											showToast("�ѹ�ע");
+											showToast(getResources().getText(
+													R.string.markUnSucceed)
+													.toString());
 										}
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block

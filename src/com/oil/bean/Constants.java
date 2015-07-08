@@ -11,7 +11,9 @@ public class Constants {
 	/**
 	 * url
 	 */
-	public static final String IP = "http://192.168.1.91:8080/oilWeb/"; // "http://192.168.1.234:8080/oilWeb/";
+	// public static final String IP = "http://192.168.1.91:8080/oilWeb/"; //
+	// "http://192.168.1.234:8080/oilWeb/";
+	public static final String IP = "http://info.oilchem.net/";
 	public static final String LOGIN = IP + "app/user/mobileLogin";// µÇÂ¼
 	public static final String REGIST = IP + "app/reg/regist"; // ×¢²á
 	public static final String MULTI_ACCOUNT_LOGIN = IP + "app/user/selLogUser"; // ¶àÓÃ»§Ñ¡ÔñµÇÂ¼

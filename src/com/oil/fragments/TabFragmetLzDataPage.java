@@ -195,23 +195,23 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 					}
 
-					/**
-					 * 校验重复性
-					 * 
-					 * @param proName
-					 * @return
-					 */
-					private boolean checkMapList(String proName) {
-						// TODO Auto-generated method stub
-						for (int j = 0; j < mapList.size(); j++) {
-							if (proName.equals(mapList.get(j)
-									.get("pro_cn_name"))) {
-								return false;
-							}
-						}
-						return true;
-					}
-				}, url, true);
+				}, url, false);
+	}
+
+	/**
+	 * 校验重复性
+	 * 
+	 * @param proName
+	 * @return
+	 */
+	private boolean checkMapList(String proName) {
+		// TODO Auto-generated method stub
+		for (int j = 0; j < mapList.size(); j++) {
+			if (proName.equals(mapList.get(j).get("pro_cn_name"))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	PagerSlidingTabStrip psts;

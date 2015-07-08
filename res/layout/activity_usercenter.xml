@@ -110,7 +110,7 @@
                         android:text="真实姓名：" />
 
                     <TextView
-                        android:id="@+id/tv_uc_sex"
+                        android:id="@+id/tv_uc_realName"
                         style="@style/text_stytle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
-                    android:background="@color/white"
+                    android:background="@drawable/shape_uc_infoitem_down"
                     android:clickable="true"
                     android:padding="10dp" >
 
@@ -172,40 +172,12 @@
                         android:text="企业名称：" />
 
                     <TextView
-                        android:id="@+id/tv_us_schoolenumber"
+                        android:id="@+id/tv_uc_comName"
                         style="@style/text_stytle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:src="@drawable/ic_back_dark" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"
-                    android:background="@drawable/shape_uc_infoitem_down"
-                    android:clickable="true"
-                    android:padding="10dp" >
-
-                    <TextView
-                        style="@style/text_stytle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="企业属性：" />
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_weight="1" />
 
                     <ImageView
                         android:layout_width="wrap_content"

@@ -30,5 +30,9 @@
     <string name="inputName">请输入您的姓名</string>
     <string name="inputCompanyName">请输入企业名称</string>
     <string name="passwordNotSame">密码不一致</string>
+    <string name="markSucceed">收藏成功</string>
+    <string name="markUnSucceed">收藏失败</string>
+    <string name="unMarkSucceed">取消关注</string>
+    <string name="unMarkUnSucceed">取消关注失败</string>
 
 </resources>
