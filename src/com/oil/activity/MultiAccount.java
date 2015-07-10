@@ -72,8 +72,11 @@ public class MultiAccount extends Activity { // ���û���¼����
 									JSONObject obj = new JSONObject(jsString)
 											.getJSONObject("data");
 									if (obj.getString("login").equals("1")) {
-										Toast.makeText(MultiAccount.this,
-												"��¼�ɹ�", 1).show();
+										Toast.makeText(
+												MultiAccount.this,
+												getResources().getText(
+														R.string.loginSuccess),
+												1).show();
 										CommonUtil.saveUserInfo(
 												MultiAccount.this,
 												obj.getString("accessToken"),

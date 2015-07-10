@@ -13,7 +13,7 @@ public class MyRequestParams extends RequestParams {
 	public MyRequestParams(Context context) {
 		SharedPreferences sp = context.getSharedPreferences(
 				Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
-		this.put("appname", "2");
+		this.put("appname", Constants.OilAppTag + "");
 		if (sp.getBoolean(Constants.LOGIN_STATE, false)) { // �ѵ�¼
 
 			this.put("cuuid", sp.getString(Constants.CUUID, ""));

@@ -15,6 +15,7 @@ import com.example.oilclient.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.oil.activity.UserLoginActivity;
 import com.oil.event.FinishEvent;
+import com.oil.iface.OnCommonBusListener;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.CommonUtil;
 import com.oil.utils.HttpTool;
@@ -33,50 +34,6 @@ public class OilUser implements Serializable {
 
 	public OilUser() {
 	};
-
-	public static void Login(Context context, String userName,
-			String accountPwd, final onLoginListener loginListener) {
-		if (null != userName && null != accountPwd) {
-
-			TelephonyManager telephonyManager = (TelephonyManager) context
-					.getSystemService(Context.TELEPHONY_SERVICE);
-			String imei = telephonyManager.getDeviceId();
-
-			MyRequestParams params = new MyRequestParams(context);
-			params.put("phone", userName);
-			params.put("password", accountPwd);
-			params.put("imei", imei);
-			params.put("ver", CommonUtil.getAppInfo(context).get("name"));
-			HttpTool.netRequest(context, params, new OnReturnListener() {
-
-				@Override
-				public void onReturn(String jsString) {
-					// TODO Auto-generated method stub
-					try {
-						JSONObject obj = new JSONObject(jsString)
-								.getJSONObject("data");
-						if (obj.getString("login").equals("1")) {
-
-							loginListener.onSuccess("100", jsString);
-
-						} else {
-							// 登录失败
-							String errorMessage = obj.getString("message");
-							loginListener.onError(Error_AccountInfoMiss,
-									errorMessage);
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-			}, Constants.LOGIN, true);
-
-		} else {
-			loginListener.onError(Error_AccountInfoMiss, "");
-		}
-	}
 
 	public String getAccountPwd() {
 		return accountPwd;
@@ -134,6 +91,17 @@ public class OilUser implements Serializable {
 		this.corpprovince = corpprovince;
 	}
 
+	/**
+	 * 用户登录
+	 * 
+	 * @param context
+	 * @param userName
+	 * @param name
+	 * @param password
+	 * @param phone
+	 * @param corpName
+	 * @param registListener
+	 */
 	public static void signIn(final Context context, final String userName,
 			String name, final String password, String phone, String corpName,
 			final onRegistListener registListener) {
@@ -217,20 +185,13 @@ public class OilUser implements Serializable {
 	}
 
 	/**
-	 * 閼惧嘲褰� 瑜版挸澧犻悽銊﹀煕
+	 * 获取当前用户
 	 * 
 	 * @param context
 	 * @return
 	 */
 	public static OilUser getCurrentUser(Context context) {
-		// 閿熸枻鎷峰彇閿熸枻鎷峰墠閿熺煫浼欐嫹
-		// String json_user = (String) SharedPreferenceUtils.getParam(context,
-		// Shared_Key_currentUser, "null");
-		// Log.e("getJson", json_user);
-		// // JSONObject jo = JSONObject.fromObject(json_user);
-		//
-		// // Log.e("current", msg)
-		// return new Gson().fromJson(json_user, OilUser.class);
+
 		OilUser oilUser = new OilUser();
 		String name = (String) SharedPreferenceUtils.getParam(context,
 				Constants.USER_INFO_SHARED, Constants.NAME, "");
@@ -242,12 +203,99 @@ public class OilUser implements Serializable {
 				Constants.USER_INFO_SHARED, Constants.USER_NAME, "");
 		String cuuid = (String) SharedPreferenceUtils.getParam(context,
 				Constants.USER_INFO_SHARED, Constants.CUUID, "");
+		String pwd = (String) SharedPreferenceUtils.getParam(context,
+				Constants.USER_INFO_SHARED, Constants.USER_PWD, "");
 		oilUser.setName(name);
 		oilUser.setCorpName(corpName);
 		oilUser.setCuuid(cuuid);
 		oilUser.setPhone(userPhone);
 		oilUser.setUserName(userName);
+		oilUser.setAccountPwd(pwd);
 		return oilUser;
+	}
+
+	/**
+	 * 用户登录
+	 * 
+	 * @param context
+	 * @param userName
+	 * @param accountPwd
+	 * @param loginListener
+	 */
+	public static void Login(Context context, String userName,
+			String accountPwd, final onLoginListener loginListener) {
+		if (null != userName && null != accountPwd) {
+
+			TelephonyManager telephonyManager = (TelephonyManager) context
+					.getSystemService(Context.TELEPHONY_SERVICE);
+			String imei = telephonyManager.getDeviceId();
+
+			MyRequestParams params = new MyRequestParams(context);
+			params.put("phone", userName);
+			params.put("password", accountPwd);
+			params.put("imei", imei);
+			params.put("ver", CommonUtil.getAppInfo(context).get("name"));
+			HttpTool.netRequest(context, params, new OnReturnListener() {
+
+				@Override
+				public void onReturn(String jsString) {
+					// TODO Auto-generated method stub
+					try {
+						JSONObject obj = new JSONObject(jsString)
+								.getJSONObject("data");
+						if (obj.getString("login").equals("1")) {
+
+							loginListener.onSuccess("100", jsString);
+
+						} else {
+							// 登录失败
+							String errorMessage = obj.getString("message");
+							loginListener.onError(Error_AccountInfoMiss,
+									errorMessage);
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}, Constants.LOGIN, true);
+
+		} else {
+			loginListener.onError(Error_AccountInfoMiss, "");
+		}
+	}
+
+	public static void changeUserPwd(final Context context, String newPwd,
+			final OnCommonBusListener commonBusListener) {
+		MyRequestParams oilParams = new MyRequestParams(context);
+		oilParams.put("password", newPwd);
+		HttpTool.netRequestNoCheck(context, oilParams, new OnReturnListener() {
+
+			@Override
+			public void onReturn(String jsString) {
+				// TODO Auto-generated method stub
+				try {
+					JSONObject jo = new JSONObject(jsString);
+					String modify = jo.getJSONObject("data")
+							.getString("modify");
+					if (modify.equals("1")) {
+						commonBusListener.onSucceed(context.getResources()
+								.getText(R.string.resetPwdSucceed).toString());
+					} else {
+						commonBusListener
+								.onSucceed(context.getResources()
+										.getText(R.string.resetPwdUnSucceed)
+										.toString());
+					}
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}, Constants.URL_CHANGEPWD, false);
 	}
 
 	public interface onLoginListener {

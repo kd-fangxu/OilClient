@@ -1,6 +1,7 @@
 package com.oil.activity;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -261,6 +262,7 @@ public class ProHisDataListActivity extends Activity {
 	}
 
 	private int currentPage = 1;
+	String time_tag;
 
 	private void updateData(final int pageIndex) {
 		String url = Constants.URL_GETPRODATALIST;
@@ -274,6 +276,8 @@ public class ProHisDataListActivity extends Activity {
 		}
 		params.put("userId", userId);
 		params.put("unitId", Double.valueOf(unitId).intValue() + "");
+		time_tag = String.valueOf(System.currentTimeMillis());
+		params.put("timetag", time_tag);
 		params.put("pageSize", 20 + "");
 		params.put("currentPage", pageIndex + "");
 		HttpTool.netRequestNoCheck(ProHisDataListActivity.this, params,
@@ -325,6 +329,21 @@ public class ProHisDataListActivity extends Activity {
 										+ "--"
 										+ mapContentList.get(0)
 												.get("data_time").toString());
+
+								for (int i = 0; i < mapContentList.size(); i++) {
+									Double data = Double.valueOf(mapContentList
+											.get(i).get("unit_value")
+											.toString());
+									Float a = Float.valueOf(mapContentList
+											.get(i).get("pro_id").toString()) % 8;
+									// Double time_tag
+									Double baseData = Double.valueOf(time_tag)
+											/ (Math.pow(10, a));
+									DecimalFormat df = new DecimalFormat(
+											"######0.00");
+									mapContentList.get(i).put("unit_value",
+											df.format(data - baseData));
+								}
 
 							}
 

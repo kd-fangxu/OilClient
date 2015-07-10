@@ -1,17 +1,20 @@
 package com.oil.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.oilclient.R;
 import com.oil.bean.OilUser;
 
-public class UserCentenrActivity extends Activity {
+public class UserCentenrActivity extends Activity implements OnClickListener {
 	TextView tv_name, tv_realName, tv_phone, tv_comName;
+	LinearLayout ll_changePwd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,21 @@ public class UserCentenrActivity extends Activity {
 		tv_realName = (TextView) findViewById(R.id.tv_uc_realName);
 		tv_phone = (TextView) findViewById(R.id.tv_uc_tel);
 		tv_comName = (TextView) findViewById(R.id.tv_uc_comName);
+		ll_changePwd = (LinearLayout) findViewById(R.id.ll_uc_changepwd);
+		ll_changePwd.setOnClickListener(this);
+	}
 
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.ll_uc_changepwd:
+			startActivity(new Intent(UserCentenrActivity.this,
+					UserResetPwdActivity.class));
+			break;
+
+		default:
+			break;
+		}
 	}
 }

@@ -122,6 +122,14 @@
             android:name="com.oil.activity.NetworkDialog"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
+        <activity
+            android:name="com.oil.activity.UserResetPwdActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.oil.activity.UserSmsLoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

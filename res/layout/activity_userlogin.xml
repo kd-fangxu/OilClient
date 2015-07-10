@@ -85,12 +85,12 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/tv_wechatlogin"
+            android:id="@+id/tv_smslogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="2dp"
             android:padding="5dp"
-            android:text="微信登陆" />
+            android:text="短信登陆" />
 
         <View
             android:layout_width="1dp"

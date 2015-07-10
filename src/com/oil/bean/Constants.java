@@ -3,6 +3,8 @@ package com.oil.bean;
 import android.os.Environment;
 
 public class Constants {
+	public static int OilAppTag = 2;// 项目代号
+
 	public static int PageType_info = 1;// 资讯
 	public static int PageType_data = 2;// 数据
 
@@ -11,13 +13,17 @@ public class Constants {
 	/**
 	 * url
 	 */
-	// public static final String IP = "http://192.168.1.91:8080/oilWeb/"; //
+	public static final String IP = "http://192.168.1.91:8080/oilWeb/"; //
 	// "http://192.168.1.234:8080/oilWeb/";
-	public static final String IP = "http://info.oilchem.net/";
+	// public static final String IP = "http://info.oilchem.net/";
 	public static final String LOGIN = IP + "app/user/mobileLogin";// 登录
 	public static final String REGIST = IP + "app/reg/regist"; // 注册
 	public static final String MULTI_ACCOUNT_LOGIN = IP + "app/user/selLogUser"; // 多用户选择登录
 	public static final String LOGOUT = IP + "app/user/userLogout"; // 注销
+	public static final String URL_CHANGEPWD = IP + "app/user/updPwd";// 更改用户密码
+	public static final String URL_GET_SMS_CODE = IP + "app/user/sendSmsVkey";// 获取短信验证码
+	public static final String URL_SMS_LOGIN = IP + "app/user/smsLogin";// 验证码登录
+
 	public static final String URL_GETPROSTRUCTURE = IP
 			+ "app/oilinfo/getProStructure";// 获取产品结构
 	public static final String URL_GETUSERFOUCE = IP
@@ -44,6 +50,7 @@ public class Constants {
 	public static final String NAME = "name";
 	public static final String CORP_NAME = "corpName";
 	public static final String CORP_PROVINCE = "corpProvince";
+	public static final String USER_PWD = "userpwd";
 	/**
 	 * path
 	 */

@@ -7,7 +7,6 @@
     <!-- 交互常用 -->
     <string name="demo1">再按一下退出</string>
     <string name="demo2">网络不给力</string>
-    <string name="demo3">登录成功</string>
     <string name="logoutSuccess">注销成功</string>
     <string name="loginSuccess">登录成功</string>
 
@@ -32,7 +31,9 @@
     <string name="passwordNotSame">密码不一致</string>
     <string name="markSucceed">收藏成功</string>
     <string name="markUnSucceed">收藏失败</string>
-    <string name="unMarkSucceed">取消关注</string>
-    <string name="unMarkUnSucceed">取消关注失败</string>
+    <string name="unMarkSucceed">取消收藏</string>
+    <string name="unMarkUnSucceed">取消收藏失败</string>
+    <string name="resetPwdSucceed">密码重置成功</string>
+    <string name="resetPwdUnSucceed">密码重置失败</string>
 
 </resources>

@@ -19,8 +19,6 @@ public class UserMsgActivity extends Activity {
 
 	}
 
-
-
 	private void initWeidget() {
 		// TODO Auto-generated method stub
 		ImageView iv_back;
