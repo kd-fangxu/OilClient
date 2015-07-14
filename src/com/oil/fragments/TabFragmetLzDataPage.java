@@ -43,6 +43,7 @@ import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
 import com.oil.weidget.OilContentViewPager;
 import com.oil.weidget.PagerSlidingTabStrip;
+import com.oil.workmodel.UserFouceModel;
 
 import de.greenrobot.event.EventBus;
 
@@ -98,7 +99,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 			// tianjia
 			isNeedUpdate = true;
 			// pWindow.dismiss();
-			// getUserFouce();
+			getUserFouce();
 
 		} else {
 			// shanchu
@@ -112,7 +113,10 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		// TODO Auto-generated method stub
 		if (isNeedUpdate && event != null) {
 			// fouceAdd();
-			pWindow.dismiss();
+			if (pWindow != null) {
+				pWindow.dismiss();
+			}
+
 			getUserFouce();
 		}
 		super.onResume();
@@ -178,9 +182,12 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 										mapList.add((HashMap<String, String>) templeMaplist
 												.get(i));
+
 									}
 									;
 								}
+								UserFouceModel.getInstance().setFouceList(
+										mapList);
 							}
 
 							pagerAdapter.notifyDataSetChanged();

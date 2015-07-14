@@ -30,6 +30,7 @@ import com.oil.datamodel.OilProductStrucModel;
 import com.oil.event.UserFouceChangeEvent;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
+import com.oil.workmodel.UserFouceModel;
 
 import de.greenrobot.event.EventBus;
 
@@ -121,8 +122,15 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 			public void convert(CommonViewHolder helper,
 					final Map<String, Object> item, int Position) {
 				// TODO Auto-generated method stub
+				ImageView iv_fouce = helper.getView(R.id.iv_item_select);
 				helper.setText(R.id.tv_item_simple, item.get("pro_cn_name")
 						.toString());
+				if (UserFouceModel.getInstance().isFouced(
+						item.get("pro_id").toString())) {
+					iv_fouce.setSelected(true);
+				} else {
+					iv_fouce.setSelected(false);
+				}
 				// final ImageView iv_select =
 				// helper.getView(R.id.iv_item_select);
 				// iv_select.setImageResource(R.drawable.icon_add);
@@ -179,7 +187,7 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 						ProductSelectActivity.this).getCuuid();
 				final ImageView iv_add = (ImageView) view
 						.findViewById(R.id.iv_item_select);
-				if (iv_add.isSelected()) {// 取锟斤拷锟阶�
+				if (iv_add.isSelected()) {// 以关注
 					// 锟斤拷庸锟阶�
 					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
 							+ "/" + proId + "/" + 0;
@@ -199,6 +207,7 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 											event.setAdded(true);
 											EventBus.getDefault().post(event);
 											iv_add.setSelected(false);
+											
 										} else {
 											showToast(getResources().getText(
 													R.string.unMarkUnSucceed)

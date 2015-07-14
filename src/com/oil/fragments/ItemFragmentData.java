@@ -38,7 +38,7 @@ import com.oil.weidget.HorizontalListView;
 public class ItemFragmentData extends Fragment {
 	PullToRefreshExpandableListView ptep_lv;
 	HorizontalListView hlv_type;
-	int type = 0;// Ĭ�ϡ��ҡ� 1�����
+	int type = 0;// 默锟较★拷锟揭★拷 1锟斤拷锟斤拷锟�
 	Map<String, String> map;
 
 	/**
@@ -54,6 +54,9 @@ public class ItemFragmentData extends Fragment {
 
 	}
 
+	public ItemFragmentData() {
+	}
+
 	public ItemFragmentData(int type, HashMap<String, String> map) {
 		this.map = map;
 		this.type = type;
@@ -65,11 +68,11 @@ public class ItemFragmentData extends Fragment {
 
 	// List<HashMap<String, List<DataSimple>>> mapList;
 	List<Map<String, Object>> groupTitleList = new ArrayList<Map<String, Object>>();
-	ProDataMainGroupAdapter sdAdapter;// ������
+	ProDataMainGroupAdapter sdAdapter;// 锟斤拷锟斤拷锟斤拷
 
 	// List<String> keyList = new ArrayList<String>();
 
-	// HashMap<String, List<DataSimple>> contentMap;// �����
+	// HashMap<String, List<DataSimple>> contentMap;// 锟斤拷锟斤拷锟�
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -194,7 +197,7 @@ public class ItemFragmentData extends Fragment {
 	List<Map<String, Object>> currentGroupMapList = new ArrayList<Map<String, Object>>();
 
 	/**
-	 * ���²�Ʒ���
+	 * 锟斤拷锟铰诧拷品锟斤拷锟�
 	 */
 	private void updateProDataAdapter() {
 

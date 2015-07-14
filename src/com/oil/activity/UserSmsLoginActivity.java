@@ -19,9 +19,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class UserSmsLoginActivity extends Activity implements OnClickListener {
 	EditText et_tel, et_smscoede;
+	ImageView iv_pageback;
 	Button btn_getcode, btn_confirm;
 	boolean isCodeEffect = false;// 验证码是否有效
 
@@ -39,14 +41,19 @@ public class UserSmsLoginActivity extends Activity implements OnClickListener {
 		et_smscoede = (EditText) findViewById(R.id.et_sms_code);
 		btn_getcode = (Button) findViewById(R.id.btn_getsmscode);
 		btn_confirm = (Button) findViewById(R.id.btn_confirm);
+		iv_pageback = (ImageView) findViewById(R.id.iv_pageback);
 		btn_getcode.setOnClickListener(this);
 		btn_confirm.setOnClickListener(this);
+		iv_pageback.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
+		case R.id.iv_pageback:
+			finish();
+			break;
 		case R.id.btn_getsmscode:
 			if (isCodeEffect) {
 				getSmsCode();

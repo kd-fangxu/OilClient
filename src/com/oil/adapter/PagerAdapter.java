@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.oil.fragments.ItemFragmentData;
 import com.oil.fragments.ItemFragmentNews;
-import com.oil.fragments.ProductNewClumnTabFragment;
 
 /**
  * fragment  ≈‰¿‡
@@ -49,7 +48,7 @@ public abstract class PagerAdapter<T> extends FragmentStatePagerAdapter {
 			return ItemFragmentData.getInstance(1,
 					(HashMap<String, String>) itemList.get(position));
 		case 4:
-			return ProductNewClumnTabFragment.getInstance();
+//			return ProductNewClumnTabFragment.getInstance();
 
 		default:
 			break;

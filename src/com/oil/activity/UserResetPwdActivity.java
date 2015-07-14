@@ -19,7 +19,7 @@ import com.oil.utils.ToastUtils;
 public class UserResetPwdActivity extends Activity implements OnClickListener {
 	EditText et_oldpwd, et_newpwd, et_confirmpwd;
 	Button btn_confirm;
-	ImageView iv_oldPwd, iv_newPwd, iv_conPwd;
+	ImageView iv_oldPwd, iv_newPwd, iv_conPwd, iv_back;
 	boolean isOldPwdRight, isNewPwdRight, isConfirmPwdRight;
 
 	@Override
@@ -43,6 +43,15 @@ public class UserResetPwdActivity extends Activity implements OnClickListener {
 		iv_oldPwd = (ImageView) findViewById(R.id.iv_oldpwd);
 		iv_newPwd = (ImageView) findViewById(R.id.iv_newpwd);
 		iv_conPwd = (ImageView) findViewById(R.id.iv_confirmpwd);
+		iv_back = (ImageView) findViewById(R.id.iv_pageback);
+		iv_back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
 		et_oldpwd.addTextChangedListener(new TextWatcher() {
 
 			@Override

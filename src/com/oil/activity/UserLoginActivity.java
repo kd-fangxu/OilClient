@@ -75,7 +75,7 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 		case R.id.tv_smslogin:
 			startActivity(new Intent(UserLoginActivity.this,
 					UserSmsLoginActivity.class));
-			finish();
+			// finish();
 			break;
 		default:
 			break;
@@ -112,7 +112,10 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 										@Override
 										public void onConfirmClick() {
 											// TODO Auto-generated method stub
-
+											startActivity(new Intent(
+													UserLoginActivity.this,
+													UserSmsLoginActivity.class));
+											// finish();
 										}
 
 										@Override

@@ -20,6 +20,7 @@ import com.oil.inter.OnReturnListener;
 import com.oil.utils.CommonUtil;
 import com.oil.utils.HttpTool;
 import com.oil.utils.SharedPreferenceUtils;
+import com.oil.utils.StringUtils;
 import com.oil.utils.ToastUtils;
 import com.oilchem.weixin.mp.aes.AesException;
 import com.oilchem.weixin.mp.aes.SHA1;
@@ -232,7 +233,7 @@ public class OilUser implements Serializable {
 
 			MyRequestParams params = new MyRequestParams(context);
 			params.put("phone", userName);
-			params.put("password", accountPwd);
+			params.put("password", StringUtils.MD5(accountPwd));
 			params.put("imei", imei);
 			params.put("ver", CommonUtil.getAppInfo(context).get("name"));
 			HttpTool.netRequest(context, params, new OnReturnListener() {
@@ -269,7 +270,7 @@ public class OilUser implements Serializable {
 	public static void changeUserPwd(final Context context, String newPwd,
 			final OnCommonBusListener commonBusListener) {
 		MyRequestParams oilParams = new MyRequestParams(context);
-		oilParams.put("password", newPwd);
+		oilParams.put("password", StringUtils.MD5(newPwd));
 		HttpTool.netRequestNoCheck(context, oilParams, new OnReturnListener() {
 
 			@Override

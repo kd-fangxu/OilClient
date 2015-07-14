@@ -36,7 +36,8 @@
             android:imeOptions="actionSearch"
             android:paddingLeft="15dp"
             android:singleLine="true"
-            android:textColor="#515151"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textSize="17sp" />
     </LinearLayout>
 

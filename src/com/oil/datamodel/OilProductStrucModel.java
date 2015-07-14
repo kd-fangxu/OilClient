@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.oil.bean.Constants;
+import com.oil.dialogs.IfaceCommonDialogInit;
 import com.oil.utils.FileUtils;
 import com.oil.utils.ObjectConvertUtils;
 import com.oil.utils.StringUtils;
@@ -128,5 +129,54 @@ public class OilProductStrucModel {
 			}
 		}
 		return mapList;
+	}
+
+	/**
+	 * 根据产品关键词获取产品列表
+	 * 
+	 * @return
+	 */
+	public List<Map<String, Object>> getProductListsByProName(String keyWord) {
+		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+		for (int i = 0; i < productList.size(); i++) {
+			if (productList.get(i).get("pro_cn_name").toString()
+					.contains(keyWord)) {
+				resultList.add(productList.get(i));
+			}
+		}
+		return resultList;
+	}
+
+	/**
+	 * 根据pro-id获取单个产品数据
+	 * 
+	 * @param pro_id
+	 * @return
+	 */
+	public Map<String, Object> getProItem(String pro_id) {
+		for (int i = 0; i < productList.size(); i++) {
+			if (productList.get(i).get("pro_id").toString().equals(pro_id)) {
+				return productList.get(i);
+			}
+		}
+		return null;
+
+	}
+
+	/**
+	 * 根据chan-id获取产品组数据
+	 * 
+	 * @param pro_id
+	 * @return
+	 */
+	public Map<String, Object> getChanItem(String chan_id) {
+		for (int i = 0; i < productChainList.size(); i++) {
+			if (productChainList.get(i).get("chan_id").toString()
+					.equals(chan_id)) {
+				return productChainList.get(i);
+			}
+		}
+		return null;
+
 	}
 }

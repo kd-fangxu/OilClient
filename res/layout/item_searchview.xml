@@ -8,19 +8,22 @@
         android:id="@+id/tv_item_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:padding="3dp"
         android:text="item"
+        android:textColor="@color/gray"
         android:textSize="15sp" />
 
     <ImageView
+        android:id="@+id/iv_mark"
         android:layout_width="25dp"
-        android:layout_height="24dp"
+        android:layout_height="25dp"
         android:layout_gravity="center_vertical"
         android:layout_margin="5dp"
         android:padding="3dp"
         android:scaleType="fitXY"
-        android:src="@drawable/icon_find" />
+        android:src="@drawable/selector_item_focus" />
 
 </LinearLayout>
