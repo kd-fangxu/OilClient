@@ -22,10 +22,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.oil.adapter.HeadPageAdapter;
 import com.oil.weidget.FouceViewPager.OnSingleTouchListener;
-import com.tencent.bugly.proguard.T;
 import com.viewpagerindicator.CirclePageIndicator;
 
-public class HotHeaderPager extends LinearLayout {
+public class HotHeaderPager<T> extends LinearLayout {
 	List<T> contentList;
 	Handler handler;
 	int count = 0;
