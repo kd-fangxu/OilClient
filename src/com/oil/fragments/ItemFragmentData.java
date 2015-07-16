@@ -28,6 +28,7 @@ import com.oil.activity.ProHisDataListActivity;
 import com.oil.adapter.ExpandDataAdapter;
 import com.oil.adapter.ProDataMainGroupAdapter;
 import com.oil.bean.Constants;
+import com.oil.bean.MyRequestParams;
 import com.oil.bean.OilUser;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.GsonParserFactory;
@@ -90,7 +91,7 @@ public class ItemFragmentData extends Fragment {
 			public void onRefresh(
 					PullToRefreshBase<ExpandableListView> refreshView) {
 				// TODO Auto-generated method stub
-
+				getData();
 			}
 		});
 
@@ -144,13 +145,15 @@ public class ItemFragmentData extends Fragment {
 	}
 
 	private void getData() {
+
 		// TODO Auto-generated method stub
 		String url = Constants.URL_GETPRODDATA + "/"
 				+ OilUser.getCurrentUser(getActivity()).getCuuid() + "/"
 				+ map.get("wang_id") + "/" + map.get("chan_id") + "/"
 				+ map.get("pro_id");
 		Log.e("url", url);
-		HttpTool.netRequestNoCheck(getActivity(), null, new OnReturnListener() {
+		HttpTool.netRequestNoCheck(getActivity(), new MyRequestParams(
+				getActivity()), new OnReturnListener() {
 
 			@Override
 			public void onReturn(String jsString) {
@@ -171,6 +174,8 @@ public class ItemFragmentData extends Fragment {
 
 				updateMainTitleAdapter();
 				updateProDataAdapter();
+				ptep_lv.onRefreshComplete();
+
 			}
 
 		}, url, false);

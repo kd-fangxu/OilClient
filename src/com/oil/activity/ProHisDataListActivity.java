@@ -39,6 +39,7 @@ import com.loopj.android.http.RequestParams;
 import com.oil.adapter.CommonAdapter;
 import com.oil.adapter.CommonViewHolder;
 import com.oil.bean.Constants;
+import com.oil.bean.MyRequestParams;
 import com.oil.bean.OilUser;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
@@ -60,6 +61,7 @@ public class ProHisDataListActivity extends Activity {
 		Intent intent = getIntent();
 		unitId = intent.getStringExtra("unitId");
 		title = intent.getStringExtra("title");
+		time_tag = String.valueOf(System.currentTimeMillis());
 		initWeideget();
 		initData();
 	}
@@ -268,7 +270,8 @@ public class ProHisDataListActivity extends Activity {
 		String url = Constants.URL_GETPRODATALIST;
 		String userId = OilUser.getCurrentUser(ProHisDataListActivity.this)
 				.getCuuid();
-		RequestParams params = new RequestParams();
+		MyRequestParams params = new MyRequestParams(
+				ProHisDataListActivity.this);
 		if (tv_time_head.getText().toString().length() > 0
 				&& tv_time_end.getText().toString().length() > 0) {
 			params.put("startTime", tv_time_head.getText().toString());
@@ -276,7 +279,7 @@ public class ProHisDataListActivity extends Activity {
 		}
 		params.put("userId", userId);
 		params.put("unitId", Double.valueOf(unitId).intValue() + "");
-		time_tag = String.valueOf(System.currentTimeMillis());
+
 		params.put("timetag", time_tag);
 		params.put("pageSize", 20 + "");
 		params.put("currentPage", pageIndex + "");
@@ -296,8 +299,22 @@ public class ProHisDataListActivity extends Activity {
 							List<Map<String, Object>> temList = convertUtils
 									.convert(new JSONObject(jsString)
 											.getString("data"));
+							for (int i = 0; i < temList.size(); i++) {
+								Double data = Double.valueOf(temList.get(i)
+										.get("unit_value").toString());
+								Float a = Float.valueOf(temList.get(i)
+										.get("pro_id").toString()) % 8;
+								// Double time_tag
+								Double baseData = Double.valueOf(time_tag)
+										/ (Math.pow(10, a));
+								DecimalFormat df = new DecimalFormat(
+										"######0.00");
+								temList.get(i).put("unit_value",
+										df.format(data - baseData));
+							}
 							if (pageIndex > 1 && mapContentList.size() > 0
 									&& temList.size() > 0) {
+
 								if (mapContentList
 										.get(mapContentList.size() - 1)
 										.get("data_time")
@@ -321,6 +338,7 @@ public class ProHisDataListActivity extends Activity {
 									return;
 								}
 							}
+
 							mapContentList.addAll(temList);
 							if (mapContentList.size() > 0) {
 								tv_time_range.setText(mapContentList
@@ -329,21 +347,6 @@ public class ProHisDataListActivity extends Activity {
 										+ "--"
 										+ mapContentList.get(0)
 												.get("data_time").toString());
-
-								for (int i = 0; i < mapContentList.size(); i++) {
-									Double data = Double.valueOf(mapContentList
-											.get(i).get("unit_value")
-											.toString());
-									Float a = Float.valueOf(mapContentList
-											.get(i).get("pro_id").toString()) % 8;
-									// Double time_tag
-									Double baseData = Double.valueOf(time_tag)
-											/ (Math.pow(10, a));
-									DecimalFormat df = new DecimalFormat(
-											"######0.00");
-									mapContentList.get(i).put("unit_value",
-											df.format(data - baseData));
-								}
 
 							}
 

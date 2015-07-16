@@ -148,6 +148,9 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 	}
 
+	/**
+	 * 获取用户收藏
+	 */
 	private void getUserFouce() {
 		// TODO Auto-generated method stub
 		String url = Constants.URL_GETUSERFOUCE;

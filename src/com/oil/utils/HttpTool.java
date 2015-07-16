@@ -94,13 +94,13 @@ public class HttpTool {
 
 			@Override
 			public void onFailure(Throwable error, String content) {
-				Log.d("value", "fail==" + content);
-				CommonUtil.cancleDialog();
-				if (!Constants.isRequestFailDialogExist) {
-					Intent intent = new Intent(context, RequestFailDialog.class);
-					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					context.startActivity(intent);
-				}
+				// Log.d("value", "fail==" + content);
+				// CommonUtil.cancleDialog();
+				// if (!Constants.isRequestFailDialogExist) {
+				// Intent intent = new Intent(context, RequestFailDialog.class);
+				// intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				// context.startActivity(intent);
+				// }
 				super.onFailure(error, content);
 			}
 		};

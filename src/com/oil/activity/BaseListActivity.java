@@ -69,7 +69,7 @@ public class BaseListActivity extends Activity {
 						gson.toJson(commonAdapter.getItem(position)),
 						new TypeToken<HotPoint>() {
 						}.getType());
-				;
+
 				intent.putExtra(WebViewShowActivity.PAGE_URL,
 						hotPoint.getLink());
 				startActivity(intent);

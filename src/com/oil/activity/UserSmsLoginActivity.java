@@ -55,7 +55,7 @@ public class UserSmsLoginActivity extends Activity implements OnClickListener {
 			finish();
 			break;
 		case R.id.btn_getsmscode:
-			if (isCodeEffect) {
+			if (!isCodeEffect) {
 				getSmsCode();
 			}
 			break;
