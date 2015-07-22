@@ -3,7 +3,6 @@ package com.oil.bean;
 import android.os.Environment;
 
 public class Constants {
-	public static int OilAppTag = 2;// 项目代号
 
 	public static int PageType_info = 1;// 资讯
 	public static int PageType_data = 2;// 数据
@@ -13,9 +12,9 @@ public class Constants {
 	/**
 	 * url
 	 */
-	public static final String IP = "http://192.168.1.91:8080/oilWeb/"; //
+	 public static final String IP = "http://192.168.1.91:8080/oilWeb/"; //
 	// "http://192.168.1.234:8080/oilWeb/";
-	// public static final String IP = "http://info.oilchem.net/";
+//	public static final String IP = "http://info.oilchem.net/";
 	public static final String LOGIN = IP + "app/user/mobileLogin";// 登录
 	public static final String REGIST = IP + "app/reg/regist"; // 注册
 	public static final String MULTI_ACCOUNT_LOGIN = IP + "app/user/selLogUser"; // 多用户选择登录
@@ -36,6 +35,7 @@ public class Constants {
 			+ "app/oilinfo/proGzViaApp";// 关注与取消关注
 	public static final String URl_ProChart = IP
 			+ "app/oilinfo/queryProductChainAllChart";// 获取产品图表数据
+	public static final String URL_APPUODATE = IP + "app/sys/chkAppVer";// app检查更新
 
 	/**
 	 * sharedPreference

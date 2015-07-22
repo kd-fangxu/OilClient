@@ -146,14 +146,10 @@
                         android:src="@drawable/ic_back_dark" />
                 </LinearLayout>
 
-                
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-               
                     android:layout_margin="1dp"
-                   
                     android:background="@drawable/shape_uc_infoitem_down"
                     android:clickable="true"
                     android:padding="10dp" >
@@ -214,7 +210,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_uc_emailverified"
+                    android:id="@+id/ll_uc_checkupdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="1dp"

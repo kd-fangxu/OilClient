@@ -16,6 +16,8 @@ import com.oil.event.FinishEvent;
 import com.oil.fragments.MainFragment;
 import com.oil.fragments.MenuFragment;
 import com.oil.utils.ScreenUtils;
+import com.oil.workmodel.AppVersionManager;
+import com.oil.workmodel.InstallInfoManager;
 
 import de.greenrobot.event.EventBus;
 
@@ -38,6 +40,8 @@ public class MainActivity extends SlidingFragmentActivity {
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		EventBus.getDefault().register(this);
+	
+		AppVersionManager.doCheckUpdate(MainActivity.this);// ¼ì²é¸üÐÂ
 	}
 
 	// ï¿½Ø±ï¿½

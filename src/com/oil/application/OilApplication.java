@@ -7,7 +7,10 @@ import android.app.Application;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.oil.activity.MainActivity;
 import com.oil.workmodel.AppInit;
+import com.oil.workmodel.InstallInfoManager;
+import com.oil.workmodel.UserRegisterManager;
 import com.tencent.bugly.crashreport.CrashReport;
 
 public class OilApplication extends Application {
@@ -29,6 +32,8 @@ public class OilApplication extends Application {
 				ImageLoaderConfiguration.createDefault(this));
 		new AppInit(this).initProductStruct();
 		initCrashReport();
+		new InstallInfoManager(this).doPostInstallInfo();
+		new UserRegisterManager(this).doAutoPost();
 	}
 
 	private void initCrashReport() {

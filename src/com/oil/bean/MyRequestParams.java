@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.loopj.android.http.RequestParams;
+import com.oil.workmodel.AppVersionManager;
 import com.oilchem.weixin.mp.aes.AesException;
 import com.oilchem.weixin.mp.aes.SHA1;
 
@@ -13,7 +14,7 @@ public class MyRequestParams extends RequestParams {
 	public MyRequestParams(Context context) {
 		SharedPreferences sp = context.getSharedPreferences(
 				Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
-		this.put("appname", Constants.OilAppTag + "");
+		this.put("appname", AppVersionManager.OilAppTag + "");
 		if (sp.getBoolean(Constants.LOGIN_STATE, false)) { // �ѵ�¼
 
 			this.put("cuuid", sp.getString(Constants.CUUID, ""));

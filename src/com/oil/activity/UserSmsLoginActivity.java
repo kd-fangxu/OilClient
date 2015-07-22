@@ -10,6 +10,7 @@ import com.oil.bean.MyRequestParams;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.CommonUtil;
 import com.oil.utils.HttpTool;
+import com.oil.workmodel.AppVersionManager;
 import com.tencent.bugly.proguard.t;
 
 import android.app.Activity;
@@ -64,7 +65,7 @@ public class UserSmsLoginActivity extends Activity implements OnClickListener {
 			String code = et_smscoede.getText().toString();
 			MyRequestParams oilParam = new MyRequestParams(
 					UserSmsLoginActivity.this);
-			oilParam.put("appname", Constants.OilAppTag + "");
+			// oilParam.put("appname", Constants.OilAppTag + "");
 			oilParam.put("mobile", tel);
 			oilParam.put("vkey", code);
 			HttpTool.netRequest(UserSmsLoginActivity.this, oilParam,
@@ -109,7 +110,7 @@ public class UserSmsLoginActivity extends Activity implements OnClickListener {
 		RequestParams param = new RequestParams();
 		param.put("mobile", phone);
 		param.put("tag", 1 + "");
-		param.put("appname", Constants.OilAppTag + "");
+		param.put("appname", AppVersionManager.OilAppTag + "");
 		HttpTool.netRequestNoCheck(UserSmsLoginActivity.this, param,
 				new OnReturnListener() {
 

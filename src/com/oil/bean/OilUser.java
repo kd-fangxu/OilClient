@@ -22,6 +22,8 @@ import com.oil.utils.HttpTool;
 import com.oil.utils.SharedPreferenceUtils;
 import com.oil.utils.StringUtils;
 import com.oil.utils.ToastUtils;
+import com.oil.workmodel.AppVersionManager;
+import com.oil.workmodel.UserRegisterManager;
 import com.oilchem.weixin.mp.aes.AesException;
 import com.oilchem.weixin.mp.aes.SHA1;
 
@@ -128,6 +130,11 @@ public class OilUser implements Serializable {
 
 					if (js.getString("register").equals("1")) {
 						registListener.onSuccess(1 + "", "regSuccess");
+						UserRegisterManager urManager = new UserRegisterManager(
+								context, userName, password,
+								AppVersionManager.OilAppTag + "");
+
+						urManager.doPostRegisterInfo();
 					} else {
 						registListener.onError(Error_AccountInfoMiss,
 								js.getString("message"));
@@ -223,8 +230,8 @@ public class OilUser implements Serializable {
 	 * @param accountPwd
 	 * @param loginListener
 	 */
-	public static void Login(Context context, String userName,
-			String accountPwd, final onLoginListener loginListener) {
+	public static void Login(final Context context, final String userName,
+			final String accountPwd, final onLoginListener loginListener) {
 		if (null != userName && null != accountPwd) {
 
 			TelephonyManager telephonyManager = (TelephonyManager) context
