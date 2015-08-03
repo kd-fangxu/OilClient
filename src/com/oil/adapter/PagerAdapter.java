@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.oil.bean.Constants;
+import com.oil.fragments.ItemFraShangji;
 import com.oil.fragments.ItemFragmentData;
 import com.oil.fragments.ItemFragmentNews;
 
@@ -37,18 +39,23 @@ public abstract class PagerAdapter<T> extends FragmentStatePagerAdapter {
 	@Override
 	public Fragment getItem(int position) {
 		// TODO Auto-generated method stub
-
+		// public static int PageType_info = 1;// 资讯
+		// public static int PageType_data = 2;// 数据——数据库
+		// public static int PageType_price = 3;// 数据——价格库
+		// public static int pageType_shangji = 4;// 商机
 		switch (type) {
-		case 1:
+		case 1:// 资讯
 			return ItemFragmentNews.getInstance();
 		case 2:
-			return ItemFragmentData.getInstance(0,
-					(HashMap<String, String>) itemList.get(position));
-		case 3:
 			return ItemFragmentData.getInstance(1,
 					(HashMap<String, String>) itemList.get(position));
+		case 3:
+			return ItemFragmentData.getInstance(2,
+					(HashMap<String, String>) itemList.get(position));
 		case 4:
-//			return ProductNewClumnTabFragment.getInstance();
+			// return ProductNewClumnTabFragment.getInstance();
+			return new ItemFraShangji(
+					(HashMap<String, String>) itemList.get(position));
 
 		default:
 			break;

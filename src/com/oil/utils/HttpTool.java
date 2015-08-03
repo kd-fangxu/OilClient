@@ -94,7 +94,7 @@ public class HttpTool {
 
 			@Override
 			public void onFailure(Throwable error, String content) {
-				// Log.d("value", "fail==" + content);
+				Log.d("value", "fail==" + content);
 				// CommonUtil.cancleDialog();
 				// if (!Constants.isRequestFailDialogExist) {
 				// Intent intent = new Intent(context, RequestFailDialog.class);

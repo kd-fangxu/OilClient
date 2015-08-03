@@ -60,7 +60,7 @@ public class MainFragment extends Fragment {
 		// ft.commit();
 	}
 
-	private void initWeidget() {
+	public void initWeidget() {
 		// TODO Auto-generated method stub
 		iv_mainback.setOnClickListener(new OnClickListener() {
 
@@ -89,13 +89,15 @@ public class MainFragment extends Fragment {
 					break;
 				case R.id.rb_tab_data:
 					ft.replace(R.id.fl_showpage, new TabFragmetLzDataPage(1));
+					// 0:jia ge ku 价格库 1:shujuku 数据库
 					break;
 				case R.id.rb_tab_msg:
-					ft.replace(R.id.fl_showpage, new TabFragmentMsgPage());
+					ft.replace(R.id.fl_showpage, new TabFragmentShangJi());
 					break;
 				case R.id.rb_tab_user:
 					// ft.replace(R.id.fl_showpage, new TabFragmentUserPage());
 					ft.replace(R.id.fl_showpage, new TabFragmetLzDataPage(0));
+					// 0:jia ge ku 价格库 1:shujuku 数据库
 					break;
 
 				default:

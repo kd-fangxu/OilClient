@@ -57,7 +57,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	int tem_type = 0;
 
 	/**
-	 * 0:wo 1:data
+	 * 0:jia ge ku 价格库 1:shujuku 数据库
 	 * 
 	 * @param type
 	 */
@@ -66,8 +66,16 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		// Log
 	};
 
+	/**
+	 * 0:jia ge ku 价格库 1:shujuku 数据库
+	 * 
+	 * @param type
+	 */
 	public static TabFragmetLzDataPage getInstance(int type) {
 		return new TabFragmetLzDataPage(type);
+	}
+
+	public TabFragmetLzDataPage() {
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -232,19 +240,36 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	List<String> titleList;
 	List<HashMap<String, String>> mapList = new ArrayList<HashMap<String, String>>();
 
-	private void initWeidget(View view) {
+	public void initWeidget(View view) {
 		// TODO Auto-generated method stub
+		switch (tem_type) {
+		case 1:// 数据库
+			pagerAdapter = new PagerAdapter<HashMap<String, String>>(
+					getFragmentManager(), mapList, Constants.PageType_data) {
 
-		pagerAdapter = new PagerAdapter<HashMap<String, String>>(
-				getFragmentManager(), mapList, Constants.PageType_data) {
+				@Override
+				public String getName(HashMap<String, String> item) {
+					// TODO Auto-generated method stub
+					return item.get("pro_cn_name");
+				}
 
-			@Override
-			public String getName(HashMap<String, String> item) {
-				// TODO Auto-generated method stub
-				return item.get("pro_cn_name");
-			}
+			};
+			break;
+		case 0:// 价格库
+			pagerAdapter = new PagerAdapter<HashMap<String, String>>(
+					getFragmentManager(), mapList, Constants.PageType_price) {
 
-		};
+				@Override
+				public String getName(HashMap<String, String> item) {
+					// TODO Auto-generated method stub
+					return item.get("pro_cn_name");
+				}
+
+			};
+			break;
+		default:
+			break;
+		}
 
 		ocvp.setAdapter(pagerAdapter);
 		psts.setViewPager(ocvp);

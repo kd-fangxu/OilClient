@@ -24,6 +24,7 @@ import com.example.oilclient.R;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
+import com.loopj.android.http.RequestParams;
 import com.oil.activity.ProHisDataListActivity;
 import com.oil.adapter.ExpandDataAdapter;
 import com.oil.adapter.ProDataMainGroupAdapter;
@@ -39,7 +40,7 @@ import com.oil.weidget.HorizontalListView;
 public class ItemFragmentData extends Fragment {
 	PullToRefreshExpandableListView ptep_lv;
 	HorizontalListView hlv_type;
-	int type = 0;// 默锟较★拷锟揭★拷 1锟斤拷锟斤拷锟�
+	int groupID = 0;// 默锟较★拷锟揭★拷 1锟斤拷锟斤拷锟�
 	Map<String, String> map;
 
 	/**
@@ -60,7 +61,7 @@ public class ItemFragmentData extends Fragment {
 
 	public ItemFragmentData(int type, HashMap<String, String> map) {
 		this.map = map;
-		this.type = type;
+		this.groupID = type;
 	};
 
 	// HashMap<String, Object> currentDataMap = new HashMap<String, Object>();
@@ -152,33 +153,38 @@ public class ItemFragmentData extends Fragment {
 				+ map.get("wang_id") + "/" + map.get("chan_id") + "/"
 				+ map.get("pro_id");
 		Log.e("url", url);
-		HttpTool.netRequestNoCheck(getActivity(), new MyRequestParams(
-				getActivity()), new OnReturnListener() {
+		MyRequestParams params = new MyRequestParams(getActivity());
+		params.put("groupID", groupID + "");
+		HttpTool.netRequestNoCheck(getActivity(), params,
+				new OnReturnListener() {
 
-			@Override
-			public void onReturn(String jsString) {
-				// TODO Auto-generated method stub
-				GsonParserFactory gpf = new GsonParserFactory();
-				mapContentList.clear();
-				mapContentList.addAll(gpf.getProDataDatails(jsString));
-				ObjectConvertUtils<List<Map<String, Object>>> convertUtils = new ObjectConvertUtils<List<Map<String, Object>>>();
-				groupTitleList.clear();
-				try {
-					groupTitleList.addAll(convertUtils.convert(new JSONObject(
-							jsString).getString("productTempClassList")));
-					filterEmptyGroupList();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					@Override
+					public void onReturn(String jsString) {
+						// TODO Auto-generated method stub
+						GsonParserFactory gpf = new GsonParserFactory();
+						mapContentList.clear();
+						mapContentList.addAll(gpf.getProDataDatails(jsString));
+						ObjectConvertUtils<List<Map<String, Object>>> convertUtils = new ObjectConvertUtils<List<Map<String, Object>>>();
+						groupTitleList.clear();
+						try {
+							groupTitleList.addAll(convertUtils
+									.convert(new JSONObject(jsString)
+											.getString("productTempClassList")));
+							filterEmptyGroupList();
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						if (groupTitleList.size() > 0) {
 
-				updateMainTitleAdapter();
-				updateProDataAdapter();
-				ptep_lv.onRefreshComplete();
+							updateMainTitleAdapter();
+							updateProDataAdapter();
+						}
+						ptep_lv.onRefreshComplete();
 
-			}
+					}
 
-		}, url, false);
+				}, url, false);
 	}
 
 	private void updateMainTitleAdapter() {

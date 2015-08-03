@@ -130,6 +130,10 @@
             android:name="com.oil.activity.UserSmsLoginActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.oil.activity.ShangjiDetailsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

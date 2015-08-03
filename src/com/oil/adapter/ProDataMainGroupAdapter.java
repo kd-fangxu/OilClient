@@ -39,7 +39,7 @@ public class ProDataMainGroupAdapter extends BaseAdapter {
 		return position;
 	}
 
-	int selectedPosition = 0;
+	int selectedPosition = -1;
 
 	public void SetSelectedPosition(int position) {
 		// TODO Auto-generated method stub

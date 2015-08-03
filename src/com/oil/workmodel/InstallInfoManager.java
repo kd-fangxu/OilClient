@@ -24,13 +24,14 @@ import com.oil.utils.SharedPreferenceUtils;
 public class InstallInfoManager {
 
 	String shareFlag_isPostIntallInfo = "isPostIntallInfo";
-	String requestUrl = Constants.IP + "app/installmanage/addInstallLog";
+	String requestUrl = Constants.IP + "app/InstallLogManager/addInstallLog";
 	private String Device_Id; // 设备ID
 	private String App_Id;// app标识 商脉通：1 资讯:2
 	private String App_Version;// app版本
 	private String Device_Model;// 设备型号
 	private String version_Releas;// 设备系统版本号
 	private String App_PackageName;// app包名
+	private String device_type = "android";
 	private Context context;
 
 	public InstallInfoManager(Context context) {
@@ -85,7 +86,7 @@ public class InstallInfoManager {
 			params.put("Device_Model", this.getDevice_Model());
 			params.put("version_Releas", this.getVersion_Releas());
 			params.put("App_PackageName", this.getApp_PackageName());
-
+			params.put("device_type", device_type);
 			HttpTool.netRequestNoCheck(context, params, new OnReturnListener() {
 
 				@Override

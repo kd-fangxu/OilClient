@@ -109,7 +109,7 @@ public class AppVersionManager {
 						if (isShowInfo) {
 							Toast.makeText(context, "程序无需更新", 0).show();
 						}
-						
+
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block

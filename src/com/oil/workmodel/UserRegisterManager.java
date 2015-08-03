@@ -21,11 +21,11 @@ import android.telephony.TelephonyManager;
  *
  */
 public class UserRegisterManager {
-	String requestUrl = "/app/userRegLog";
+	String requestUrl = "/app/UserRegLogManager/userRegLog";
 	String userName;
 	String pwd;
-	String AppName; 
-	
+	String AppName;
+	private String device_type = "android";
 	Context context;
 
 	public UserRegisterManager(Context context, String userName, String pwd,
@@ -74,6 +74,7 @@ public class UserRegisterManager {
 		param.put("device_id", getDevice_Id());
 		param.put("packageName", getApp_PackageName());
 		param.put("app_version", getApp_Version());
+		param.put("device_type", device_type);
 		HttpTool.netRequestNoCheck(context, param, new OnReturnListener() {
 
 			@Override

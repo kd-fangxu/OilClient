@@ -98,7 +98,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:drawableTop="@drawable/selector_tab_msg"
-            android:text="短讯"
+            android:text="商机"
             android:textColor="@color/white" />
 
         <RadioButton
