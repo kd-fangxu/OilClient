@@ -14,7 +14,8 @@
             android:id="@+id/tv_itemType"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/selector_item_selcted_bgreen"
             android:gravity="center"
             android:padding="5dp"
@@ -38,7 +39,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -48,6 +48,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="2dp"
             android:text="comName"
             android:textColor="@color/whitesmoke"
             android:textSize="15sp" />
@@ -59,6 +60,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="2dp"
             android:text="comName"
             android:textColor="@color/whitesmoke"
             android:textSize="15sp" />
@@ -69,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-       android:layout_marginTop="5dp"
+        android:padding="2dp"
         android:text="uptime"
         android:textColor="@color/whitesmoke" />
 

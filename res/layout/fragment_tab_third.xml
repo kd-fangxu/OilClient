@@ -57,4 +57,23 @@
         </com.oil.weidget.OilContentViewPager>
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/iv_myShangji"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="50dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_circlebtn"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_bus"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
 </FrameLayout>

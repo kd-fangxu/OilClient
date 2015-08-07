@@ -84,7 +84,7 @@ public class UserSmsLoginActivity extends Activity implements OnClickListener {
 									CommonUtil.loginSuccess(jsString,
 											UserSmsLoginActivity.this, "main",
 
-											"");
+											"sms");
 									// ¶ÌÐÅµÇÂ½³É¹¦
 								} else {
 									// µÇÂ¼Ê§°Ü

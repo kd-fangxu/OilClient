@@ -2,25 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="250dp"
-    android:orientation="vertical"
-    android:paddingBottom="10dp" >
+    android:minWidth="260dp"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/tv_comdialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/Themecolor"
-        android:padding="5dp"
+        android:padding="8dp"
         android:text="item"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_comdialog_content"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:minHeight="55dp"
         android:padding="10dp"
         android:text="this is the content"
         android:textSize="16sp" />
@@ -41,7 +41,8 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:text="取消"
-            android:textColor="@color/Themecolor" />
+            android:textColor="@color/Themecolor"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btn_confirm"
@@ -50,7 +51,8 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:text="确认"
-            android:textColor="@color/Themecolor" />
+            android:textColor="@color/Themecolor"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>

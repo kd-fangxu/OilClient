@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/item_share"
+        android:title="分享">
+    </item>
+    <item
+        android:id="@+id/item_match"
+        android:title="匹配">
+    </item>
+    <item
+        android:id="@+id/item_update"
+        android:title="修改">
+    </item>
+    <item
+        android:id="@+id/item_shuoxin"
+        android:title="刷新">
+    </item>
+    <item
+        android:id="@+id/item_delete"
+        android:title="删除">
+    </item>
+
+</menu>

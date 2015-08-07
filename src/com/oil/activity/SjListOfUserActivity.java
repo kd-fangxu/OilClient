@@ -1,26 +1,21 @@
-package com.oil.fragments;
+package com.oil.activity;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.example.oilclient.R;
@@ -28,7 +23,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.oil.activity.ShangjiDetailsActivity;
 import com.oil.adapter.CommonAdapter;
 import com.oil.adapter.CommonViewHolder;
 import com.oil.bean.Constants;
@@ -36,69 +30,126 @@ import com.oil.bean.MyRequestParams;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
 import com.oil.utils.ObjectConvertUtils;
+import com.oil.utils.ToastUtils;
 
 /**
- * 商机单界面
+ * 我的供求列表界面
  * 
  * @author Administrator
  *
  */
-public class ItemFraShangji extends Fragment {
-	int dataType = 0;// 1:供应 0：求购
-	RadioGroup rg_type;
-	int pageCount = 1;
-	HashMap<String, String> mapString;
+public class SjListOfUserActivity extends Activity {
+	ImageView iv_pageback, iv_add;
 	PullToRefreshListView prlv;
-	// HorizontalListView hlv;
-
 	CommonAdapter<Map<String, Object>> commonAdapter;
 	List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();// 填充数据
-
-	// JSONArray jArray = new JSONArray();
-	public ItemFraShangji() {
-	};
-
-	public ItemFraShangji(HashMap<String, String> mapString) {
-		this.mapString = mapString;
-	};
+	int requestType = 2;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View view = View.inflate(getActivity(), R.layout.view_list, null);
-		prlv = (PullToRefreshListView) view.findViewById(R.id.prlv_data);
-		// hlv = (HorizontalListView) view.findViewById(R.id.hlv_type);
-		rg_type = (RadioGroup) view.findViewById(R.id.rg_busType);
-		rg_type.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.act_shangji_user);
+		// Intent intent = getIntent();
 
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				// TODO Auto-generated method stub
-				switch (checkedId) {
-				case R.id.rb_busGy:
-					dataType = 1;
-					pageCount = 1;
-					updateDate();
-					break;
-				case R.id.rb_busQg:
-					dataType = 0;
-					pageCount = 1;
-					updateDate();
-					break;
+		initView();
 
-				default:
-					break;
-				}
-			}
-		});
-
-		initLv();
-		rg_type.check(R.id.rb_busGy);
-		return view;
 	}
 
-	private void initLv() {
+	private void initData() {
+		// TODO Auto-generated method stub
+		updataData(requestType);
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		initData();
+		super.onResume();
+	}
+
+	private void updataData(int type) {
+		// TODO Auto-generated method stub
+		String url = Constants.URl_getGqList + type;
+		MyRequestParams params = new MyRequestParams(SjListOfUserActivity.this);
+		params.put("corpid", 0 + "");
+
+		HttpTool.netRequest(SjListOfUserActivity.this, params,
+				new OnReturnListener() {
+
+					@Override
+					public void onReturn(String jsString) {
+						// TODO Auto-generated method stub
+
+						// TODO Auto-generated method stub
+						try {
+							JSONObject jo = new JSONObject(jsString);
+							String data = jo.getJSONObject("data").getString(
+									"message");
+							// jaArray.
+							List<Map<String, Object>> temMapList;
+							ObjectConvertUtils<List<Map<String, Object>>> ocUtils = new ObjectConvertUtils<List<Map<String, Object>>>();
+							if (pageCount == 1) {
+								mapList.clear();
+
+							}
+							temMapList = ocUtils.convert(data);
+							if (temMapList != null) {
+								if (temMapList.size() > 0
+										&& mapList.size() > 0
+										&& temMapList
+												.get(0)
+												.get("sdid")
+												.toString()
+												.equals(mapList.get(0)
+														.get("sdid").toString())) {
+									ToastUtils.getInstance(
+											SjListOfUserActivity.this)
+											.showText("无更多内容");
+
+								} else {
+									mapList.addAll(temMapList);
+								}
+
+							}
+
+							commonAdapter.notifyDataSetChanged();
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						prlv.onRefreshComplete();
+
+					}
+				}, url, false);
+	}
+
+	int pageCount = 1;
+
+	private void initView() {
+		// TODO Auto-generated method stub
+		iv_pageback = (ImageView) findViewById(R.id.iv_pageback);
+		iv_pageback.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+		iv_add = (ImageView) findViewById(R.id.iv_add);
+		iv_add.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(SjListOfUserActivity.this,
+						GqPublicActivity.class));
+			}
+		});
+		prlv = (PullToRefreshListView) findViewById(R.id.prlv_data);
+
 		// TODO Auto-generated method stub
 		prlv.setMode(Mode.BOTH);
 		prlv.setOnRefreshListener(new OnRefreshListener<ListView>() {
@@ -113,17 +164,17 @@ public class ItemFraShangji extends Fragment {
 						.getRefreshableView().getAdapter().getCount() - 1) {
 					// 加载更多
 					pageCount++;
-					updateDate();
+					updataData(requestType);
 				} else {
 					// 刷新
 					pageCount = 1;
-					updateDate();
+					updataData(requestType);
 				}
 
 			}
 		});
-		commonAdapter = new CommonAdapter<Map<String, Object>>(getActivity(),
-				mapList, R.layout.item_shangji_data) {
+		commonAdapter = new CommonAdapter<Map<String, Object>>(
+				SjListOfUserActivity.this, mapList, R.layout.item_shangji_data) {
 
 			@Override
 			public void convert(CommonViewHolder helper,
@@ -162,9 +213,9 @@ public class ItemFraShangji extends Fragment {
 				Object stock = item.get("stock");
 				Object price = item.get("price");
 				Object unit = item.get("unit");
-				if (pro_name != null && unit != null && stock != null) {
+				if (pro_name != null && stock != null) {
 					sb.append(pro_name.toString() + stock.toString()
-							+ unit.toString());
+							+ (unit == null ? "吨" : unit.toString()));
 					tv_busInfo.setText(sb.toString());
 
 				}
@@ -194,69 +245,15 @@ public class ItemFraShangji extends Fragment {
 						.intValue()
 						+ "";
 
-				Intent intent = new Intent(getActivity(),
-						ShangjiDetailsActivity.class).putExtra("sdid", sdid);
+				Intent intent = new Intent(SjListOfUserActivity.this,
+						ShangjiDetailsActivity.class).putExtra("sdid", sdid)
+						.putExtra("isUserReq", true);
+				;
 
-				getActivity().startActivity(intent);
+				startActivity(intent);
 			}
 		});
 		// updateDate();
-	}
-
-	private void updateDate() {
-		// TODO Auto-generated method stub
-		Log.e("tag", "updateDate");
-		MyRequestParams params = new MyRequestParams(getActivity());
-		params.put("tb", dataType + "");
-		params.put("page", pageCount + "");
-		params.put("pagesize", "20");
-		// params.put("keyword", mapString.get("pro_cn_name"));
-		params.put("keytype", 0 + "");
-		params.put("ggxh", "");
-		params.put("keyword", URLEncoder.encode(URLEncoder.encode(mapString
-				.get("pro_cn_name"))));
-		HttpTool.netRequest(getActivity(), params, new OnReturnListener() {
-
-			@Override
-			public void onReturn(String jsString) {
-				// TODO Auto-generated method stub
-				try {
-					JSONObject jo = new JSONObject(jsString);
-					String data = jo.getJSONObject("data").getString("message");
-					// jaArray.
-					List<Map<String, Object>> temMapList;
-					ObjectConvertUtils<List<Map<String, Object>>> ocUtils = new ObjectConvertUtils<List<Map<String, Object>>>();
-					if (pageCount == 1) {
-						mapList.clear();
-
-					}
-					temMapList = ocUtils.convert(data);
-					if (temMapList != null) {
-						if (temMapList.size() > 0
-								&& mapList.size() > 0
-								&& temMapList
-										.get(0)
-										.get("sdid")
-										.toString()
-										.equals(mapList.get(0).get("sdid")
-												.toString())) {
-
-						} else {
-							mapList.addAll(temMapList);
-						}
-
-					}
-
-					commonAdapter.notifyDataSetChanged();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				prlv.onRefreshComplete();
-
-			}
-		}, Constants.URL_GRTSHANGJI, false);
 
 	}
 }

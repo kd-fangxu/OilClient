@@ -14,9 +14,9 @@ public class Constants {
 	/**
 	 * url
 	 */
-	public static String IP = "http://192.168.1.91:8080/oilWeb/"; //
+	 public static String IP = "http://192.168.1.91:8080/oilWeb/"; //
 	// "http://192.168.1.234:8080/oilWeb/";
-	// public static String IP = "http://info.oilchem.net/";
+//	public static String IP = "http://info.oilchem.net/";
 	public static final String LOGIN = IP + "app/user/mobileLogin";// 登录
 	public static final String REGIST = IP + "app/reg/regist"; // 注册
 	public static final String MULTI_ACCOUNT_LOGIN = IP + "app/user/selLogUser"; // 多用户选择登录
@@ -41,6 +41,10 @@ public class Constants {
 	public static final String URL_GRTSHANGJI = IP + "app/gq/searchgq";// 获取商机供求资源
 
 	public static final String URL_getGQ = IP + "app/gq/gqdetail";// 获取供求详情
+	public static final String URl_getGqList = IP + "app/gq/getmygq/";// 获取供求列表
+																		// 0：供
+																		// 1：求2：gong3:供求
+	public static final String URL_getGqPhone = IP + "app/gq/getPhone";// 获取供求电话
 	/**
 	 * sharedPreference
 	 */
