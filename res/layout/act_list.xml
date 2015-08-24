@@ -29,22 +29,13 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:padding="3dp"
-            android:text="我的供求"
+            android:text="供求匹配"
             android:textColor="@color/white"
             android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/iv_menu"
-            android:layout_width="55dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_norbutton"
-            android:padding="14dp"
-            android:src="@drawable/icon_more" />
     </LinearLayout>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/prlv_data"
+        android:id="@+id/lv_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="#00000000"

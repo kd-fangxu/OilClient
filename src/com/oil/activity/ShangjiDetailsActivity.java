@@ -1,5 +1,8 @@
 package com.oil.activity;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +23,7 @@ import com.example.oilclient.R;
 import com.oil.bean.Constants;
 import com.oil.bean.MyConfig;
 import com.oil.bean.MyRequestParams;
+import com.oil.bean.ProductBean;
 import com.oil.dialogs.CommontitleDialog;
 import com.oil.dialogs.CommontitleDialog.onComDialogBtnClick;
 import com.oil.inter.OnReturnListener;
@@ -33,6 +37,7 @@ public class ShangjiDetailsActivity extends Activity implements OnClickListener 
 	String sdid;
 	Button btn_call;
 	boolean isUserReq = false;
+	ProductBean currentPro;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +51,13 @@ public class ShangjiDetailsActivity extends Activity implements OnClickListener 
 		}
 
 		initView();
-		initData();
+
 	}
+
+	protected void onResume() {
+		super.onResume();
+		initData();
+	};
 
 	StringBuilder sb_pro, sb_conn;
 
@@ -75,13 +85,15 @@ public class ShangjiDetailsActivity extends Activity implements OnClickListener 
 										+ jObject.getString("model")
 										+ "\n"
 										+ "数量："
-										+ jObject.getString("stock")
-										+ "吨"
+										+ ((jObject.getString("stock") == null || jObject
+												.getString("stock").equals(
+														"null")) ? " "
+												: (jObject.get("stock") + "吨"))
 										+ "\n"
 										+ "价格："
 										+ (jObject.getString("price").equals(
-												"null") ? "面议" : jObject
-												.getString("price")) + "元");
+												"null") ? "面议" : (jObject
+												.getString("price") + "元")));
 								tv_proInfo.setText(sb_pro.toString());
 								sb_conn = new StringBuilder();
 								sb_conn.append("联系人："
@@ -92,6 +104,7 @@ public class ShangjiDetailsActivity extends Activity implements OnClickListener 
 										+ "\n" + "备注："
 										+ jObject.getString("remark"));
 								tv_connInfo.setText(sb_conn.toString());
+								currentPro = getPublishList(jsString).get(0);
 
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
@@ -99,6 +112,7 @@ public class ShangjiDetailsActivity extends Activity implements OnClickListener 
 							}
 
 						}
+
 					}, Constants.URL_getGQ, false);
 		}
 	}
@@ -149,6 +163,15 @@ public class ShangjiDetailsActivity extends Activity implements OnClickListener 
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(Intent.createChooser(intent, getTitle()));
 					break;
+				case R.id.item_match:
+					doMatch();
+					break;
+				case R.id.item_update:
+					doUpdate();
+					break;
+				// case R.id.item_shuoxin:
+				// doRefreshGq();
+				// break;
 				case R.id.item_delete:
 					final CommontitleDialog titleDialog = new CommontitleDialog(
 							ShangjiDetailsActivity.this);
@@ -178,6 +201,21 @@ public class ShangjiDetailsActivity extends Activity implements OnClickListener 
 			}
 
 		});
+	}
+
+	private void doUpdate() {
+		// TODO Auto-generated method stub
+		Intent intent = new Intent(ShangjiDetailsActivity.this,
+				GqPublicActivity.class);
+		intent.putExtra("isMine", true);
+		intent.putExtra("product", currentPro);
+		startActivity(intent);
+
+	}
+
+	private void doMatch() {
+		startActivity(new Intent(ShangjiDetailsActivity.this,
+				ShangjiMatachAct.class).putExtra("sdid", sdid));
 	}
 
 	private void doDeleteGq() {
@@ -260,5 +298,67 @@ public class ShangjiDetailsActivity extends Activity implements OnClickListener 
 
 					}
 				}, Constants.URL_getGqPhone, false);
+	}
+
+	/**
+	 * 解析供求历史列表
+	 */
+	public ArrayList<ProductBean> getPublishList(String jsString) {
+		ArrayList<ProductBean> list = new ArrayList<ProductBean>();
+		try {
+			JSONArray array = new JSONObject(jsString).getJSONObject("data")
+					.getJSONArray("message");
+
+			for (int i = 0; i < array.length(); i++) {
+				ProductBean product = new ProductBean();
+				JSONObject obj = array.getJSONObject(i);
+				product.sdid = obj.getString("sdid");
+				product.tb = obj.getString("tb");
+				product.addTime = obj.getString("addtime").equals("null") ? ""
+						: obj.getString("addtime");
+				product.refreshTime = obj.getString("refreshtime").equals(
+						"null") ? "" : obj.getString("refreshtime");
+				product.corpId = obj.getString("corpid").equals("null") ? ""
+						: obj.getString("corpid");
+				product.corpName = obj.getString("corpname").equals("null") ? ""
+						: obj.getString("corpname");
+				product.cpName = obj.getString("cpname").equals("null") ? ""
+						: obj.getString("cpname");
+				product.stock = obj.getString("stock").equals("null") ? ""
+						: obj.getString("stock");
+
+				if (obj.has("lastCallTime")) {
+					product.lastCallTime = obj.getString("lastCallTime")
+							.equals("null") ? "" : obj
+							.getString("lastCallTime");
+				}
+				if (obj.has("price")) {
+					product.price = obj.getString("price").equals("null") ? ""
+							: obj.getString("price");
+				}
+				if (obj.has("cpid")) {
+					product.cpId = obj.getString("cpid");
+				}
+				if (obj.has("phone")) {
+					product.phone = obj.getString("phone").equals("null") ? ""
+							: obj.getString("phone");
+				}
+				if (obj.has("model")) {
+					product.model = obj.getString("model").equals("null") ? ""
+							: obj.getString("model");
+				}
+				if (obj.has("refreshtime")) {
+					product.refreshTime = obj.getString("refreshtime").equals(
+							"null") ? "" : obj.getString("refreshtime");
+				}
+
+				list.add(product);
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

@@ -68,7 +68,6 @@ public class CheeseDynamicAdapter extends BaseDynamicGridAdapter {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					// Toast.makeText(getContext(), "onivclick", 1).show();
-
 					remove(getItem(position));
 					UserFouceChangeEvent event = new UserFouceChangeEvent();
 					event.setAdded(false);

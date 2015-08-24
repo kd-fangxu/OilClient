@@ -1,20 +1,31 @@
 package com.oil.activity;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.oilclient.R;
-import com.oil.utils.StringUtils;
+import com.viewpagerindicator.TitlePageIndicator;
 
+/**
+ * 文章显示
+ * 
+ * @author Administrator
+ *
+ */
 public class WebViewShowActivity extends Activity {
 	public static String PAGE_TITLE = "title";
 	public static String PAGE_URL = "url";
+	public static String PAGR_CONTENT = "content";
+	ImageView iv_pageback;
+	TextView tv_title;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +42,21 @@ public class WebViewShowActivity extends Activity {
 		Intent intent = getIntent();
 		String pageTitle = intent.getStringExtra(PAGE_TITLE);
 		String Url = intent.getStringExtra(PAGE_URL);
+		String content = intent.getStringExtra(PAGR_CONTENT);
+		iv_pageback = (ImageView) findViewById(R.id.iv_pageback);
+		tv_title = (TextView) findViewById(R.id.tv_page_title);
+		iv_pageback.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+		if (pageTitle != null) {
+			tv_title.setText(pageTitle);
+		}
+
 		webView = (WebView) findViewById(R.id.wv_show);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -39,33 +65,15 @@ public class WebViewShowActivity extends Activity {
 		webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// webView.getSettings().setAllowFileAccess(true);
 		webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-		webView.getSettings().setDefaultTextEncodingName("UTF-8");
+		// webView.getSettings().setDefaultTextEncodingName("UTF-8");
 		webView.getSettings().setLoadWithOverviewMode(true);
 
-		// webView.setWebViewClient(new WebViewClient() {
-		// public boolean shouldOverrideUrlLoading(WebView view, String url) {
-		// view.loadUrl(url);
-		// return true;
-		// }
-		//
-		// @Override
-		// public void onReceivedError(WebView view, int errorCode,
-		// String description, String failingUrl) {
-		// // TODO Auto-generated method stub
-		// // Log.e("aaaaa", "web加载失败");
-		// view.stopLoading();
-		// view.clearView();
-		// view.setVisibility(view.GONE);
-		// }
-		// });
-		// webView.loadUrl(Url);
-		try {
-			String content = StringUtils.convertStreamToString(getAssets()
-					.open("newdetails.txt"));
-			webView.loadData(content, "text/html", "utf-8");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// String content = StringUtils.convertStreamToString(getAssets()
+		// .open("newdetails.txt"));
+		webView.getSettings().setDefaultTextEncodingName("UTF -8");// 设置默认为utf-8
+		// webView.loadData(data, "text/html", "UTF -8");//API提供的标准用法，无法解决乱码问题
+		webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
+
+		// webView.loadd
 	}
 }

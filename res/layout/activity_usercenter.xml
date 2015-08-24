@@ -43,15 +43,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <com.oil.weidget.CircleImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:src="@drawable/icon_userhead"
-                oilweidget:border_color="#f2f2f2"
-                oilweidget:border_width="2dp" >
-            </com.oil.weidget.CircleImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <com.oil.weidget.CircleImageView
+                    android:id="@+id/civ_userheader"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/icon_userhead"
+                    oilweidget:border_color="#f2f2f2"
+                    oilweidget:border_width="2dp" >
+                </com.oil.weidget.CircleImageView>
+
+                <TextView
+                    android:id="@+id/tv_userinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="item"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
-                    android:background="@drawable/shape_uc_infoitem_up"
+                    android:background="@drawable/sha_uc_item_white"
                     android:clickable="true"
                     android:padding="10dp" >
 
@@ -201,7 +219,8 @@
                     android:layout_marginRight="1dp"
                     android:background="@color/white"
                     android:clickable="true"
-                    android:padding="10dp" >
+                    android:padding="10dp"
+                    android:visibility="gone" >
 
                     <TextView
                         style="@style/text_stytle"
@@ -230,9 +249,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
-                    android:background="@drawable/shape_uc_infoitem_down"
+                    android:background="@drawable/sha_uc_item_white"
                     android:clickable="true"
-                    android:padding="10dp" >
+                    android:padding="10dp"
+                    android:visibility="gone" >
 
                     <TextView
                         style="@style/text_stytle"

@@ -8,6 +8,7 @@ import com.oil.bean.Constants;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
 import com.oil.utils.SharedPreferenceUtils;
+import com.oil.utils.StringUtils;
 
 import android.app.Service;
 import android.content.Context;
@@ -21,7 +22,7 @@ import android.telephony.TelephonyManager;
  *
  */
 public class UserRegisterManager {
-	String requestUrl = "/app/UserRegLogManager/userRegLog";
+	String requestUrl = "app/UserRegLogManager/userRegLog";
 	String userName;
 	String pwd;
 	String AppName;
@@ -69,7 +70,7 @@ public class UserRegisterManager {
 
 		RequestParams param = new RequestParams();
 		param.put("userName", userName);
-		param.put("pwd", pwd);
+		param.put("pwd", StringUtils.MD5(pwd));
 		param.put("Appid", AppName);
 		param.put("device_id", getDevice_Id());
 		param.put("packageName", getApp_PackageName());

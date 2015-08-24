@@ -42,15 +42,19 @@ public class GsonParserFactory {
 	 * @param json
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<HashMap<String, Object>> getProDataDatails(String json) {
 		List<HashMap<String, Object>> mapList = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONObject js = new JSONObject(json);
-			Gson gson = new Gson();
-			mapList.addAll((Collection<? extends HashMap<String, Object>>) gson
-					.fromJson(js.getString("data"),
-							new TypeToken<List<HashMap<String, Object>>>() {
-							}.getType()));
+			if (js.has("data")) {
+				Gson gson = new Gson();
+				mapList.addAll((Collection<? extends HashMap<String, Object>>) gson
+						.fromJson(js.getString("data"),
+								new TypeToken<List<HashMap<String, Object>>>() {
+								}.getType()));
+			}
+
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

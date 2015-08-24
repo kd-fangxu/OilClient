@@ -1,9 +1,13 @@
 package com.oil.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
@@ -23,6 +27,7 @@ import com.oil.inter.OnReturnListener;
 import de.greenrobot.event.EventBus;
 
 public class HttpTool {
+
 	public static void netRequest(final Context context,
 			com.loopj.android.http.RequestParams params,
 			final OnReturnListener listener, final String url,
@@ -48,7 +53,8 @@ public class HttpTool {
 				CommonUtil.cancleDialog();
 
 				if (null != content) {
-					if (DataUtil.CheckJson(false, content, context)) {
+
+					if (new JsonValidator().validate(content)) {
 						if (null != listener) {
 							listener.onReturn(content);
 						}
@@ -59,19 +65,23 @@ public class HttpTool {
 								// µÇÂ¼Ê§Ð§
 								OilUser.logOut(context);
 
-							} else if (obj.has("data")
-									&& obj.getJSONObject("data").has(
-											"accessToken")) {
-								Editor editor = context.getSharedPreferences(
-										Constants.USER_INFO_SHARED,
-										Activity.MODE_PRIVATE).edit();
-								editor.putString(
-										Constants.ACCESS_TOKEN,
-										new JSONObject(content).getJSONObject(
-												"data")
-												.getString("accessToken"))
-										.commit();
+							} else if (obj.has("data")) {
+								if (obj.getJSONObject("data")
+										.has("accessToken")) {
 
+									Editor editor = context
+											.getSharedPreferences(
+													Constants.USER_INFO_SHARED,
+													Activity.MODE_PRIVATE)
+											.edit();
+									editor.putString(
+											Constants.ACCESS_TOKEN,
+											new JSONObject(content)
+													.getJSONObject("data")
+													.getString("accessToken"))
+											.commit();
+
+								}
 							}
 
 						} catch (JSONException e) {

@@ -60,7 +60,8 @@
                     android:layout_margin="1dp"
                     android:background="@drawable/shape_uc_infoitem_up"
                     android:clickable="true"
-                    android:padding="10dp" >
+                    android:padding="10dp"
+                    android:visibility="gone" >
 
                     <TextView
                         style="@style/text_stytle"
@@ -91,7 +92,8 @@
                     android:layout_marginRight="1dp"
                     android:background="@color/white"
                     android:clickable="true"
-                    android:padding="10dp" >
+                    android:padding="10dp"
+                    android:visibility="gone" >
 
                     <TextView
                         style="@style/text_stytle"
@@ -115,13 +117,13 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_uc_tel"
+                    android:id="@+id/ll_clearcatch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
                     android:layout_marginTop="1dp"
-                    android:background="@color/white"
+                    android:background="@drawable/shape_uc_infoitem_up"
                     android:clickable="true"
                     android:padding="10dp" >
 
@@ -215,7 +217,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:background="@color/white"
+                    android:background="@drawable/shape_uc_infoitem_down"
                     android:clickable="true"
                     android:padding="10dp" >
 
@@ -248,7 +250,8 @@
                     android:layout_margin="1dp"
                     android:background="@drawable/shape_uc_infoitem_down"
                     android:clickable="true"
-                    android:padding="10dp" >
+                    android:padding="10dp"
+                    android:visibility="gone" >
 
                     <TextView
                         style="@style/text_stytle"

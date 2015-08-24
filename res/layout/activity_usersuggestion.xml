@@ -31,10 +31,20 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <WebView
-        android:id="@+id/wv_show"
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_margin="20dp"
+        android:background="@drawable/shape_item_text"
+        android:minHeight="150dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/selector_btnclick_gray"
+        android:text="提交"
+        android:textColor="@color/whitesmoke"
+        android:textSize="16sp" />
 
 </LinearLayout>

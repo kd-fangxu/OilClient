@@ -10,12 +10,15 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.oilclient.R;
@@ -26,7 +29,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.oil.adapter.CommonAdapter;
 import com.oil.adapter.CommonViewHolder;
 import com.oil.bean.Constants;
+import com.oil.bean.MyConfig;
 import com.oil.bean.MyRequestParams;
+import com.oil.dialogs.CommontitleDialog;
+import com.oil.dialogs.CommontitleDialog.onComDialogBtnClick;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
 import com.oil.utils.ObjectConvertUtils;
@@ -39,7 +45,7 @@ import com.oil.utils.ToastUtils;
  *
  */
 public class SjListOfUserActivity extends Activity {
-	ImageView iv_pageback, iv_add;
+	ImageView iv_pageback, iv_add, iv_more;
 	PullToRefreshListView prlv;
 	CommonAdapter<Map<String, Object>> commonAdapter;
 	List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();// 填充数据
@@ -138,16 +144,25 @@ public class SjListOfUserActivity extends Activity {
 				finish();
 			}
 		});
-		iv_add = (ImageView) findViewById(R.id.iv_add);
-		iv_add.setOnClickListener(new OnClickListener() {
+		// iv_add = (ImageView) findViewById(R.id.iv_add);
+		iv_more = (ImageView) findViewById(R.id.iv_menu);
+		initPoputMenu();
+		iv_more.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(SjListOfUserActivity.this,
-						GqPublicActivity.class));
+				pMenu.show();
 			}
 		});
+		// iv_add.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		// });
 		prlv = (PullToRefreshListView) findViewById(R.id.prlv_data);
 
 		// TODO Auto-generated method stub
@@ -246,7 +261,7 @@ public class SjListOfUserActivity extends Activity {
 						+ "";
 
 				Intent intent = new Intent(SjListOfUserActivity.this,
-						ShangjiDetailsActivity.class).putExtra("sdid", sdid)
+						SjListOfUserActivity.class).putExtra("sdid", sdid)
 						.putExtra("isUserReq", true);
 				;
 
@@ -255,5 +270,67 @@ public class SjListOfUserActivity extends Activity {
 		});
 		// updateDate();
 
+	}
+
+	PopupMenu pMenu;
+
+	private void initPoputMenu() {
+		// TODO Auto-generated method stub
+		pMenu = new PopupMenu(SjListOfUserActivity.this, iv_more);
+		pMenu.getMenuInflater().inflate(R.menu.menu_gq_listdo, pMenu.getMenu());
+
+		pMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				// TODO Auto-generated method stub
+				switch (item.getItemId()) {
+
+				case R.id.item_shuoxin:
+					doRefreshGq();
+					break;
+				case R.id.item_add:
+					startActivity(new Intent(SjListOfUserActivity.this,
+							GqPublicActivity.class));
+					break;
+				default:
+					break;
+				}
+				return false;
+			}
+
+		});
+	}
+
+	private void doRefreshGq() {
+		// TODO Auto-generated method stub
+		MyRequestParams params = new MyRequestParams(SjListOfUserActivity.this);
+		params.put("tb", "2");
+		HttpTool.netRequest(SjListOfUserActivity.this, params,
+				new OnReturnListener() {
+
+					@Override
+					public void onReturn(String jsString) {
+						// TODO Auto-generated method stub
+						try {
+							JSONObject jObject = new JSONObject(jsString);
+							String status = jObject.getJSONObject("data")
+									.getString("refresh");
+							if (status.equals("1")) {
+								ToastUtils.getInstance(
+										SjListOfUserActivity.this).showText(
+										"刷新成功，供求置顶");
+							} else {
+								ToastUtils.getInstance(
+										SjListOfUserActivity.this).showText(
+										"刷新失败");
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+				}, MyConfig.REFRESH_PUBLISHLIST, true);
 	}
 }

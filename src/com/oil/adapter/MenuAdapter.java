@@ -1,6 +1,9 @@
 package com.oil.adapter;
 
+import java.util.List;
+
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,29 +11,39 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.oilclient.R;
+import com.oil.datamodel.OilMenuItem;
 
 public class MenuAdapter extends BaseAdapter {
 	Context context;
-	String[] menuName;
-	int[] iconList;
 
-	public MenuAdapter(Context context, String[] menuName, int[] iconList) {
+	// String[] menuName;
+	// int[] iconList;
+
+	// public MenuAdapter(Context context, String[] menuName, int[] iconList) {
+	// // TODO Auto-generated constructor stub
+	// this.context = context;
+	// // this.menuName = menuName;
+	// // this.iconList = iconList;
+	// }
+
+	List<OilMenuItem> menuList;
+
+	public MenuAdapter(Context context, List<OilMenuItem> menuList) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
-		this.menuName = menuName;
-		this.iconList = iconList;
+		this.menuList = menuList;
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return menuName.length;
+		return menuList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return menuName[position];
+		return menuList.get(position);
 	}
 
 	@Override
@@ -54,8 +67,9 @@ public class MenuAdapter extends BaseAdapter {
 			convertView.setTag(mViewHolder);
 		}
 		mViewHolder = (MenuViewHolder) convertView.getTag();
-		mViewHolder.tv_menu_content.setText(menuName[position]);
-		mViewHolder.iv_menu_icon.setImageResource(iconList[position]);
+		mViewHolder.tv_menu_content.setText(menuList.get(position).getName());
+		mViewHolder.iv_menu_icon.setImageResource(menuList.get(position)
+				.getIconId());
 		return convertView;
 	}
 

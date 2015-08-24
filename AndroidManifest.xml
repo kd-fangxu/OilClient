@@ -146,6 +146,11 @@
             android:name="com.oil.activity.ActivityProductName"
             android:screenOrientation="portrait" >
         </activity>
+        
+            <activity
+            android:name="com.oil.activity.ShangjiMatachAct"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

@@ -85,6 +85,7 @@ public class UserSmsLoginActivity extends Activity implements OnClickListener {
 											UserSmsLoginActivity.this, "main",
 
 											"sms");
+									finish();
 									// ¶ÌÐÅµÇÂ½³É¹¦
 								} else {
 									// µÇÂ¼Ê§°Ü

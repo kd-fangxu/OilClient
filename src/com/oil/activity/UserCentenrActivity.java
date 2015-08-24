@@ -15,6 +15,7 @@ import com.oil.bean.OilUser;
 public class UserCentenrActivity extends Activity implements OnClickListener {
 	TextView tv_name, tv_realName, tv_phone, tv_comName;
 	LinearLayout ll_changePwd;
+	TextView tv_userinfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,9 @@ public class UserCentenrActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		ImageView iv_back;
 		TextView tv_pagetitle;
-
+		tv_userinfo = (TextView) findViewById(R.id.tv_userinfo);
+		tv_userinfo.setText(OilUser.getCurrentUser(UserCentenrActivity.this)
+				.getUserName() + "\n" + "试阅用户" + "\n" + "到期时间：2015/10/01");
 		iv_back = (ImageView) findViewById(R.id.iv_pageback);
 		iv_back.setOnClickListener(new OnClickListener() {
 
@@ -50,7 +53,7 @@ public class UserCentenrActivity extends Activity implements OnClickListener {
 			}
 		});
 		tv_pagetitle = (TextView) findViewById(R.id.tv_page_title);
-		tv_pagetitle.setText("用户中心");
+		tv_pagetitle.setText("会员中心");
 
 		tv_realName = (TextView) findViewById(R.id.tv_uc_realName);
 		tv_phone = (TextView) findViewById(R.id.tv_uc_tel);

@@ -3,6 +3,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +64,7 @@ public class CommonUtil {
 	 * @return
 	 */
 	public static Dialog LoadingDialog;
+	public static List<Dialog> runningDiaList = new ArrayList<Dialog>();
 
 	public static Dialog createLoadingDialog(Context context, String msg) {
 
@@ -86,12 +88,19 @@ public class CommonUtil {
 				LinearLayout.LayoutParams.FILL_PARENT,
 				LinearLayout.LayoutParams.FILL_PARENT));// 璁剧疆甯冨眬
 		LoadingDialog = loadingDialog;
+		runningDiaList.add(loadingDialog);
 		return loadingDialog;
 	}
 
 	public static void cancleDialog() {
 		try {
-			LoadingDialog.cancel();
+			if (LoadingDialog == runningDiaList.get(runningDiaList.size() - 1)) {
+				for (int i = 0; i < runningDiaList.size(); i++) {
+					runningDiaList.get(i).dismiss();
+				}
+				runningDiaList.clear();
+			}
+
 		} catch (Exception e) {
 		}
 	}

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,8 @@ import com.oil.adapter.ProDataMainGroupAdapter;
 import com.oil.bean.Constants;
 import com.oil.bean.MyRequestParams;
 import com.oil.bean.OilUser;
+import com.oil.datasave.AppDataCatchModel;
+import com.oil.iface.OnDataReturnListener;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.GsonParserFactory;
 import com.oil.utils.HttpTool;
@@ -155,37 +158,92 @@ public class ItemFragmentData extends Fragment {
 		Log.e("url", url);
 		MyRequestParams params = new MyRequestParams(getActivity());
 		params.put("groupID", groupID + "");
-		HttpTool.netRequestNoCheck(getActivity(), params,
-				new OnReturnListener() {
+		AppDataCatchModel catchModel = new AppDataCatchModel(getActivity(),
+				url, params);
+		catchModel.setOnDataReturnListener(OilUser
+				.getCurrentUser(getActivity()).getCuuid()
+				+ map.get("wang_id")
+				+ "_"
+				+ map.get("chan_id")
+				+ "_"
+				+ map.get("pro_id")
+				+ groupID
+				+ ".json", true, true, new OnDataReturnListener() {
 
-					@Override
-					public void onReturn(String jsString) {
-						// TODO Auto-generated method stub
-						GsonParserFactory gpf = new GsonParserFactory();
-						mapContentList.clear();
-						mapContentList.addAll(gpf.getProDataDatails(jsString));
-						ObjectConvertUtils<List<Map<String, Object>>> convertUtils = new ObjectConvertUtils<List<Map<String, Object>>>();
-						groupTitleList.clear();
-						try {
-							groupTitleList.addAll(convertUtils
-									.convert(new JSONObject(jsString)
-											.getString("productTempClassList")));
-							filterEmptyGroupList();
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						if (groupTitleList.size() > 0) {
-
-							updateMainTitleAdapter();
-							updateProDataAdapter();
-						}
-						ptep_lv.onRefreshComplete();
-
-					}
-
-				}, url, false);
+			@Override
+			public void onDataReturn(String content) {
+				// TODO Auto-generated method stub
+				onDataLoaded(content);
+			}
+		});
 	}
+
+	private void onDataLoaded(String jsString) {
+		// TODO Auto-generated method stub
+		GsonParserFactory gpf = new GsonParserFactory();
+		mapContentList.clear();
+		mapContentList.addAll(gpf.getProDataDatails(jsString));
+		ObjectConvertUtils<List<Map<String, Object>>> convertUtils = new ObjectConvertUtils<List<Map<String, Object>>>();
+		groupTitleList.clear();
+		try {
+			groupTitleList.addAll(convertUtils.convert(new JSONObject(jsString)
+					.getString("productTempClassList")));
+			filterEmptyGroupList();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			groupTitleList.clear();
+		}
+		if (groupTitleList.size() > 0) {
+
+			updateMainTitleAdapter();
+			updateProDataAdapter();
+		}
+		ptep_lv.onRefreshComplete();
+	}
+
+	// private void getData() {
+	//
+	// // TODO Auto-generated method stub
+	// String url = Constants.URL_GETPRODDATA + "/"
+	// + OilUser.getCurrentUser(getActivity()).getCuuid() + "/"
+	// + map.get("wang_id") + "/" + map.get("chan_id") + "/"
+	// + map.get("pro_id");
+	// Log.e("url", url);
+	// MyRequestParams params = new MyRequestParams(getActivity());
+	// params.put("groupID", groupID + "");
+	// HttpTool.netRequestNoCheck(getActivity(), params,
+	// new OnReturnListener() {
+	//
+	// @Override
+	// public void onReturn(String jsString) {
+	// // TODO Auto-generated method stub
+	// GsonParserFactory gpf = new GsonParserFactory();
+	// mapContentList.clear();
+	// mapContentList.addAll(gpf.getProDataDatails(jsString));
+	// ObjectConvertUtils<List<Map<String, Object>>> convertUtils = new
+	// ObjectConvertUtils<List<Map<String, Object>>>();
+	// groupTitleList.clear();
+	// try {
+	// groupTitleList.addAll(convertUtils
+	// .convert(new JSONObject(jsString)
+	// .getString("productTempClassList")));
+	// filterEmptyGroupList();
+	// } catch (JSONException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// if (groupTitleList.size() > 0) {
+	//
+	// updateMainTitleAdapter();
+	// updateProDataAdapter();
+	// }
+	// ptep_lv.onRefreshComplete();
+	//
+	// }
+	//
+	// }, url, false);
+	// }
 
 	private void updateMainTitleAdapter() {
 		// TODO Auto-generated method stub
@@ -222,7 +280,7 @@ public class ItemFragmentData extends Fragment {
 			String s = ((Map<String, Object>) sdAdapter.getItem(sdAdapter
 					.getSelectionPositon())).get("clas_id").toString();
 			String s1 = ((Map<String, Object>) mapContentList.get(i).get(
-					"productTemplate")).get("clas_order").toString();
+					"productTemplate")).get("clas_id").toString();
 			if (s.equals(s1)) {
 				currentGroupMapList.add(mapContentList.get(i));
 			}
@@ -231,24 +289,32 @@ public class ItemFragmentData extends Fragment {
 	}
 
 	private boolean filterEmptyGroupList() {
+		// int size = ;
 		for (int i = 0; i < groupTitleList.size(); i++) {
 			String s = groupTitleList.get(i).get("clas_id").toString();
 			if (!clasIdcheck(s)) {
+				Log.e("filter log", s + ":被过滤");
 				groupTitleList.remove(i);
+				i--;
 			}
 		}
 		return false;
 	}
 
 	public boolean clasIdcheck(String s) {
-		for (int j = 0; j < mapContentList.size(); j++) {
+		try {
+			for (int j = 0; j < mapContentList.size(); j++) {
 
-			String s1 = ((Map<String, Object>) mapContentList.get(j).get(
-					"productTemplate")).get("clas_order").toString();
-			if (s.equals(s1)) {
-				return true;
+				String s1 = ((Map<String, Object>) mapContentList.get(j).get(
+						"productTemplate")).get("clas_id").toString();
+				if (s.equals(s1)) {
+					return true;
+				}
 			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+
 		return false;
 
 	}

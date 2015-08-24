@@ -91,7 +91,14 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		iv_userfouce.setOnClickListener(this);
 		// initUserFoucePopu();
 		initWeidget(view);
-		getUserFouce();
+		if (UserFouceModel.getInstance().getFouceList() != null) {
+			mapList.addAll(UserFouceModel.getInstance().getFouceList());
+			pagerAdapter.notifyDataSetChanged();
+			psts.notifyDataSetChanged();
+		} else if (!(mapList.size() > 0)) {
+			getUserFouce();
+		}
+
 		EventBus.getDefault().register(this);
 
 		return view;

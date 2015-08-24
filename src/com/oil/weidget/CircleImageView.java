@@ -196,8 +196,8 @@ public class CircleImageView extends ImageView {
 		if (mBitmap == null) {
 			return;
 		}
-//		ShapeDrawable shapeDrawable;
-	
+		// ShapeDrawable shapeDrawable;
+
 		mBitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP,
 				Shader.TileMode.CLAMP);
 

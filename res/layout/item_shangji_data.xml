@@ -31,7 +31,6 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="comName"
             android:textColor="@color/whitesmoke"
             android:textSize="18sp" />
     </LinearLayout>
@@ -49,7 +48,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="2dp"
-            android:text="comName"
             android:textColor="@color/whitesmoke"
             android:textSize="15sp" />
 
@@ -61,7 +59,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="2dp"
-            android:text="comName"
             android:textColor="@color/whitesmoke"
             android:textSize="15sp" />
     </LinearLayout>

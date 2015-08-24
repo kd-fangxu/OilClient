@@ -77,7 +77,8 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/selecter_tab_info"
             android:text="资讯"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/rb_tab_data"

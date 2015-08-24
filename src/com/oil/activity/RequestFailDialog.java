@@ -50,8 +50,6 @@ public class RequestFailDialog extends Activity {
 		});
 	}
 
-	
-
 	@Override
 	protected void onDestroy() {
 		Constants.isRequestFailDialogExist = false;

@@ -29,6 +29,10 @@ public class UserFouceModel {
 		return model;
 	};
 
+	public void reset() {
+		model = null;
+	}
+
 	/**
 	 * 产品是否已经收藏
 	 * 

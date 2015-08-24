@@ -13,6 +13,7 @@
     <!-- 交互常用 -->
     <string-array name="menu">
         <item>会员中心</item>
+        <item>积分任务</item>
         <item>消息</item>
         <item>设置</item>
         <item>关于</item>
@@ -36,13 +37,12 @@
     <string name="resetPwdSucceed">密码重置成功</string>
     <string name="resetPwdUnSucceed">密码重置失败</string>
 
-    
-     <!-- pull to refresh -->
+    <!-- pull to refresh -->
     <string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">松开刷新数据</string>
     <string name="xlistview_header_hint_loading">正在加载...</string>
     <string name="xlistview_header_last_time">上次更新时间：</string>
     <string name="xlistview_footer_hint_normal">查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
-    
+
 </resources>

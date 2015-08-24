@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="260dp"
+    android:background="@color/whitesmoke"
+    android:minWidth="300dp"
     android:orientation="vertical" >
 
     <TextView
@@ -17,7 +18,7 @@
 
     <TextView
         android:id="@+id/tv_comdialog_content"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:minHeight="55dp"
@@ -31,28 +32,30 @@
         android:layout_gravity="center_horizontal"
         android:background="@color/Themecolor"
         android:orientation="horizontal"
-        android:paddingTop="0.5dp" >
+        android:paddingTop="1dp" >
 
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:layout_marginRight="0.5dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@color/whitesmoke"
             android:text="取消"
             android:textColor="@color/Themecolor"
-            android:textSize="15sp" />
+            android:textSize="17sp"
+            android:textStyle="normal" />
 
         <Button
             android:id="@+id/btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@color/whitesmoke"
             android:text="确认"
             android:textColor="@color/Themecolor"
-            android:textSize="15sp" />
+            android:textSize="17sp"
+            android:textStyle="normal" />
     </LinearLayout>
 
 </LinearLayout>

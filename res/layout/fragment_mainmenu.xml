@@ -26,9 +26,9 @@
                 android:orientation="horizontal" >
 
                 <com.oil.weidget.CircleImageView
+                    android:id="@+id/civ_userheader"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_gravity="center_horizontal"
                     android:src="@drawable/icon_userhead"
                     oilweidget:border_color="#f2f2f2"
                     oilweidget:border_width="2dp" >

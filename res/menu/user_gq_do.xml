@@ -13,10 +13,7 @@
         android:id="@+id/item_update"
         android:title="修改">
     </item>
-    <item
-        android:id="@+id/item_shuoxin"
-        android:title="刷新">
-    </item>
+    
     <item
         android:id="@+id/item_delete"
         android:title="删除">

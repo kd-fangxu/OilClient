@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingMultiplier="1.5"
                 android:padding="5dp"
-                android:text="prodetail"
+                android:text="加载中..."
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingMultiplier="1.5"
                 android:padding="5dp"
-                android:text="prodetail"
+                android:text="加载中..."
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 

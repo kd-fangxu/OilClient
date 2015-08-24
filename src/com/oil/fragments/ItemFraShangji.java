@@ -167,6 +167,10 @@ public class ItemFraShangji extends Fragment {
 							+ unit.toString());
 					tv_busInfo.setText(sb.toString());
 
+				} else if (pro_name != null) {
+					tv_busInfo.setText(pro_name.toString());
+				} else {
+					tv_busInfo.setText("ÎÞÊý¾Ý");
 				}
 
 				if (price != null) {
@@ -211,7 +215,7 @@ public class ItemFraShangji extends Fragment {
 		params.put("page", pageCount + "");
 		params.put("pagesize", "20");
 		// params.put("keyword", mapString.get("pro_cn_name"));
-		params.put("keytype", 0 + "");
+		params.put("keytype", 1 + "");
 		params.put("ggxh", "");
 		params.put("keyword", URLEncoder.encode(URLEncoder.encode(mapString
 				.get("pro_cn_name"))));

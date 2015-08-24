@@ -20,6 +20,7 @@ import com.oil.dialogs.CommontitleDialog.onComDialogBtnClick;
 import com.oil.event.LoginSuccessEvent;
 import com.oil.utils.CommonUtil;
 import com.oil.utils.ToastUtils;
+import com.oil.workmodel.UserFouceModel;
 
 import de.greenrobot.event.EventBus;
 

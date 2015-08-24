@@ -23,6 +23,7 @@ import com.oil.utils.SharedPreferenceUtils;
 import com.oil.utils.StringUtils;
 import com.oil.utils.ToastUtils;
 import com.oil.workmodel.AppVersionManager;
+import com.oil.workmodel.UserFouceModel;
 import com.oil.workmodel.UserRegisterManager;
 import com.oilchem.weixin.mp.aes.AesException;
 import com.oilchem.weixin.mp.aes.SHA1;
@@ -113,7 +114,7 @@ public class OilUser implements Serializable {
 
 		params.put("userName", userName);
 		params.put("phone", phone);
-		params.put("passWord", password);
+		params.put("passWord", StringUtils.MD5(password));
 		params.put("name",
 				java.net.URLEncoder.encode(java.net.URLEncoder.encode(name)));
 		params.put("corpName", java.net.URLEncoder.encode(java.net.URLEncoder
@@ -181,7 +182,7 @@ public class OilUser implements Serializable {
 		editor.commit();
 		editor.putString(Constants.USER_PHONE, userPhone);
 		editor.commit();
-
+		UserFouceModel.getInstance().reset();
 		Intent intent = new Intent();
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.setClass(context, UserLoginActivity.class);
