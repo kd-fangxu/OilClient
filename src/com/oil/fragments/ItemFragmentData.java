@@ -43,7 +43,7 @@ import com.oil.weidget.HorizontalListView;
 public class ItemFragmentData extends Fragment {
 	PullToRefreshExpandableListView ptep_lv;
 	HorizontalListView hlv_type;
-	int groupID = 0;// 默锟较★拷锟揭★拷 1锟斤拷锟斤拷锟�
+	int groupID = 0;// 榛橀敓杈冣槄鎷烽敓鎻槄鎷�1閿熸枻鎷烽敓鏂ゆ嫹閿燂拷
 	Map<String, String> map;
 
 	/**
@@ -73,11 +73,11 @@ public class ItemFragmentData extends Fragment {
 
 	// List<HashMap<String, List<DataSimple>>> mapList;
 	List<Map<String, Object>> groupTitleList = new ArrayList<Map<String, Object>>();
-	ProDataMainGroupAdapter sdAdapter;// 锟斤拷锟斤拷锟斤拷
+	ProDataMainGroupAdapter sdAdapter;// 閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
 
 	// List<String> keyList = new ArrayList<String>();
 
-	// HashMap<String, List<DataSimple>> contentMap;// 锟斤拷锟斤拷锟�
+	// HashMap<String, List<DataSimple>> contentMap;// 閿熸枻鎷烽敓鏂ゆ嫹閿燂拷
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -266,7 +266,7 @@ public class ItemFragmentData extends Fragment {
 	List<Map<String, Object>> currentGroupMapList = new ArrayList<Map<String, Object>>();
 
 	/**
-	 * 锟斤拷锟铰诧拷品锟斤拷锟�
+	 * 閿熸枻鎷烽敓閾拌鎷峰搧閿熸枻鎷烽敓锟�
 	 */
 	private void updateProDataAdapter() {
 
@@ -293,7 +293,7 @@ public class ItemFragmentData extends Fragment {
 		for (int i = 0; i < groupTitleList.size(); i++) {
 			String s = groupTitleList.get(i).get("clas_id").toString();
 			if (!clasIdcheck(s)) {
-				Log.e("filter log", s + ":被过滤");
+				
 				groupTitleList.remove(i);
 				i--;
 			}
