@@ -8,7 +8,6 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.integer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,7 +24,6 @@ import com.example.oilclient.R;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
-import com.loopj.android.http.RequestParams;
 import com.oil.activity.ProHisDataListActivity;
 import com.oil.adapter.ExpandDataAdapter;
 import com.oil.adapter.ProDataMainGroupAdapter;
@@ -34,9 +32,7 @@ import com.oil.bean.MyRequestParams;
 import com.oil.bean.OilUser;
 import com.oil.datasave.AppDataCatchModel;
 import com.oil.iface.OnDataReturnListener;
-import com.oil.inter.OnReturnListener;
 import com.oil.utils.GsonParserFactory;
-import com.oil.utils.HttpTool;
 import com.oil.utils.ObjectConvertUtils;
 import com.oil.weidget.HorizontalListView;
 
@@ -69,11 +65,11 @@ public class ItemFragmentData extends Fragment {
 
 	// HashMap<String, Object> currentDataMap = new HashMap<String, Object>();
 	List<HashMap<String, Object>> mapContentList = new ArrayList<HashMap<String, Object>>();
-	ExpandDataAdapter edAdapter;
+	ExpandDataAdapter expendAdapter;
 
 	// List<HashMap<String, List<DataSimple>>> mapList;
 	List<Map<String, Object>> groupTitleList = new ArrayList<Map<String, Object>>();
-	ProDataMainGroupAdapter sdAdapter;// 閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
+	ProDataMainGroupAdapter groupAdapter;// 閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
 
 	// List<String> keyList = new ArrayList<String>();
 
@@ -110,10 +106,10 @@ public class ItemFragmentData extends Fragment {
 							View v, int groupPosition, int childPosition,
 							long id) {
 						// TODO Auto-generated method stub
-						String title = ((Map<String, Object>) edAdapter
+						String title = ((Map<String, Object>) expendAdapter
 								.getChild(groupPosition, childPosition)).get(
 								"unit_name").toString();
-						String unitId = ((Map<String, Object>) edAdapter
+						String unitId = ((Map<String, Object>) expendAdapter
 								.getChild(groupPosition, childPosition)).get(
 								"unit_id").toString();
 						Intent intent = new Intent(getActivity(),
@@ -129,10 +125,10 @@ public class ItemFragmentData extends Fragment {
 
 	private void initWeidgetAdapters() {
 		// TODO Auto-generated method stub
-		edAdapter = new ExpandDataAdapter(getActivity(), currentGroupMapList);
-		sdAdapter = new ProDataMainGroupAdapter(getActivity(), groupTitleList);
-		hlv_type.setAdapter(sdAdapter);
-		ptep_lv.getRefreshableView().setAdapter(edAdapter);
+		expendAdapter = new ExpandDataAdapter(getActivity(), currentGroupMapList);
+		groupAdapter = new ProDataMainGroupAdapter(getActivity(), groupTitleList);
+		hlv_type.setAdapter(groupAdapter);
+		ptep_lv.getRefreshableView().setAdapter(expendAdapter);
 		ptep_lv.getRefreshableView().setGroupIndicator(null);
 
 		hlv_type.setOnItemClickListener(new OnItemClickListener() {
@@ -141,8 +137,8 @@ public class ItemFragmentData extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				sdAdapter.SetSelectedPosition(position);
-				sdAdapter.notifyDataSetChanged();
+				groupAdapter.SetSelectedPosition(position);
+				groupAdapter.notifyDataSetChanged();
 				updateProDataAdapter();
 			}
 		});
@@ -258,8 +254,8 @@ public class ItemFragmentData extends Fragment {
 		// // new TypeToken<HashMap<String, String>>() {
 		// // }.getType());
 		// }
-		sdAdapter.SetSelectedPosition(0);
-		sdAdapter.notifyDataSetChanged();
+		groupAdapter.SetSelectedPosition(0);
+		groupAdapter.notifyDataSetChanged();
 
 	}
 
@@ -273,11 +269,11 @@ public class ItemFragmentData extends Fragment {
 		// currentDataMap.clear();
 		// currentDataMap
 		// .putAll((Map<? extends String, ? extends Object>) mapContentList
-		// .get(sdAdapter.getSelectionPositon()));
-		// edAdapter.notifyDataSetChanged();
+		// .get(groupAdapter.getSelectionPositon()));
+		// expendAdapter.notifyDataSetChanged();
 		currentGroupMapList.clear();
 		for (int i = 0; i < mapContentList.size(); i++) {
-			String s = ((Map<String, Object>) sdAdapter.getItem(sdAdapter
+			String s = ((Map<String, Object>) groupAdapter.getItem(groupAdapter
 					.getSelectionPositon())).get("clas_id").toString();
 			String s1 = ((Map<String, Object>) mapContentList.get(i).get(
 					"productTemplate")).get("clas_id").toString();
@@ -285,7 +281,7 @@ public class ItemFragmentData extends Fragment {
 				currentGroupMapList.add(mapContentList.get(i));
 			}
 		}
-		edAdapter.notifyDataSetChanged();
+		expendAdapter.notifyDataSetChanged();
 	}
 
 	private boolean filterEmptyGroupList() {

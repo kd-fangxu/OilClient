@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.oil.bean.Constants;
 import com.oil.fragments.ItemFraShangji;
+import com.oil.fragments.ItemFragDataNew;
 import com.oil.fragments.ItemFragmentData;
 import com.oil.fragments.ItemFragmentNews;
 
@@ -47,8 +48,9 @@ public abstract class PagerAdapter<T> extends FragmentStatePagerAdapter {
 		case 1:// ×ÊÑ¶
 			return ItemFragmentNews.getInstance();
 		case 2:
-			return ItemFragmentData.getInstance(1,
-					(HashMap<String, String>) itemList.get(position));
+//			return ItemFragmentData.getInstance(1,
+//					(HashMap<String, String>) itemList.get(position));
+			return new ItemFragDataNew(1, (HashMap<String, String>) itemList.get(position));
 		case 3:
 			return ItemFragmentData.getInstance(2,
 					(HashMap<String, String>) itemList.get(position));

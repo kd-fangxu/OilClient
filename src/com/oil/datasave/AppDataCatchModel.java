@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
+import android.R.string;
 import android.content.Context;
+import android.util.Log;
 
 import com.loopj.android.http.RequestParams;
 import com.oil.iface.OnDataReturnListener;
@@ -111,20 +113,23 @@ public class AppDataCatchModel {
 	 */
 	private boolean isDataViaTimeCheck(String fileName) {
 
-		long createTime = (long) SharedPreferenceUtils.getParam(context, this
-				.getClass().getName(), fileName + Tag_CreateTime,
-				defaultCreateTime);
-		long temTimeStay = (long) SharedPreferenceUtils.getParam(context, this
-				.getClass().getName(), fileName + Tag_TimeEffect,
-				DefaultTimestay);
+		long createTime = (long) SharedPreferenceUtils.getParam(context,
+				sp_name, fileName + Tag_CreateTime, defaultCreateTime);
+		long temTimeStay = (long) SharedPreferenceUtils.getParam(context,
+				sp_name, fileName + Tag_TimeEffect, DefaultTimestay);
 		long currentTime = System.currentTimeMillis();
-		if (currentTime - createTime <= temTimeStay) {
+
+		Log.e("timecheck", fileName + createTime + "__" + temTimeStay + "__"
+				+ currentTime);
+		if ((currentTime - createTime) <= temTimeStay) {
 			return true;
 		} else {
 			new File(Path).deleteOnExit();
 		}
 		return false;
 	}
+
+	private String sp_name = "app_catch";
 
 	private void getNetData(final boolean isAutoCatched) {
 		// TODO Auto-generated method stub
@@ -135,11 +140,13 @@ public class AppDataCatchModel {
 				// TODO Auto-generated method stub
 				try {
 					if (isAutoCatched) {
-						SharedPreferenceUtils.setParam(context, this.getClass()
-								.getName(), fileName + Tag_CreateTime, System
-								.currentTimeMillis());// 记录文件创建时间
+						SharedPreferenceUtils.setParam(context, sp_name,
+								fileName + Tag_CreateTime,
+								System.currentTimeMillis());// 记录文件创建时间
 						new FileUtils().savaData(Path,
 								StringUtils.convertStringToIs(jsString));
+
+						Log.e("timecheck", fileName + " Created ");
 					}
 					returnListener.onDataReturn(jsString);
 

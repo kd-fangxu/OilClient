@@ -33,6 +33,9 @@ public class Constants {
 			+ "app/oilinfo/getUserFoucedProduct";// 获取用户关注产品
 	public static final String URL_GETPRODDATA = IP// 获取产品数据详情
 			+ "app/oilinfo/getProductChainAll";
+	public static final String URL_GET_PRO_GROUP = IP// 获取产品数据单元组
+			+ "app/oilinfo/getProductTemList";
+	
 	public static final String URL_GETPRODATALIST = IP
 			+ "app/oilinfo/getProDataHisList";// 获取产品历史数据列表
 	public static final String URL_USERFOUCECHANGE = IP
