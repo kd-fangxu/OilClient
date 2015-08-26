@@ -26,6 +26,7 @@ import com.oil.bean.MyRequestParams;
 import com.oil.bean.OilUser;
 import com.oil.datasave.AppDataCatchModel;
 import com.oil.iface.OnDataReturnListener;
+import com.oil.utils.GsonParserFactory;
 import com.oil.utils.ObjectConvertUtils;
 import com.oil.weidget.HorizontalListView;
 
@@ -141,16 +142,55 @@ public class ItemFragDataNew extends Fragment {
 		});
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void setGroupSelPos(int position) {
 		// TODO Auto-generated method stub
 		groupSelectPosition = position;
 		groupAdapter.SetSelectedPosition(groupSelectPosition);
-		updatePagedata();
+		updatePagedata(((Map<String, Object>) groupAdapter.getItem(position)));
 		groupAdapter.notifyDataSetChanged();
 	}
 
-	private void updatePagedata() {// 获取页内容
+	private void updatePagedata(Map<String, Object> mapItem) {// 获取页内容
 		// TODO Auto-generated method stub
+		if (mapItem != null) {
+			// TODO Auto-generated method stub
+			String clasId = mapItem.get("clas_id").toString();
+			// TODO Auto-generated method stub
+			String url = Constants.URL_GET_PRO_PAGEDATA + "/"
+					+ OilUser.getCurrentUser(getActivity()).getCuuid() + "/"
+					+ map.get("wang_id") + "/" + map.get("chan_id") + "/"
+					+ map.get("pro_id");
+			Log.e("url", url);
+			MyRequestParams params = new MyRequestParams(getActivity());
+			params.put("groupID", type + "");
+			params.put("clasId", clasId);
+			AppDataCatchModel catchModel = new AppDataCatchModel(getActivity(),
+					url, params);
+			catchModel.setOnDataReturnListener(
+					OilUser.getCurrentUser(getActivity()).getCuuid()
+							+ "dataUnit" + map.get("wang_id") + "_"
+							+ map.get("chan_id") + "_" + map.get("pro_id")
+							+ type + ".json", false, false,
+					new OnDataReturnListener() {
 
+						@Override
+						public void onDataReturn(String content) {
+//							onGroupLoaded(content);
+						currentGroupMapList.clear();
+						ObjectConvertUtils<List<Map<String, Object>>> ocu=new ObjectConvertUtils<List<Map<String,Object>>>();
+//						GsonParserFactory gsonParser=new GsonParserFactory();
+						try {
+							currentGroupMapList.addAll(ocu.convert(new JSONObject(content).getString("data")));
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						expendAdapter.notifyDataSetChanged();
+						}
+
+					});
+
+		}
 	}
 }
