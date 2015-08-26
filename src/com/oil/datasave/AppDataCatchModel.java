@@ -77,8 +77,8 @@ public class AppDataCatchModel {
 	 * @param returnListener
 	 *            ：回掉接口
 	 */
-	public void setOnDataReturnListener(String fileName, boolean isAutoCatched,
-			boolean isCatchFirst, OnDataReturnListener returnListener) {
+	public void setOnDataReturnListener(String fileName, boolean isAutoCatched, boolean isCatchFirst,
+			OnDataReturnListener returnListener) {
 		// TODO Auto-generated method stub
 		this.returnListener = returnListener;
 		this.fileName = fileName;
@@ -113,14 +113,13 @@ public class AppDataCatchModel {
 	 */
 	private boolean isDataViaTimeCheck(String fileName) {
 
-		long createTime = (long) SharedPreferenceUtils.getParam(context,
-				sp_name, fileName + Tag_CreateTime, defaultCreateTime);
-		long temTimeStay = (long) SharedPreferenceUtils.getParam(context,
-				sp_name, fileName + Tag_TimeEffect, DefaultTimestay);
+		long createTime = (Long) SharedPreferenceUtils.getParam(context, sp_name, fileName + Tag_CreateTime,
+				defaultCreateTime);
+		long temTimeStay = (Long) SharedPreferenceUtils.getParam(context, sp_name, fileName + Tag_TimeEffect,
+				DefaultTimestay);
 		long currentTime = System.currentTimeMillis();
 
-		Log.e("timecheck", fileName + createTime + "__" + temTimeStay + "__"
-				+ currentTime);
+		Log.e("timecheck", fileName + createTime + "__" + temTimeStay + "__" + currentTime);
 		if ((currentTime - createTime) <= temTimeStay) {
 			return true;
 		} else {
@@ -140,11 +139,9 @@ public class AppDataCatchModel {
 				// TODO Auto-generated method stub
 				try {
 					if (isAutoCatched) {
-						SharedPreferenceUtils.setParam(context, sp_name,
-								fileName + Tag_CreateTime,
+						SharedPreferenceUtils.setParam(context, sp_name, fileName + Tag_CreateTime,
 								System.currentTimeMillis());// 记录文件创建时间
-						new FileUtils().savaData(Path,
-								StringUtils.convertStringToIs(jsString));
+						new FileUtils().savaData(Path, StringUtils.convertStringToIs(jsString));
 
 						Log.e("timecheck", fileName + " Created ");
 					}
@@ -166,8 +163,7 @@ public class AppDataCatchModel {
 	 * 清空缓存
 	 */
 	public void clearCatch() {
-		FileUtils.deleteFile(new File(context.getExternalCacheDir()
-				.getAbsolutePath()));
+		FileUtils.deleteFile(new File(context.getExternalCacheDir().getAbsolutePath()));
 	}
 
 }
