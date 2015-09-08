@@ -41,8 +41,7 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 	HashMap<String, Object> currentDataMap;
 	List<Map<String, Object>> currentGroupMapList;
 
-	public ExpandDataAdapter(Context context,
-			List<Map<String, Object>> currentGroupMapList) {
+	public ExpandDataAdapter(Context context, List<Map<String, Object>> currentGroupMapList) {
 		this.context = context;
 		this.currentGroupMapList = currentGroupMapList;
 		// TODO Auto-generated constructor stub
@@ -88,25 +87,26 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 		return currentGroupMapList.size();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		// TODO Auto-generated method stub
-		return ((List<Map<String, Object>>) currentGroupMapList.get(
-				groupPosition).get("productUnitList")).size();
+		return ((List<Map<String, Object>>) currentGroupMapList.get(groupPosition).get("productUnitList")).size();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object getGroup(int groupPosition) {
 		// TODO Auto-generated method stub
-		return (Map<String, Object>) currentGroupMapList.get(groupPosition)
-				.get("productTemplate");
+		return (Map<String, Object>) currentGroupMapList.get(groupPosition).get("productTemplate");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		// TODO Auto-generated method stub
-		return ((List<Map<String, Object>>) currentGroupMapList.get(
-				groupPosition).get("productUnitList")).get(childPosition);
+		return ((List<Map<String, Object>>) currentGroupMapList.get(groupPosition).get("productUnitList"))
+				.get(childPosition);
 	}
 
 	@Override
@@ -122,24 +122,20 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public View getGroupView(int groupPosition, boolean isExpanded,
-			View convertView, ViewGroup parent) {
+	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		// mapList.get(groupPosition).
 		GroupHolder gHolder = null;
 		if (convertView == null) {
 			gHolder = new GroupHolder();
 			convertView = View.inflate(context, R.layout.item_eplv_group, null);
-			gHolder.tv_content = (TextView) convertView
-					.findViewById(R.id.tv_item_content);
-			gHolder.iv_indicator = (ImageView) convertView
-					.findViewById(R.id.iv_indicator);
+			gHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_item_content);
+			gHolder.iv_indicator = (ImageView) convertView.findViewById(R.id.iv_indicator);
 			convertView.setTag(gHolder);
 		}
 		gHolder = (GroupHolder) convertView.getTag();
-		gHolder.tv_content.setText(((Map<String, Object>) currentGroupMapList
-				.get(groupPosition).get("productTemplate")).get("temp_name")
-				.toString());
+		gHolder.tv_content.setText(((Map<String, Object>) currentGroupMapList.get(groupPosition).get("productTemplate"))
+				.get("temp_name").toString());
 		if (isExpanded) {
 			gHolder.iv_indicator.setImageResource(R.drawable.icon_arrow_up);
 		} else {
@@ -149,30 +145,23 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public View getChildView(int groupPosition, int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
+	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
+			ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ChildHolder cHolder = null;
 		if (convertView == null) {
-			convertView = View
-					.inflate(context, R.layout.item_data_simple, null);
+			convertView = View.inflate(context, R.layout.item_data_simple, null);
 			cHolder = new ChildHolder();
-			cHolder.tv_conten1 = (TextView) convertView
-					.findViewById(R.id.tv_item_content1);
-			cHolder.tv_content2 = (TextView) convertView
-					.findViewById(R.id.tv_item_content2);
-			cHolder.tv_content3 = (TextView) convertView
-					.findViewById(R.id.tv_item_content3);
+			cHolder.tv_conten1 = (TextView) convertView.findViewById(R.id.tv_item_content1);
+			cHolder.tv_content2 = (TextView) convertView.findViewById(R.id.tv_item_content2);
+			cHolder.tv_content3 = (TextView) convertView.findViewById(R.id.tv_item_content3);
 			cHolder.tv_content3.setVisibility(View.GONE);
-			cHolder.ll_header = (LinearLayout) convertView
-					.findViewById(R.id.ll_item_title);
+			cHolder.ll_header = (LinearLayout) convertView.findViewById(R.id.ll_item_title);
 			convertView.setTag(cHolder);
 		}
 		cHolder = (ChildHolder) convertView.getTag();
-		String name = ((Map<String, Object>) getChild(groupPosition,
-				childPosition)).get("unit_name").toString();
-		String timeTag = ((Map<String, Object>) getChild(groupPosition,
-				childPosition)).get("data_times").toString();
+		String name = ((Map<String, Object>) getChild(groupPosition, childPosition)).get("unit_name").toString();
+		String timeTag = ((Map<String, Object>) getChild(groupPosition, childPosition)).get("data_times").toString();
 		Log.e("timetag", timeTag);
 		// String data = productUnitList.get(groupPosition).get(timeTag) + "";
 
@@ -200,12 +189,12 @@ public class ExpandDataAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 
-	class GroupHolder {
+	private class GroupHolder {
 		TextView tv_content;
 		ImageView iv_indicator;
 	}
 
-	class ChildHolder {
+	private class ChildHolder {
 		TextView tv_conten1, tv_content2, tv_content3;
 		LinearLayout ll_header;
 	}

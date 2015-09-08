@@ -63,8 +63,7 @@ public class ItemFraShangji extends Fragment {
 	};
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = View.inflate(getActivity(), R.layout.view_list, null);
 		prlv = (PullToRefreshListView) view.findViewById(R.id.prlv_data);
@@ -109,8 +108,8 @@ public class ItemFraShangji extends Fragment {
 
 				// TODO Auto-generated method stub
 
-				if (refreshView.getRefreshableView().getLastVisiblePosition() == refreshView
-						.getRefreshableView().getAdapter().getCount() - 1) {
+				if (refreshView.getRefreshableView()
+						.getLastVisiblePosition() == refreshView.getRefreshableView().getAdapter().getCount() - 1) {
 					// 加载更多
 					pageCount++;
 					updateDate();
@@ -122,65 +121,66 @@ public class ItemFraShangji extends Fragment {
 
 			}
 		});
-		commonAdapter = new CommonAdapter<Map<String, Object>>(getActivity(),
-				mapList, R.layout.item_shangji_data) {
+		commonAdapter = new CommonAdapter<Map<String, Object>>(getActivity(), mapList, R.layout.item_shangji_data) {
 
 			@Override
-			public void convert(CommonViewHolder helper,
-					Map<String, Object> item, int Position) {
-				// TODO Auto-generated method stub
-				// helper.setText(R.id.tv_item_content, item.get("cpname")
-				// .toString());
-				int td = Float.valueOf(item.get("tb").toString()).intValue();
-				// helper.setText(R.id.tv_itemName, td == 10 ? "求购" : "供应");
+			public void convert(CommonViewHolder helper, Map<String, Object> item, int Position) {
+				try {
 
-				TextView tv_buType, tv_comName, tv_busInfo, tv_price, tv_updateTime;
-				tv_buType = helper.getView(R.id.tv_itemType);
-				tv_comName = helper.getView(R.id.tv_item_comName);
-				tv_busInfo = helper.getView(R.id.tv_item_proInfo);
-				tv_price = helper.getView(R.id.tv_item_price);
-				tv_updateTime = helper.getView(R.id.tv_item_upTime);
-				if (td == 1) {
-					tv_buType
-							.setBackgroundResource(R.drawable.selector_item_selcted_bgreen);
-					tv_buType.setText("供");
-				} else {
+					// TODO Auto-generated method stub
+					// helper.setText(R.id.tv_item_content, item.get("cpname")
+					// .toString());
+					int td = Float.valueOf(item.get("tb").toString()).intValue();
+					// helper.setText(R.id.tv_itemName, td == 10 ? "求购" : "供应");
 
-					tv_buType
-							.setBackgroundResource(R.drawable.selector_selected_textview);
-					tv_buType.setText("求");
-				}
-				String conName = item.get("corpname").toString();
-				if (conName != null) {
-					tv_comName.setText(conName);
+					TextView tv_buType, tv_comName, tv_busInfo, tv_price, tv_updateTime;
+					tv_buType = helper.getView(R.id.tv_itemType);
+					tv_comName = helper.getView(R.id.tv_item_comName);
+					tv_busInfo = helper.getView(R.id.tv_item_proInfo);
+					tv_price = helper.getView(R.id.tv_item_price);
+					tv_updateTime = helper.getView(R.id.tv_item_upTime);
+					if (td == 1) {
+						tv_buType.setBackgroundResource(R.drawable.selector_item_selcted_bgreen);
+						tv_buType.setText("供");
+					} else {
 
-				} else {
-					tv_comName.setText("信息未录入");
-				}
-				StringBuilder sb = new StringBuilder();
-				Object pro_name = item.get("cpname");
-				Object stock = item.get("stock");
-				Object price = item.get("price");
-				Object unit = item.get("unit");
-				if (pro_name != null && unit != null && stock != null) {
-					sb.append(pro_name.toString() + stock.toString()
-							+ unit.toString());
-					tv_busInfo.setText(sb.toString());
+						tv_buType.setBackgroundResource(R.drawable.selector_selected_textview);
+						tv_buType.setText("求");
+					}
+					String conName = item.get("corpname").toString();
+					if (conName != null) {
+						tv_comName.setText(conName);
 
-				} else if (pro_name != null) {
-					tv_busInfo.setText(pro_name.toString());
-				} else {
-					tv_busInfo.setText("无数据");
-				}
+					} else {
+						tv_comName.setText("信息未录入");
+					}
+					StringBuilder sb = new StringBuilder();
+					Object pro_name = item.get("cpname");
+					Object stock = item.get("stock");
+					Object price = item.get("price");
+					Object unit = item.get("unit");
+					if (pro_name != null && unit != null && stock != null) {
+						sb.append(pro_name.toString() + stock.toString() + unit.toString());
+						tv_busInfo.setText(sb.toString());
 
-				if (price != null) {
-					tv_price.setText(price.toString() + "元");
-				} else {
-					tv_price.setText("面议");
-				}
-				String upTime = item.get("refreshtime").toString().split(" ")[0];
-				if (upTime != null) {
-					tv_updateTime.setText(upTime);
+					} else if (pro_name != null) {
+						tv_busInfo.setText(pro_name.toString());
+					} else {
+						tv_busInfo.setText("无数据");
+					}
+
+					if (price != null) {
+						tv_price.setText(price.toString() + "元");
+					} else {
+						tv_price.setText("面议");
+					}
+					String upTime = item.get("refreshtime").toString().split(" ")[0];
+					if (upTime != null) {
+						tv_updateTime.setText(upTime);
+					}
+
+				} catch (Exception e) {
+					// TODO: handle exception
 				}
 			}
 
@@ -190,16 +190,11 @@ public class ItemFraShangji extends Fragment {
 		prlv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				// TODO Auto-generated method stub
-				String sdid = Float.valueOf(
-						mapList.get(position - 1).get("sdid").toString())
-						.intValue()
-						+ "";
+				String sdid = Float.valueOf(mapList.get(position - 1).get("sdid").toString()).intValue() + "";
 
-				Intent intent = new Intent(getActivity(),
-						ShangjiDetailsActivity.class).putExtra("sdid", sdid);
+				Intent intent = new Intent(getActivity(), ShangjiDetailsActivity.class).putExtra("sdid", sdid);
 
 				getActivity().startActivity(intent);
 			}
@@ -217,8 +212,7 @@ public class ItemFraShangji extends Fragment {
 		// params.put("keyword", mapString.get("pro_cn_name"));
 		params.put("keytype", 1 + "");
 		params.put("ggxh", "");
-		params.put("keyword", URLEncoder.encode(URLEncoder.encode(mapString
-				.get("pro_cn_name"))));
+		params.put("keyword", URLEncoder.encode(URLEncoder.encode(mapString.get("pro_cn_name"))));
 		HttpTool.netRequest(getActivity(), params, new OnReturnListener() {
 
 			@Override
@@ -236,14 +230,8 @@ public class ItemFraShangji extends Fragment {
 					}
 					temMapList = ocUtils.convert(data);
 					if (temMapList != null) {
-						if (temMapList.size() > 0
-								&& mapList.size() > 0
-								&& temMapList
-										.get(0)
-										.get("sdid")
-										.toString()
-										.equals(mapList.get(0).get("sdid")
-												.toString())) {
+						if (temMapList.size() > 0 && mapList.size() > 0 && temMapList.get(0).get("sdid").toString()
+								.equals(mapList.get(0).get("sdid").toString())) {
 
 						} else {
 							mapList.addAll(temMapList);

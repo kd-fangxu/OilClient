@@ -119,7 +119,8 @@ public class AppDataCatchModel {
 				DefaultTimestay);
 		long currentTime = System.currentTimeMillis();
 
-		Log.e("timecheck", fileName + createTime + "__" + temTimeStay + "__" + currentTime);
+		// Log.e("timecheck", fileName + createTime + "__" + temTimeStay + "__"
+		// + currentTime);
 		if ((currentTime - createTime) <= temTimeStay) {
 			return true;
 		} else {

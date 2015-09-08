@@ -68,8 +68,7 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 		chainList.addAll(opsm.getChainListByWangId(wang_id));
 		chainAdapter.notifyDataSetChanged();
 		if (chainList.size() > 0) {
-			updateProdate(chainList.get(chainSelectionPositon).get("chan_id")
-					.toString());
+			updateProdate(chainList.get(chainSelectionPositon).get("chan_id").toString());
 		}
 
 	}
@@ -80,25 +79,23 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 		proAdapter.notifyDataSetChanged();
 	}
 
+	UserFouceModel userFouceModel;
+
 	private void InitCommonAdapter() {
-		chainAdapter = new CommonAdapter<Map<String, Object>>(
-				ProductSelectActivity.this, chainList,
+		chainAdapter = new CommonAdapter<Map<String, Object>>(ProductSelectActivity.this, chainList,
 				R.layout.item_simple_text) {
 
 			@Override
-			public void convert(CommonViewHolder helper,
-					final Map<String, Object> item, final int Position) {
+			public void convert(CommonViewHolder helper, final Map<String, Object> item, final int Position) {
 				// TODO Auto-generated method stub
 				TextView tv_content = helper.getView(R.id.tv_item_simple);
 				// tv_content.setTextSize(ScreenUtils.dip2px(mContext, 12));
 				if (Position == chainSelectionPositon) {
 					tv_content.setSelected(true);
-					tv_content.setTextColor(getResources().getColor(
-							R.color.white));
+					tv_content.setTextColor(getResources().getColor(R.color.white));
 				} else {
 					tv_content.setSelected(false);
-					tv_content.setTextColor(getResources().getColor(
-							R.color.gray));
+					tv_content.setTextColor(getResources().getColor(R.color.gray));
 				}
 				tv_content.setText(item.get("chan_name").toString());
 				tv_content.setOnClickListener(new OnClickListener() {
@@ -113,20 +110,16 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 				});
 			}
 		};
-
-		proAdapter = new CommonAdapter<Map<String, Object>>(
-				ProductSelectActivity.this, proList,
+		userFouceModel = new UserFouceModel(ProductSelectActivity.this);
+		proAdapter = new CommonAdapter<Map<String, Object>>(ProductSelectActivity.this, proList,
 				R.layout.item_simple_checktext) {
 
 			@Override
-			public void convert(CommonViewHolder helper,
-					final Map<String, Object> item, int Position) {
+			public void convert(CommonViewHolder helper, final Map<String, Object> item, int Position) {
 				// TODO Auto-generated method stub
 				ImageView iv_fouce = helper.getView(R.id.iv_item_select);
-				helper.setText(R.id.tv_item_simple, item.get("pro_cn_name")
-						.toString());
-				if (UserFouceModel.getInstance().isFouced(
-						item.get("pro_id").toString())) {
+				helper.setText(R.id.tv_item_simple, item.get("pro_cn_name").toString());
+				if (userFouceModel.isFouced(item.get("pro_id").toString())) {
 					iv_fouce.setSelected(true);
 				} else {
 					iv_fouce.setSelected(false);
@@ -165,8 +158,7 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 
 	private void initWeidget() {
 		// TODO Auto-generated method stub
-		toast = Toast.makeText(ProductSelectActivity.this, "",
-				Toast.LENGTH_SHORT);
+		toast = Toast.makeText(ProductSelectActivity.this, "", Toast.LENGTH_SHORT);
 		lv_chain = (ListView) findViewById(R.id.lv_chainlist);
 		lv_product = (ListView) findViewById(R.id.lv_prolist);
 		btn_fouce = (Button) findViewById(R.id.btn_fouce);
@@ -177,79 +169,60 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 		lv_product.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				// TODO Auto-generated method stub
-				int proId = Double.valueOf(
-						proList.get(position).get("pro_id").toString())
-						.intValue();
-				String userId = OilUser.getCurrentUser(
-						ProductSelectActivity.this).getCuuid();
-				final ImageView iv_add = (ImageView) view
-						.findViewById(R.id.iv_item_select);
-				if (iv_add.isSelected()) {// 以关注
-					// 锟斤拷庸锟阶�
-					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
-							+ "/" + proId + "/" + 0;
-					HttpTool.netRequestNoCheck(ProductSelectActivity.this,
-							null, new OnReturnListener() {
+				int proId = Double.valueOf(proList.get(position).get("pro_id").toString()).intValue();
+				String userId = OilUser.getCurrentUser(ProductSelectActivity.this).getCuuid();
+				final ImageView iv_add = (ImageView) view.findViewById(R.id.iv_item_select);
+				if (iv_add.isSelected()) {// 浠ュ叧娉�
+					// 閿熸枻鎷峰焊閿熼樁锟�
+					String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/" + proId + "/" + 0;
+					HttpTool.netRequestNoCheck(ProductSelectActivity.this, null, new OnReturnListener() {
 
-								@Override
-								public void onReturn(String jsString) {
-									// TODO Auto-generated method stub
-									try {
-										if (new JSONObject(jsString).get(
-												"status").equals("1")) {
-											showToast(getResources().getText(
-													R.string.unMarkSucceed)
-													.toString());
-											UserFouceChangeEvent event = new UserFouceChangeEvent();
-											event.setAdded(true);
-											EventBus.getDefault().post(event);
-											iv_add.setSelected(false);
-											
-										} else {
-											showToast(getResources().getText(
-													R.string.unMarkUnSucceed)
-													.toString());
-										}
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
+						@Override
+						public void onReturn(String jsString) {
+							// TODO Auto-generated method stub
+							try {
+								if (new JSONObject(jsString).get("status").equals("1")) {
+									showToast(getResources().getText(R.string.unMarkSucceed).toString());
+									UserFouceChangeEvent event = new UserFouceChangeEvent();
+									event.setAdded(true);
+									EventBus.getDefault().post(event);
+									iv_add.setSelected(false);
+
+								} else {
+									showToast(getResources().getText(R.string.unMarkUnSucceed).toString());
 								}
-							}, url, false);
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}, url, false);
 
-				} else {// 锟斤拷庸锟阶�
-					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
-							+ "/" + proId + "/" + 1;
-					HttpTool.netRequestNoCheck(ProductSelectActivity.this,
-							null, new OnReturnListener() {
+				} else {// 閿熸枻鎷峰焊閿熼樁锟�
+					String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/" + proId + "/" + 1;
+					HttpTool.netRequestNoCheck(ProductSelectActivity.this, null, new OnReturnListener() {
 
-								@Override
-								public void onReturn(String jsString) {
-									// TODO Auto-generated method stub
-									try {
-										if (new JSONObject(jsString).get(
-												"status").equals("1")) {
-											showToast(getResources().getText(
-													R.string.markSucceed)
-													.toString());
-											UserFouceChangeEvent event = new UserFouceChangeEvent();
-											event.setAdded(true);
-											EventBus.getDefault().post(event);
-											iv_add.setSelected(true);
-										} else {
-											showToast(getResources().getText(
-													R.string.markUnSucceed)
-													.toString());
-										}
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
+						@Override
+						public void onReturn(String jsString) {
+							// TODO Auto-generated method stub
+							try {
+								if (new JSONObject(jsString).get("status").equals("1")) {
+									showToast(getResources().getText(R.string.markSucceed).toString());
+									UserFouceChangeEvent event = new UserFouceChangeEvent();
+									event.setAdded(true);
+									EventBus.getDefault().post(event);
+									iv_add.setSelected(true);
+								} else {
+									showToast(getResources().getText(R.string.markUnSucceed).toString());
 								}
-							}, url, false);
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}, url, false);
 				}
 
 			}
@@ -267,8 +240,7 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 				if (proList.get(i).get("isSelected") != null) {
 					isSelected = (Boolean) proList.get(i).get("isSelected");
 					if (isSelected) {
-						proFocusList.add(proList.get(i).get("pro_id")
-								.toString());
+						proFocusList.add(proList.get(i).get("pro_id").toString());
 						UserFouceChangeEvent userFouceChangeEvent = new UserFouceChangeEvent();
 						userFouceChangeEvent.setAdded(true);
 						userFouceChangeEvent.setAddedProIds(proFocusList);

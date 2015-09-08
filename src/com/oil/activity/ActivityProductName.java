@@ -64,29 +64,24 @@ public class ActivityProductName extends Activity {
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				int position = arg2 - 1;
 				productname = productList.get(position)[1];
 				productid = productList.get(position)[0];
-
 				finish();
-
 			}
 		});
 		final EditText name = (EditText) findViewById(R.id.qiyemingcheng);
 		name.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO Auto-generated method stub
 				getProductList(name.getText().toString());
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
 			}
 
@@ -177,26 +172,24 @@ public class ActivityProductName extends Activity {
 
 	public void getProductList(String str) {
 
-		HttpReqRecep.getProductList(ActivityProductName.this, str,
-				new OnReturnListener() {
+		HttpReqRecep.getProductList(ActivityProductName.this, str, new OnReturnListener() {
 
-					@Override
-					public void onReturn(String jsString) {
-						// TODO Auto-generated method stub
-						productList.clear();
-						productList = parserProductList(jsString);
-						mAdapter.notifyDataSetChanged();
+			@Override
+			public void onReturn(String jsString) {
+				// TODO Auto-generated method stub
+				productList.clear();
+				productList = parserProductList(jsString);
+				mAdapter.notifyDataSetChanged();
 
-					}
+			}
 
-				});
+		});
 	}
 
 	private ArrayList<String[]> parserProductList(String jsString) {
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		try {
-			JSONArray array = new JSONObject(jsString).getJSONObject("data")
-					.getJSONArray("message");
+			JSONArray array = new JSONObject(jsString).getJSONObject("data").getJSONArray("message");
 			for (int i = 0; i < array.length(); i++) {
 				String[] product = new String[2];
 				product[0] = array.getJSONObject(i).getString("productid");
