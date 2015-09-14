@@ -3,12 +3,17 @@ package com.oil.datasave;
 import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+
+import android.R.string;
 import android.content.Context;
+import android.util.Log;
+
 import com.loopj.android.http.RequestParams;
 import com.oil.iface.OnDataReturnListener;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.FileUtils;
 import com.oil.utils.HttpTool;
+import com.oil.utils.SharedPreferenceUtils;
 import com.oil.utils.StringUtils;
 
 /**
@@ -23,6 +28,13 @@ public class AppDataCatchModel {
 	RequestParams params;
 	OnDataReturnListener returnListener;
 	String Path;
+	String fileName;
+
+	private String Tag_CreateTime = "createTime";// 创建时间
+	private String Tag_TimeEffect = "timeEffect";// 有效时间
+	private int Days = 24 * 60 * 60 * 1000;// 天数毫秒换算
+	private long DefaultTimestay = 1 * Days;// 默认有效时间为一天
+	private long defaultCreateTime = 0;
 
 	public AppDataCatchModel(Context context) {
 		this.context = context;
@@ -65,14 +77,15 @@ public class AppDataCatchModel {
 	 * @param returnListener
 	 *            ：回掉接口
 	 */
-	public void setOnDataReturnListener(String fileName, boolean isAutoCatched,
-			boolean isCatchFirst, OnDataReturnListener returnListener) {
+	public void setOnDataReturnListener(String fileName, boolean isAutoCatched, boolean isCatchFirst,
+			OnDataReturnListener returnListener) {
 		// TODO Auto-generated method stub
 		this.returnListener = returnListener;
+		this.fileName = fileName;
 		Path = context.getExternalCacheDir().getAbsolutePath() + "/" + fileName;
 		if (fileName != null) {
-			if (isCatchFirst) {
-				
+			if (isCatchFirst && isDataViaTimeCheck(fileName)) {
+
 				String content = getCatchData(fileName);
 				if (content == null) {
 					if (params != null && url != null) {
@@ -91,9 +104,33 @@ public class AppDataCatchModel {
 		}
 
 	}
-private String getDataViaTimeCheck(String fileName)
-{
-	return fileName;}
+
+	/**
+	 * 缓存文件时候失效
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	private boolean isDataViaTimeCheck(String fileName) {
+
+		long createTime = (Long) SharedPreferenceUtils.getParam(context, sp_name, fileName + Tag_CreateTime,
+				defaultCreateTime);
+		long temTimeStay = (Long) SharedPreferenceUtils.getParam(context, sp_name, fileName + Tag_TimeEffect,
+				DefaultTimestay);
+		long currentTime = System.currentTimeMillis();
+
+		// Log.e("timecheck", fileName + createTime + "__" + temTimeStay + "__"
+		// + currentTime);
+		if ((currentTime - createTime) <= temTimeStay) {
+			return true;
+		} else {
+			new File(Path).deleteOnExit();
+		}
+		return false;
+	}
+
+	private String sp_name = "app_catch";
+
 	private void getNetData(final boolean isAutoCatched) {
 		// TODO Auto-generated method stub
 		HttpTool.netRequest(context, params, new OnReturnListener() {
@@ -103,8 +140,11 @@ private String getDataViaTimeCheck(String fileName)
 				// TODO Auto-generated method stub
 				try {
 					if (isAutoCatched) {
-						new FileUtils().savaData(Path,
-								StringUtils.convertStringToIs(jsString));
+						SharedPreferenceUtils.setParam(context, sp_name, fileName + Tag_CreateTime,
+								System.currentTimeMillis());// 记录文件创建时间
+						new FileUtils().savaData(Path, StringUtils.convertStringToIs(jsString));
+
+						Log.e("timecheck", fileName + " Created ");
 					}
 					returnListener.onDataReturn(jsString);
 
@@ -124,8 +164,7 @@ private String getDataViaTimeCheck(String fileName)
 	 * 清空缓存
 	 */
 	public void clearCatch() {
-		FileUtils.deleteFile(new File(context.getExternalCacheDir()
-				.getAbsolutePath()));
+		FileUtils.deleteFile(new File(context.getExternalCacheDir().getAbsolutePath()));
 	}
 
 }

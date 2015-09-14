@@ -15,10 +15,10 @@ public class Constants {
 	 * url
 	 */
 	public static String baseIp = "http://192.168.1.91:8080/";
-	public static String IP = baseIp + "oilWeb/"; //
+	 public static String IP = baseIp + "oilWeb/"; //
+	//	public static String IP = "http://info.oilchem.net/";
+
 	public static String oilChemIp = baseIp + "oilchem/";
-	// "http://192.168.1.234:8080/oilWeb/";
-	// public static String IP = "http://info.oilchem.net/";
 	public static final String LOGIN = IP + "app/user/mobileLogin";// 登录
 	public static final String REGIST = IP + "app/reg/regist"; // 注册
 	public static final String MULTI_ACCOUNT_LOGIN = IP + "app/user/selLogUser"; // 多用户选择登录
@@ -27,18 +27,18 @@ public class Constants {
 	public static final String URL_GET_SMS_CODE = IP + "app/user/sendSmsVkey/1";// 获取短信验证码
 	public static final String URL_SMS_LOGIN = IP + "app/user/smsLogin";// 验证码登录
 
-	public static final String URL_GETPROSTRUCTURE = IP
-			+ "app/oilinfo/getProStructure";// 获取产品结构
-	public static final String URL_GETUSERFOUCE = IP
-			+ "app/oilinfo/getUserFoucedProduct";// 获取用户关注产品
+	public static final String URL_GETPROSTRUCTURE = IP + "app/oilinfo/getProStructure";// 获取产品结构
+	public static final String URL_GETUSERFOUCE = IP + "app/oilinfo/getUserFoucedProduct";// 获取用户关注产品
 	public static final String URL_GETPRODDATA = IP// 获取产品数据详情
 			+ "app/oilinfo/getProductChainAll";
-	public static final String URL_GETPRODATALIST = IP
-			+ "app/oilinfo/getProDataHisList";// 获取产品历史数据列表
-	public static final String URL_USERFOUCECHANGE = IP
-			+ "app/oilinfo/proGzViaApp";// 关注与取消关注
-	public static final String URl_ProChart = IP
-			+ "app/oilinfo/queryProductChainAllChart";// 获取产品图表数据
+	public static final String URL_GET_PRO_GROUP = IP// 获取产品数据单元组
+			+ "app/oilinfo/getProductTemList";
+	public static final String URL_GET_PRO_PAGEDATA = IP// 获取产品数据单元组下的数据
+			+ "app/oilinfo/getDataItemByTemId";
+
+	public static final String URL_GETPRODATALIST = IP + "app/oilinfo/getProDataHisList";// 获取产品历史数据列表
+	public static final String URL_USERFOUCECHANGE = IP + "app/oilinfo/proGzViaApp";// 关注与取消关注
+	public static final String URl_ProChart = IP + "app/oilinfo/queryProductChainAllChart";// 获取产品图表数据
 	public static final String URL_APPUODATE = IP + "app/sys/chkAppVer";// app检查更新
 	public static final String URL_GRTSHANGJI = IP + "app/gq/searchgq";// 获取商机供求资源
 
@@ -48,8 +48,7 @@ public class Constants {
 																		// 1：求2：gong3:供求
 	public static final String URL_getGqPhone = IP + "app/gq/getPhone";// 获取供求电话
 
-	public static final String URL_getCompantNews = oilChemIp
-			+ "app/getCompanyNew";// 获取公司新闻动态
+	public static final String URL_getCompantNews = oilChemIp + "app/getCompanyNew";// 获取公司新闻动态
 	/**
 	 * sharedPreference
 	 */
@@ -67,8 +66,7 @@ public class Constants {
 	/**
 	 * path
 	 */
-	public static final String BasePath = Environment
-			.getExternalStorageDirectory().getAbsolutePath();// 基地址
+	public static final String BasePath = Environment.getExternalStorageDirectory().getAbsolutePath();// 基地址
 	public static final String PathAppInit = BasePath + "/init";// 初始化文件地址
 
 }

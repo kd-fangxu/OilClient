@@ -27,6 +27,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:padding="3dp"
+            android:singleLine="true"
             android:text="commonlinechart"
             android:textColor="@color/white"
             android:textSize="18sp" />

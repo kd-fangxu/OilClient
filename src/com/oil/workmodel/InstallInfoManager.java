@@ -40,8 +40,7 @@ public class InstallInfoManager {
 
 	public String getDevice_Id() {
 
-		return ((TelephonyManager) context
-				.getSystemService(Service.TELEPHONY_SERVICE)).getDeviceId();
+		return ((TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE)).getDeviceId();
 	}
 
 	public String getApp_Id() {
@@ -50,9 +49,7 @@ public class InstallInfoManager {
 
 	public String getApp_Version() {
 		try {
-			return context.getPackageManager().getPackageInfo(
-					context.getPackageName(), 0).versionCode
-					+ "";
+			return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode + "";
 		} catch (NameNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,8 +73,9 @@ public class InstallInfoManager {
 	 * 提交安装信息
 	 */
 	public void doPostInstallInfo() {
-		boolean isPost = (Boolean) SharedPreferenceUtils.getParam(context, this
-				.getClass().getName(), shareFlag_isPostIntallInfo, false);
+		boolean isPost = (Boolean) SharedPreferenceUtils.getParam(context, "InstallInfoManager",
+				shareFlag_isPostIntallInfo, false);
+
 		if (!isPost) {
 			RequestParams params = new RequestParams();
 			params.put("Device_Id", this.getDevice_Id());
@@ -96,13 +94,11 @@ public class InstallInfoManager {
 					try {
 						jObject = new JSONObject(jsString);
 						if (jObject.getString("status").equals("1")) {
-							SharedPreferenceUtils.setParam(context, this
-									.getClass().getName(),
-									shareFlag_isPostIntallInfo, true);
+							SharedPreferenceUtils.setParam(context, "InstallInfoManager", shareFlag_isPostIntallInfo,
+									true);
 						} else {
-							SharedPreferenceUtils.setParam(context, this
-									.getClass().getName(),
-									shareFlag_isPostIntallInfo, false);
+							SharedPreferenceUtils.setParam(context, "InstallInfoManager", shareFlag_isPostIntallInfo,
+									false);
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block

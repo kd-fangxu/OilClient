@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -54,7 +55,9 @@ import de.greenrobot.event.EventBus;
  *
  */
 public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
+	UserFouceModel userFouceModel;
 	int tem_type = 0;
+	Context context;
 
 	/**
 	 * 0:jia ge ku 价格库 1:shujuku 数据库
@@ -62,6 +65,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	 * @param type
 	 */
 	public TabFragmetLzDataPage(int type) {
+		this.context = getActivity();
 		this.tem_type = type;
 		// Log
 	};
@@ -78,11 +82,9 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	public TabFragmetLzDataPage() {
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View view = View.inflate(getActivity(), R.layout.fragment_tab_third,
-				null);
+		View view = View.inflate(getActivity(), R.layout.fragment_tab_third, null);
 		ll_titlebar = (LinearLayout) view.findViewById(R.id.ll_titlebar);
 		iv_userfouce = (ImageView) view.findViewById(R.id.iv_userfouce_control);
 		psts = (PagerSlidingTabStrip) view.findViewById(R.id.ps_indicator);
@@ -90,9 +92,10 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		ocvp = (OilContentViewPager) view.findViewById(R.id.vp_content);
 		iv_userfouce.setOnClickListener(this);
 		// initUserFoucePopu();
+		userFouceModel = new UserFouceModel(getActivity());
 		initWeidget(view);
-		if (UserFouceModel.getInstance().getFouceList() != null) {
-			mapList.addAll(UserFouceModel.getInstance().getFouceList());
+		if (userFouceModel.getFouceList() != null) {
+			mapList.addAll(userFouceModel.getFouceList());
 			pagerAdapter.notifyDataSetChanged();
 			psts.notifyDataSetChanged();
 		} else if (!(mapList.size() > 0)) {
@@ -109,12 +112,13 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 	public void onEvent(UserFouceChangeEvent event) {
 		this.event = event;
+		isNeedUpdate = true;
 		int changedPosition = event.getChangedPosition();
 		if (event.isAdded()) {
 			// tianjia
-			isNeedUpdate = true;
+
 			// pWindow.dismiss();
-			getUserFouce();
+			// getUserFouce();
 
 		} else {
 			// shanchu
@@ -126,14 +130,14 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
-		if (isNeedUpdate && event != null) {
-			// fouceAdd();
-			if (pWindow != null) {
-				pWindow.dismiss();
-			}
 
-			getUserFouce();
+		// fouceAdd();
+		if (pWindow != null) {
+			pWindow.dismiss();
 		}
+
+		getUserFouce();
+
 		super.onResume();
 
 	}
@@ -154,10 +158,10 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 	private void fouceRemoveChanged(int changedPosition, int actionType) {
 		String proId = mapList.remove(changedPosition).get("pro_id").toString();
-		String userId = OilUser.getCurrentUser(getActivity()).getCuuid();
-		String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/" + proId
-				+ "/" + 0;
-		HttpTool.netRequestNoCheck(getActivity(), null, null, url, false);
+		// String userId = OilUser.getCurrentUser(context).getCuuid();
+		// String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/" +
+		// proId + "/" + 0;
+		// HttpTool.netRequestNoCheck(context, null, null, url, false);
 		pagerAdapter.notifyDataSetChanged();
 		psts.notifyDataSetChanged();
 
@@ -174,53 +178,47 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		RequestParams params = new RequestParams();
 
 		params.put("UserId", OilUser.getCurrentUser(getActivity()).getCuuid());
-		HttpTool.netRequestNoCheck(getActivity(), params,
-				new OnReturnListener() {
+		HttpTool.netRequestNoCheck(getActivity(), params, new OnReturnListener() {
 
-					@Override
-					public void onReturn(String jsString) {
-						// TODO Auto-generated method stub
-						// Log.e("info", jsString);
+			@Override
+			public void onReturn(String jsString) {
+				// TODO Auto-generated method stub
+				// Log.e("info", jsString);
 
-						JSONObject js;
-						try {
-							js = new JSONObject(jsString);
-							List<Map<String, String>> templeMaplist = new ArrayList<Map<String, String>>();
+				JSONObject js;
+				try {
+					js = new JSONObject(jsString);
+					List<Map<String, String>> templeMaplist = new ArrayList<Map<String, String>>();
 
-							templeMaplist
-									.addAll((Collection<? extends HashMap<String, String>>) new Gson().fromJson(
-											js.getString("productList"),
-											new TypeToken<List<HashMap<String, String>>>() {
-											}.getType()));
-							if (templeMaplist.size() > 0) {
-								mapList.clear();
-								for (int i = 0; i < templeMaplist.size(); i++) {
-									if (checkMapList(templeMaplist.get(i).get(
-											"pro_cn_name"))) {
+					templeMaplist.addAll((Collection<? extends HashMap<String, String>>) new Gson()
+							.fromJson(js.getString("productList"), new TypeToken<List<HashMap<String, String>>>() {
+					}.getType()));
+					if (templeMaplist.size() > 0) {
+						mapList.clear();
+						for (int i = 0; i < templeMaplist.size(); i++) {
+							if (checkMapList(templeMaplist.get(i).get("pro_cn_name"))) {
 
-										mapList.add((HashMap<String, String>) templeMaplist
-												.get(i));
+								mapList.add((HashMap<String, String>) templeMaplist.get(i));
 
-									}
-									;
-								}
-								UserFouceModel.getInstance().setFouceList(
-										mapList);
 							}
-
-							pagerAdapter.notifyDataSetChanged();
-							psts.notifyDataSetChanged();
-							if (cDynamicAdapter != null) {
-								cDynamicAdapter.notifyDataSetChanged();
-							}
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							;
 						}
-
+						userFouceModel.setFouceList(mapList);
 					}
 
-				}, url, false);
+					pagerAdapter.notifyDataSetChanged();
+					psts.notifyDataSetChanged();
+					if (cDynamicAdapter != null) {
+						cDynamicAdapter.notifyDataSetChanged();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		}, url, false);
 	}
 
 	/**
@@ -251,8 +249,8 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (tem_type) {
 		case 1:// 数据库
-			pagerAdapter = new PagerAdapter<HashMap<String, String>>(
-					getFragmentManager(), mapList, Constants.PageType_data) {
+			pagerAdapter = new PagerAdapter<HashMap<String, String>>(getFragmentManager(), mapList,
+					Constants.PageType_data) {
 
 				@Override
 				public String getName(HashMap<String, String> item) {
@@ -263,8 +261,8 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 			};
 			break;
 		case 0:// 价格库
-			pagerAdapter = new PagerAdapter<HashMap<String, String>>(
-					getFragmentManager(), mapList, Constants.PageType_price) {
+			pagerAdapter = new PagerAdapter<HashMap<String, String>>(getFragmentManager(), mapList,
+					Constants.PageType_price) {
 
 				@Override
 				public String getName(HashMap<String, String> item) {
@@ -282,27 +280,20 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		psts.setViewPager(ocvp);
 	}
 
-	private void initDemoData() {
-		// TODO Auto-generated method stub
-
-	}
-
 	PopupWindow pWindow;
 	DynamicGridView dgView;
 	CheeseDynamicAdapter cDynamicAdapter;
 	Button btn_edit_com;
-	LinearLayout ll_item1, ll_item2, ll_item3, ll_item4, ll_item5, ll_item6,
-			ll_item7, ll_item8, ll_item9;;
+	LinearLayout ll_item1, ll_item2, ll_item3, ll_item4, ll_item5, ll_item6, ll_item7, ll_item8, ll_item9;;
 	List<String> fouceList = new ArrayList<String>();
 
 	private void initUserFoucePopu() {
 		// TODO Auto-generated method stub
-		fouceList.clear();
-		for (int i = 0; i < mapList.size(); i++) {
-			fouceList.add(mapList.get(i).get("pro_cn_name"));
-		}
-		View popuView = View.inflate(getActivity(),
-				R.layout.view_popu_userfouce, null);
+		// fouceList.clear();
+		// for (int i = 0; i < mapList.size(); i++) {
+		// fouceList.add(mapList.get(i).get("pro_cn_name"));
+		// }
+		View popuView = View.inflate(getActivity(), R.layout.view_popu_userfouce, null);
 		dgView = (DynamicGridView) popuView.findViewById(R.id.dynamic_grid);
 		dgView.setOnTouchListener(new OnTouchListener() {
 
@@ -340,13 +331,12 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		ll_item7.setOnClickListener(this);
 		ll_item8.setOnClickListener(this);
 		ll_item9.setOnClickListener(this);
-		cDynamicAdapter = new CheeseDynamicAdapter(getActivity(), fouceList, 3);
+		cDynamicAdapter = new CheeseDynamicAdapter(getActivity(), mapList, 3);
 		dgView.setAdapter(cDynamicAdapter);
 
 		dgView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 				dgView.startEditMode(position);
 				btn_edit_com.setVisibility(view.VISIBLE);
 				return true;
@@ -361,8 +351,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 				btn_edit_com.setVisibility(View.GONE);
 			}
 		});
-		pWindow = new PopupWindow(popuView, LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
+		pWindow = new PopupWindow(popuView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		pWindow.setFocusable(true);
 		pWindow.setBackgroundDrawable(new ColorDrawable(0));
 		pWindow.setOutsideTouchable(true);

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +38,7 @@ import com.oil.workmodel.UserFouceModel;
 import de.greenrobot.event.EventBus;
 
 public class SearchPageActivity extends Activity implements OnClickListener {
+	@SuppressLint("ShowToast")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -55,21 +56,19 @@ public class SearchPageActivity extends Activity implements OnClickListener {
 	CommonAdapter<Map<String, Object>> itemAdapter;
 	List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
 	List<String> itemList = new ArrayList<String>();
+	UserFouceModel userFouceModel;
 
 	private void initWeidget() {
 		// TODO Auto-generated method stub
-		itemAdapter = new CommonAdapter<Map<String, Object>>(this, dataList,
-				R.layout.item_searchview) {
+		userFouceModel = new UserFouceModel(SearchPageActivity.this);
+		itemAdapter = new CommonAdapter<Map<String, Object>>(this, dataList, R.layout.item_searchview) {
 
 			@Override
-			public void convert(CommonViewHolder helper,
-					Map<String, Object> item, int positon) {
+			public void convert(CommonViewHolder helper, Map<String, Object> item, int positon) {
 				// TODO Auto-generated method stuima
 				ImageView iv_fouce = helper.getView(R.id.iv_mark);
-				helper.setText(R.id.tv_item_content, item.get("pro_cn_name")
-						.toString());
-				if (UserFouceModel.getInstance().isFouced(
-						item.get("pro_id").toString())) {
+				helper.setText(R.id.tv_item_content, item.get("pro_cn_name").toString());
+				if (userFouceModel.isFouced(item.get("pro_id").toString())) {
 					iv_fouce.setSelected(true);
 				} else {
 					iv_fouce.setSelected(false);
@@ -85,8 +84,7 @@ public class SearchPageActivity extends Activity implements OnClickListener {
 		lv_show.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				// TODO Auto-generated method stub
 				// Intent intent = new Intent(SearchPageActivity.this,
 				// ProductDetailsActivity.class);
@@ -101,75 +99,57 @@ public class SearchPageActivity extends Activity implements OnClickListener {
 				// startActivity(intent);
 
 				// TODO Auto-generated method stub
-				int proId = Double.valueOf(
-						dataList.get(position).get("pro_id").toString())
-						.intValue();
-				String userId = OilUser.getCurrentUser(SearchPageActivity.this)
-						.getCuuid();
-				final ImageView iv_add = (ImageView) view
-						.findViewById(R.id.iv_mark);
-				if (iv_add.isSelected()) {// 取锟斤拷锟阶�
-					// 锟斤拷庸锟阶�
-					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
-							+ "/" + proId + "/" + 0;
-					HttpTool.netRequestNoCheck(SearchPageActivity.this, null,
-							new OnReturnListener() {
+				int proId = Double.valueOf(dataList.get(position).get("pro_id").toString()).intValue();
+				String userId = OilUser.getCurrentUser(SearchPageActivity.this).getCuuid();
+				final ImageView iv_add = (ImageView) view.findViewById(R.id.iv_mark);
+				if (iv_add.isSelected()) {// 鍙栭敓鏂ゆ嫹閿熼樁锟�
+					// 閿熸枻鎷峰焊閿熼樁锟�
+					String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/" + proId + "/" + 0;
+					HttpTool.netRequestNoCheck(SearchPageActivity.this, null, new OnReturnListener() {
 
-								@Override
-								public void onReturn(String jsString) {
-									// TODO Auto-generated method stub
-									try {
-										if (new JSONObject(jsString).get(
-												"status").equals("1")) {
-											showToast(getResources().getText(
-													R.string.unMarkSucceed)
-													.toString());
-											UserFouceChangeEvent event = new UserFouceChangeEvent();
-											event.setAdded(true);
-											EventBus.getDefault().post(event);
-											iv_add.setSelected(false);
-										} else {
-											showToast(getResources().getText(
-													R.string.unMarkUnSucceed)
-													.toString());
-										}
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
+						@Override
+						public void onReturn(String jsString) {
+							// TODO Auto-generated method stub
+							try {
+								if (new JSONObject(jsString).get("status").equals("1")) {
+									showToast(getResources().getText(R.string.unMarkSucceed).toString());
+									UserFouceChangeEvent event = new UserFouceChangeEvent();
+									event.setAdded(true);
+									EventBus.getDefault().post(event);
+									iv_add.setSelected(false);
+								} else {
+									showToast(getResources().getText(R.string.unMarkUnSucceed).toString());
 								}
-							}, url, false);
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}, url, false);
 
-				} else {// 锟斤拷庸锟阶�
-					String url = Constants.URL_USERFOUCECHANGE + "/" + userId
-							+ "/" + proId + "/" + 1;
-					HttpTool.netRequestNoCheck(SearchPageActivity.this, null,
-							new OnReturnListener() {
+				} else {// 閿熸枻鎷峰焊閿熼樁锟�
+					String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/" + proId + "/" + 1;
+					HttpTool.netRequestNoCheck(SearchPageActivity.this, null, new OnReturnListener() {
 
-								@Override
-								public void onReturn(String jsString) {
-									// TODO Auto-generated method stub
-									try {
-										if (new JSONObject(jsString).get(
-												"status").equals("1")) {
-											showToast(getResources().getText(
-													R.string.markSucceed)
-													.toString());
-											UserFouceChangeEvent event = new UserFouceChangeEvent();
-											event.setAdded(true);
-											EventBus.getDefault().post(event);
-											iv_add.setSelected(true);
-										} else {
-											showToast(getResources().getText(
-													R.string.markUnSucceed)
-													.toString());
-										}
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
+						@Override
+						public void onReturn(String jsString) {
+							// TODO Auto-generated method stub
+							try {
+								if (new JSONObject(jsString).get("status").equals("1")) {
+									showToast(getResources().getText(R.string.markSucceed).toString());
+									UserFouceChangeEvent event = new UserFouceChangeEvent();
+									event.setAdded(true);
+									EventBus.getDefault().post(event);
+									iv_add.setSelected(true);
+								} else {
+									showToast(getResources().getText(R.string.markUnSucceed).toString());
 								}
-							}, url, false);
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}, url, false);
 				}
 
 			}
@@ -199,14 +179,11 @@ public class SearchPageActivity extends Activity implements OnClickListener {
 		et_edit.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				// TODO Auto-generated method stub
 				dataList.clear();
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					dataList.addAll(new OilProductStrucModel()
-							.getProductListsByProName(et_edit.getText()
-									.toString()));
+					dataList.addAll(new OilProductStrucModel().getProductListsByProName(et_edit.getText().toString()));
 				}
 				itemAdapter.notifyDataSetChanged();
 				return true;

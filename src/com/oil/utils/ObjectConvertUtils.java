@@ -8,7 +8,6 @@ public class ObjectConvertUtils<T> {
 
 	public T convert(String json) {
 		Gson gson = new Gson();
-
 		t = gson.fromJson(json, new TypeToken<T>() {
 		}.getType());
 		return t;

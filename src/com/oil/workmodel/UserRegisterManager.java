@@ -22,6 +22,7 @@ import android.telephony.TelephonyManager;
  *
  */
 public class UserRegisterManager {
+	String sp_Tag = "registerTag";
 	String requestUrl = "app/UserRegLogManager/userRegLog";
 	String userName;
 	String pwd;
@@ -29,8 +30,7 @@ public class UserRegisterManager {
 	private String device_type = "android";
 	Context context;
 
-	public UserRegisterManager(Context context, String userName, String pwd,
-			String appName) {
+	public UserRegisterManager(Context context, String userName, String pwd, String appName) {
 		this.userName = userName;
 		this.pwd = pwd;
 		this.AppName = appName;
@@ -43,8 +43,7 @@ public class UserRegisterManager {
 
 	public String getDevice_Id() {
 
-		return ((TelephonyManager) context
-				.getSystemService(Service.TELEPHONY_SERVICE)).getDeviceId();
+		return ((TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE)).getDeviceId();
 	}
 
 	public String getApp_PackageName() {
@@ -53,9 +52,7 @@ public class UserRegisterManager {
 
 	public String getApp_Version() {
 		try {
-			return context.getPackageManager().getPackageInfo(
-					context.getPackageName(), 0).versionCode
-					+ "";
+			return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode + "";
 		} catch (NameNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,21 +99,15 @@ public class UserRegisterManager {
 
 	private void removeRegInfo() {
 		// TODO Auto-generated method stub
-		SharedPreferenceUtils.setParam(context, this.getClass().getName(),
-				shareKey_isHasNewUser, false);
-		SharedPreferenceUtils.setParam(context, this.getClass().getName(),
-				"userName", null);
-		SharedPreferenceUtils.setParam(context, this.getClass().getName(),
-				"pwd", null);
+		SharedPreferenceUtils.setParam(context, sp_Tag, shareKey_isHasNewUser, false);
+		SharedPreferenceUtils.setParam(context, sp_Tag, "userName", null);
+		SharedPreferenceUtils.setParam(context, sp_Tag, "pwd", null);
 	}
 
 	private void addRegInfo() {
-		SharedPreferenceUtils.setParam(context, this.getClass().getName(),
-				shareKey_isHasNewUser, true);
-		SharedPreferenceUtils.setParam(context, this.getClass().getName(),
-				"userName", userName);
-		SharedPreferenceUtils.setParam(context, this.getClass().getName(),
-				"pwd", pwd);
+		SharedPreferenceUtils.setParam(context, sp_Tag, shareKey_isHasNewUser, true);
+		SharedPreferenceUtils.setParam(context, sp_Tag, "userName", userName);
+		SharedPreferenceUtils.setParam(context, sp_Tag, "pwd", pwd);
 	}
 
 	String shareKey_isHasNewUser = "isHasNewUser";
@@ -125,14 +116,10 @@ public class UserRegisterManager {
 	 * 自动上传失败的注册信息
 	 */
 	public void doAutoPost() {
-		boolean isHasNewUser = (Boolean) SharedPreferenceUtils.getParam(
-				context, this.getClass().getName(), shareKey_isHasNewUser,
-				false);
+		boolean isHasNewUser = (Boolean) SharedPreferenceUtils.getParam(context, sp_Tag, shareKey_isHasNewUser, false);
 		if (isHasNewUser) {
-			userName = (String) SharedPreferenceUtils.getParam(context, this
-					.getClass().getName(), "userName", "");
-			pwd = (String) SharedPreferenceUtils.getParam(context, this
-					.getClass().getName(), "pwd", "");
+			userName = (String) SharedPreferenceUtils.getParam(context, sp_Tag, "userName", "");
+			pwd = (String) SharedPreferenceUtils.getParam(context, sp_Tag, "pwd", "");
 			this.AppName = AppVersionManager.OilAppTag + "";
 			this.doPostRegisterInfo();
 		}

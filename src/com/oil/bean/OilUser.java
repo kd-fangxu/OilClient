@@ -106,19 +106,16 @@ public class OilUser implements Serializable {
 	 * @param corpName
 	 * @param registListener
 	 */
-	public static void signIn(final Context context, final String userName,
-			String name, final String password, String phone, String corpName,
-			final onRegistListener registListener) {
+	public static void signIn(final Context context, final String userName, String name, final String password,
+			String phone, String corpName, final onRegistListener registListener) {
 		AsyncHttpClient client = AsyncHttpClientUtil.getInstance(context);
 		com.loopj.android.http.RequestParams params = new com.loopj.android.http.RequestParams();
 
 		params.put("userName", userName);
 		params.put("phone", phone);
 		params.put("passWord", StringUtils.MD5(password));
-		params.put("name",
-				java.net.URLEncoder.encode(java.net.URLEncoder.encode(name)));
-		params.put("corpName", java.net.URLEncoder.encode(java.net.URLEncoder
-				.encode(corpName)));
+		params.put("name", java.net.URLEncoder.encode(java.net.URLEncoder.encode(name)));
+		params.put("corpName", java.net.URLEncoder.encode(java.net.URLEncoder.encode(corpName)));
 		HttpTool.netRequest(context, params, new OnReturnListener() {
 
 			@Override
@@ -126,19 +123,16 @@ public class OilUser implements Serializable {
 				// TODO Auto-generated method stub
 
 				try {
-					JSONObject js = new JSONObject(jsString)
-							.getJSONObject("data");
+					JSONObject js = new JSONObject(jsString).getJSONObject("data");
 
 					if (js.getString("register").equals("1")) {
 						registListener.onSuccess(1 + "", "regSuccess");
-						UserRegisterManager urManager = new UserRegisterManager(
-								context, userName, password,
+						UserRegisterManager urManager = new UserRegisterManager(context, userName, password,
 								AppVersionManager.OilAppTag + "");
 
 						urManager.doPostRegisterInfo();
 					} else {
-						registListener.onError(Error_AccountInfoMiss,
-								js.getString("message"));
+						registListener.onError(Error_AccountInfoMiss, js.getString("message"));
 
 					}
 				} catch (JSONException e) {
@@ -153,23 +147,18 @@ public class OilUser implements Serializable {
 
 	public static void logOut(Context context) {
 		MyRequestParams params = new MyRequestParams(context);
-		SharedPreferences sp = context.getSharedPreferences(
-				Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
+		SharedPreferences sp = context.getSharedPreferences(Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
 		params.put("cuuid", sp.getString(Constants.CUUID, ""));
 
 		String accessToken = sp.getString(Constants.ACCESS_TOKEN, "");
 		String userName = sp.getString(Constants.USER_NAME, "");
 		params.put("accesstoken", accessToken);
-		String timestamp = String.valueOf(System.currentTimeMillis()
-				+ sp.getLong(Constants.TIME_GAP, 0));
+		String timestamp = String.valueOf(System.currentTimeMillis() + sp.getLong(Constants.TIME_GAP, 0));
 		params.put("timestamp", timestamp);
 		params.put("username", userName);
 
 		try {
-			params.put(
-					"signature",
-					SHA1.getSHA1(new String[] { userName, timestamp,
-							accessToken }));
+			params.put("signature", SHA1.getSHA1(new String[] { userName, timestamp, accessToken }));
 		} catch (AesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -182,13 +171,12 @@ public class OilUser implements Serializable {
 		editor.commit();
 		editor.putString(Constants.USER_PHONE, userPhone);
 		editor.commit();
-		UserFouceModel.getInstance().reset();
+		new UserFouceModel(context).reset();
 		Intent intent = new Intent();
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.setClass(context, UserLoginActivity.class);
 		context.startActivity(intent);
-		ToastUtils.getInstance(context).showText(
-				context.getResources().getString(R.string.logoutSuccess));
+		ToastUtils.getInstance(context).showText(context.getResources().getString(R.string.logoutSuccess));
 		EventBus.getDefault().post(new FinishEvent());
 
 	}
@@ -202,18 +190,17 @@ public class OilUser implements Serializable {
 	public static OilUser getCurrentUser(Context context) {
 
 		OilUser oilUser = new OilUser();
-		String name = (String) SharedPreferenceUtils.getParam(context,
-				Constants.USER_INFO_SHARED, Constants.NAME, "");
-		String corpName = (String) SharedPreferenceUtils.getParam(context,
-				Constants.USER_INFO_SHARED, Constants.CORP_NAME, "");
-		String userPhone = (String) SharedPreferenceUtils.getParam(context,
-				Constants.USER_INFO_SHARED, Constants.USER_PHONE, "");
-		String userName = (String) SharedPreferenceUtils.getParam(context,
-				Constants.USER_INFO_SHARED, Constants.USER_NAME, "");
-		String cuuid = (String) SharedPreferenceUtils.getParam(context,
-				Constants.USER_INFO_SHARED, Constants.CUUID, "");
-		String pwd = (String) SharedPreferenceUtils.getParam(context,
-				Constants.USER_INFO_SHARED, Constants.USER_PWD, "");
+		String name = (String) SharedPreferenceUtils.getParam(context, Constants.USER_INFO_SHARED, Constants.NAME, "");
+		String corpName = (String) SharedPreferenceUtils.getParam(context, Constants.USER_INFO_SHARED,
+				Constants.CORP_NAME, "");
+		String userPhone = (String) SharedPreferenceUtils.getParam(context, Constants.USER_INFO_SHARED,
+				Constants.USER_PHONE, "");
+		String userName = (String) SharedPreferenceUtils.getParam(context, Constants.USER_INFO_SHARED,
+				Constants.USER_NAME, "");
+		String cuuid = (String) SharedPreferenceUtils.getParam(context, Constants.USER_INFO_SHARED, Constants.CUUID,
+				"");
+		String pwd = (String) SharedPreferenceUtils.getParam(context, Constants.USER_INFO_SHARED, Constants.USER_PWD,
+				"");
 		oilUser.setName(name);
 		oilUser.setCorpName(corpName);
 		oilUser.setCuuid(cuuid);
@@ -231,12 +218,11 @@ public class OilUser implements Serializable {
 	 * @param accountPwd
 	 * @param loginListener
 	 */
-	public static void Login(final Context context, final String userName,
-			final String accountPwd, final onLoginListener loginListener) {
+	public static void Login(final Context context, final String userName, final String accountPwd,
+			final onLoginListener loginListener) {
 		if (null != userName && null != accountPwd) {
 
-			TelephonyManager telephonyManager = (TelephonyManager) context
-					.getSystemService(Context.TELEPHONY_SERVICE);
+			TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 			String imei = telephonyManager.getDeviceId();
 
 			MyRequestParams params = new MyRequestParams(context);
@@ -250,8 +236,7 @@ public class OilUser implements Serializable {
 				public void onReturn(String jsString) {
 					// TODO Auto-generated method stub
 					try {
-						JSONObject obj = new JSONObject(jsString)
-								.getJSONObject("data");
+						JSONObject obj = new JSONObject(jsString).getJSONObject("data");
 						if (obj.getString("login").equals("1")) {
 
 							loginListener.onSuccess("100", jsString);
@@ -259,8 +244,7 @@ public class OilUser implements Serializable {
 						} else {
 							// 登录失败
 							String errorMessage = obj.getString("message");
-							loginListener.onError(Error_AccountInfoMiss,
-									errorMessage);
+							loginListener.onError(Error_AccountInfoMiss, errorMessage);
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -286,16 +270,13 @@ public class OilUser implements Serializable {
 				// TODO Auto-generated method stub
 				try {
 					JSONObject jo = new JSONObject(jsString);
-					String modify = jo.getJSONObject("data")
-							.getString("modify");
+					String modify = jo.getJSONObject("data").getString("modify");
 					if (modify.equals("1")) {
-						commonBusListener.onSucceed(context.getResources()
-								.getText(R.string.resetPwdSucceed).toString());
+						commonBusListener
+								.onSucceed(context.getResources().getText(R.string.resetPwdSucceed).toString());
 					} else {
 						commonBusListener
-								.onSucceed(context.getResources()
-										.getText(R.string.resetPwdUnSucceed)
-										.toString());
+								.onSucceed(context.getResources().getText(R.string.resetPwdUnSucceed).toString());
 					}
 
 				} catch (JSONException e) {
