@@ -56,9 +56,9 @@ public abstract class PagerAdapter<T> extends FragmentStatePagerAdapter {
 		case 3:
 			// return ItemFragmentData.getInstance(2,
 			// (HashMap<String, String>) itemList.get(position));
-			// return new ItemFragDataNew(2, (HashMap<String, String>)
-			// itemList.get(position));
-			return new ItemFragDataNewByTag(2, (HashMap<String, String>) itemList.get(position));
+			return new ItemFragDataNew(2, (HashMap<String, String>) itemList.get(position));
+		// return new ItemFragDataNewByTag(2, (HashMap<String, String>)
+		// itemList.get(position));
 		case 4:
 			// return ProductNewClumnTabFragment.getInstance();
 			return new ItemFraShangji((HashMap<String, String>) itemList.get(position));

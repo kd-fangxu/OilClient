@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.oil.bean.OilUser;
 import com.oil.utils.FileUtils;
 import com.oil.utils.StringUtils;
 
@@ -21,7 +22,6 @@ import android.text.TextDirectionHeuristic;
  */
 public class UserFouceModel {
 
-	private static UserFouceModel model;
 	List<HashMap<String, String>> fouceList;
 	String path;
 	Context context;
@@ -32,25 +32,35 @@ public class UserFouceModel {
 		this.context = context;
 		gson = new Gson();
 		fileUtils = new FileUtils();
-		path = context.getExternalCacheDir().getAbsolutePath() + "/" + "userFouceModel.json";
+		path = context.getExternalCacheDir().getAbsolutePath() + "/" + OilUser.getCurrentUser(context).getCuuid()
+				+ "userFouceModel.json";
 	}
 
+	/**
+	 * 获取收藏列表
+	 * 
+	 * @return
+	 */
 	public List<HashMap<String, String>> getFouceList() {
-		if (fouceList == null) {
-			try {
-				fouceList = gson.fromJson(StringUtils.convertStreamToString(fileUtils.openFile(path)),
-						new TypeToken<List<HashMap<String, String>>>() {
-						}.getType());
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
 
+		try {
+			fouceList = gson.fromJson(StringUtils.convertStreamToString(FileUtils.openFile(path)),
+					new TypeToken<List<HashMap<String, String>>>() {
+					}.getType());
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+
 		return fouceList;
 	}
 
+	/**
+	 * 设置收藏列表
+	 * 
+	 * @param fouceList
+	 */
 	public void setFouceList(List<HashMap<String, String>> fouceList) {
-		this.fouceList = fouceList;
+		// this.fouceList = fouceList;
 
 		String jsonContent = gson.toJson(fouceList);
 
@@ -69,10 +79,11 @@ public class UserFouceModel {
 	// }
 	// return model;
 	// };
-
+	/**
+	 * 清空收藏
+	 */
 	public void reset() {
 
-		model = null;
 		fileUtils.deleteFile(new File(path));
 	}
 
@@ -105,6 +116,7 @@ public class UserFouceModel {
 					fouceList.remove(i);
 				}
 			}
+			setFouceList(fouceList);
 		}
 	}
 }

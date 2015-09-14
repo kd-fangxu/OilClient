@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -56,6 +57,7 @@ import de.greenrobot.event.EventBus;
 public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	UserFouceModel userFouceModel;
 	int tem_type = 0;
+	Context context;
 
 	/**
 	 * 0:jia ge ku 价格库 1:shujuku 数据库
@@ -63,6 +65,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	 * @param type
 	 */
 	public TabFragmetLzDataPage(int type) {
+		this.context = getActivity();
 		this.tem_type = type;
 		// Log
 	};
@@ -109,12 +112,13 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 	public void onEvent(UserFouceChangeEvent event) {
 		this.event = event;
+		isNeedUpdate = true;
 		int changedPosition = event.getChangedPosition();
 		if (event.isAdded()) {
 			// tianjia
-			isNeedUpdate = true;
+
 			// pWindow.dismiss();
-			getUserFouce();
+			// getUserFouce();
 
 		} else {
 			// shanchu
@@ -126,14 +130,14 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
-		if (isNeedUpdate && event != null) {
-			// fouceAdd();
-			if (pWindow != null) {
-				pWindow.dismiss();
-			}
 
-			getUserFouce();
+		// fouceAdd();
+		if (pWindow != null) {
+			pWindow.dismiss();
 		}
+
+		getUserFouce();
+
 		super.onResume();
 
 	}
@@ -154,9 +158,10 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 	private void fouceRemoveChanged(int changedPosition, int actionType) {
 		String proId = mapList.remove(changedPosition).get("pro_id").toString();
-		String userId = OilUser.getCurrentUser(getActivity()).getCuuid();
-		String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/" + proId + "/" + 0;
-		HttpTool.netRequestNoCheck(getActivity(), null, null, url, false);
+		// String userId = OilUser.getCurrentUser(context).getCuuid();
+		// String url = Constants.URL_USERFOUCECHANGE + "/" + userId + "/" +
+		// proId + "/" + 0;
+		// HttpTool.netRequestNoCheck(context, null, null, url, false);
 		pagerAdapter.notifyDataSetChanged();
 		psts.notifyDataSetChanged();
 
@@ -275,11 +280,6 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		psts.setViewPager(ocvp);
 	}
 
-	private void initDemoData() {
-		// TODO Auto-generated method stub
-
-	}
-
 	PopupWindow pWindow;
 	DynamicGridView dgView;
 	CheeseDynamicAdapter cDynamicAdapter;
@@ -289,10 +289,10 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 	private void initUserFoucePopu() {
 		// TODO Auto-generated method stub
-		fouceList.clear();
-		for (int i = 0; i < mapList.size(); i++) {
-			fouceList.add(mapList.get(i).get("pro_cn_name"));
-		}
+		// fouceList.clear();
+		// for (int i = 0; i < mapList.size(); i++) {
+		// fouceList.add(mapList.get(i).get("pro_cn_name"));
+		// }
 		View popuView = View.inflate(getActivity(), R.layout.view_popu_userfouce, null);
 		dgView = (DynamicGridView) popuView.findViewById(R.id.dynamic_grid);
 		dgView.setOnTouchListener(new OnTouchListener() {
@@ -331,7 +331,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		ll_item7.setOnClickListener(this);
 		ll_item8.setOnClickListener(this);
 		ll_item9.setOnClickListener(this);
-		cDynamicAdapter = new CheeseDynamicAdapter(getActivity(), fouceList, 3);
+		cDynamicAdapter = new CheeseDynamicAdapter(getActivity(), mapList, 3);
 		dgView.setAdapter(cDynamicAdapter);
 
 		dgView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

@@ -27,6 +27,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.oil.activity.ProHisDataListActivity;
 import com.oil.adapter.ExpandDataAdapter;
+import com.oil.adapter.ExpandDataTagAdapter;
 import com.oil.adapter.ProDataMainGroupAdapter;
 import com.oil.bean.Constants;
 import com.oil.bean.MyRequestParams;
@@ -36,6 +37,7 @@ import com.oil.iface.OnDataReturnListener;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.GsonParserFactory;
 import com.oil.utils.ObjectConvertUtils;
+import com.oil.utils.ToastUtils;
 import com.oil.weidget.HorizontalListView;
 
 /**
@@ -57,6 +59,7 @@ public class ItemFragDataNew extends Fragment {
 	BaseExpandableListAdapter expendAdapter;
 
 	private int groupSelectPosition = 0;
+	boolean isMsgShow = false;
 
 	public ItemFragDataNew() {
 	};
@@ -123,6 +126,11 @@ public class ItemFragDataNew extends Fragment {
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ptep_lv.onRefreshComplete();
+			if (isMsgShow) {
+				ToastUtils.getInstance(getActivity()).showText("无分组数据");
+			}
+
 		}
 		setGroupSelPos(groupSelectPosition);
 		groupAdapter.notifyDataSetChanged();
@@ -130,10 +138,10 @@ public class ItemFragDataNew extends Fragment {
 
 	public void initView() {
 		// TODO Auto-generated method stub
-		expendAdapter = new ExpandDataAdapter(getActivity(), currentGroupMapList);
+		normalGroupInit();
 		groupAdapter = new ProDataMainGroupAdapter(getActivity(), groupTitleList);
 		hlv_type.setAdapter(groupAdapter);
-		ptep_lv.getRefreshableView().setAdapter(expendAdapter);
+
 		ptep_lv.getRefreshableView().setGroupIndicator(null);
 
 		hlv_type.setOnItemClickListener(new OnItemClickListener() {
@@ -145,6 +153,23 @@ public class ItemFragDataNew extends Fragment {
 			}
 		});
 
+		ptep_lv.setOnRefreshListener(new OnRefreshListener<ExpandableListView>() {
+
+			@Override
+			public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+				// TODO Auto-generated method stub
+				isMsgShow = true;
+				getGroupList(false);
+			}
+		});
+	}
+
+	/**
+	 * 正常分组显示
+	 */
+	private void normalGroupInit() {
+		expendAdapter = new ExpandDataAdapter(getActivity(), currentGroupMapList);
+		ptep_lv.getRefreshableView().setAdapter(expendAdapter);
 		ptep_lv.getRefreshableView().setOnChildClickListener(new OnChildClickListener() {
 
 			@Override
@@ -162,13 +187,50 @@ public class ItemFragDataNew extends Fragment {
 				return false;
 			}
 		});
+	}
 
-		ptep_lv.setOnRefreshListener(new OnRefreshListener<ExpandableListView>() {
+	/**
+	 * 组分组初始化
+	 */
+	private void tagGroupInit() {
+		expendAdapter = new ExpandDataTagAdapter(getActivity(), tagList, currentGroupMapList);
+		ptep_lv.getRefreshableView().setAdapter(expendAdapter);
+		ptep_lv.getRefreshableView().setOnChildClickListener(new OnChildClickListener() {
 
+			@SuppressWarnings("unchecked")
 			@Override
-			public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition,
+					long id) {
 				// TODO Auto-generated method stub
-				getGroupList(false);
+				String title = null;
+				String unitId = null;
+				@SuppressWarnings("unchecked")
+				Map<String, Object> mapItme = (Map<String, Object>) expendAdapter.getChild(groupPosition,
+						childPosition);
+				String tempId = mapItme.get("temp_id").toString();
+				for (int i = 0; i < currentGroupMapList.size(); i++) {
+					if (((Map<String, Object>) currentGroupMapList.get(i).get("productTemplate")).get("temp_id")
+							.toString().equals(tempId)) {
+						List<Map<String, Object>> unitList = (List<Map<String, Object>>) currentGroupMapList.get(i)
+								.get("productUnitList");
+						if (unitList != null) {
+							if (unitList.size() > 0) {
+								title = unitList.get(0).get("unit_name").toString();
+								unitId = unitList.get(0).get("unit_id").toString();
+							}
+						}
+						break;
+					}
+
+				}
+				if (unitId != null && title != null) {
+					Intent intent = new Intent(getActivity(), ProHisDataListActivity.class);
+					intent.putExtra("unitId", unitId);
+					intent.putExtra("title", title);
+					startActivity(intent);
+				}
+
+				return false;
 			}
 		});
 	}
@@ -186,6 +248,11 @@ public class ItemFragDataNew extends Fragment {
 		groupAdapter.notifyDataSetChanged();
 	}
 
+	/**
+	 * get data and update page
+	 * 
+	 * @param mapItem
+	 */
 	private void updatePagedata(Map<String, Object> mapItem) {// 获取页内容
 		// TODO Auto-generated method stub
 		boolean isFromCatch = true;
@@ -194,7 +261,7 @@ public class ItemFragDataNew extends Fragment {
 		}
 		if (mapItem != null) {
 			// TODO Auto-generated method stub
-			String clasId = mapItem.get("clas_id").toString();
+			final String clasId = mapItem.get("clas_id").toString();
 			// TODO Auto-generated method stub
 			String url = Constants.URL_GET_PRO_PAGEDATA + "/" + OilUser.getCurrentUser(getActivity()).getCuuid() + "/"
 					+ map.get("wang_id") + "/" + map.get("chan_id") + "/" + map.get("pro_id");
@@ -226,7 +293,14 @@ public class ItemFragDataNew extends Fragment {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							expendAdapter.notifyDataSetChanged();
+							String id = Float.valueOf(clasId).intValue() + "";
+							if (id.equals("26") || id.equals("28") || id.equals("30") || id.equals("31")) {
+								tagGroupInit();
+							} else {
+								normalGroupInit();
+							}
+							// expendAdapter.notifyDataSetChanged();
+
 							ptep_lv.onRefreshComplete();
 						}
 
