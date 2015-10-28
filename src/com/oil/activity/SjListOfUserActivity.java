@@ -7,20 +7,6 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.PopupMenu.OnMenuItemClickListener;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-
 import com.example.oilclient.R;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -31,12 +17,24 @@ import com.oil.adapter.CommonViewHolder;
 import com.oil.bean.Constants;
 import com.oil.bean.MyConfig;
 import com.oil.bean.MyRequestParams;
-import com.oil.dialogs.CommontitleDialog;
-import com.oil.dialogs.CommontitleDialog.onComDialogBtnClick;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.HttpTool;
 import com.oil.utils.ObjectConvertUtils;
 import com.oil.utils.ToastUtils;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.widget.TextView;
 
 /**
  * 我的供求列表界面

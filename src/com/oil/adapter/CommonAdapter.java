@@ -13,8 +13,11 @@ import android.widget.BaseAdapter;
  * ∂‡  ≈‰adapter
  * 
  * @author user
- *
+ * @param context
+ * @param mDatas
+ * @param itemLayoutId
  * @param <T>
+ *            itemOb
  */
 public abstract class CommonAdapter<T> extends BaseAdapter {
 	protected LayoutInflater mInflater;
@@ -22,6 +25,12 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 	protected List<T> mDatas;
 	protected final int mItemLayoutId;
 
+	/**
+	 * 
+	 * @param context
+	 * @param mDatas
+	 * @param itemLayoutId
+	 */
 	public CommonAdapter(Context context, List<T> mDatas, int itemLayoutId) {
 		this.mContext = context;
 		this.mInflater = LayoutInflater.from(mContext);
@@ -46,8 +55,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		final CommonViewHolder viewHolder = getViewHolder(position,
-				convertView, parent);
+		final CommonViewHolder viewHolder = getViewHolder(position, convertView, parent);
 		Log.e(this.getClass().getName(), getItem(position).toString());
 		convert(viewHolder, getItem(position), position);
 		return viewHolder.getConvertView();
@@ -56,10 +64,8 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 
 	public abstract void convert(CommonViewHolder helper, T item, int Position);
 
-	private CommonViewHolder getViewHolder(int position, View convertView,
-			ViewGroup parent) {
-		return CommonViewHolder.get(mContext, convertView, parent,
-				mItemLayoutId, position);
+	private CommonViewHolder getViewHolder(int position, View convertView, ViewGroup parent) {
+		return CommonViewHolder.get(mContext, convertView, parent, mItemLayoutId, position);
 	}
 
 }

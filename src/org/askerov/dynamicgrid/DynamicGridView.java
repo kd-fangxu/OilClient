@@ -35,7 +35,7 @@ import android.widget.ListAdapter;
 import com.example.oilclient.R;
 
 /**
- * Author: alex askerov
+ * Author: alex askerov  мов╖еепР
  * Date: 9/6/13
  * Time: 12:31 PM
  */

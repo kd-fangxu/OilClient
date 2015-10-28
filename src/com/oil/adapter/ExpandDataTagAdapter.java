@@ -4,17 +4,21 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.oilclient.R;
+import com.oil.bean.OilUser;
+import com.oil.workmodel.UserTemFouceModel;
+import com.oil.workmodel.UserTemFouceModel.onTemFouceCallBack;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * group by tag
+ * group by tag (Tag---》template)
  * 
  * @author xu
  *
@@ -58,6 +62,8 @@ public class ExpandDataTagAdapter extends BaseExpandableListAdapter {
 	List<Map<String, Object>> tagList;
 	List<Map<String, Object>> dataList;
 	Context context;
+	String userId;
+	private List<Map<String, Object>> temUserFouceList;
 
 	/**
 	 * 
@@ -66,15 +72,17 @@ public class ExpandDataTagAdapter extends BaseExpandableListAdapter {
 	 *            标签
 	 * @param dataList
 	 *            数据
+	 * @param userTemList
 	 */
 	@SuppressWarnings("unchecked")
-	public ExpandDataTagAdapter(Context context, List<Map<String, Object>> tagList,
-			List<Map<String, Object>> dataList) {
+	public ExpandDataTagAdapter(Context context, List<Map<String, Object>> tagList, List<Map<String, Object>> dataList,
+			List<Map<String, Object>> userTemList) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.tagList = tagList;
 		this.dataList = dataList;
-
+		this.temUserFouceList = userTemList;
+		userId = OilUser.getCurrentUser(context).getCuuid();
 	}
 
 	@Override
@@ -105,17 +113,80 @@ public class ExpandDataTagAdapter extends BaseExpandableListAdapter {
 		ChildHolder ch = null;
 		if (convertView == null) {
 			ch = new ChildHolder();
-			convertView = View.inflate(context, R.layout.item_simple_text, null);
+			convertView = View.inflate(context, R.layout.item_simple_checktext, null);
 			ch.tv_content = (TextView) convertView.findViewById(R.id.tv_item_simple);
+			ch.iv_temFou = (ImageView) convertView.findViewById(R.id.iv_item_select);
 			convertView.setTag(ch);
 		}
+		final Map<String, Object> item = ((List<Map<String, Object>>) tagList.get(groupPosition).get("template"))
+				.get(childPosition);
 		ch = (ChildHolder) convertView.getTag();
-		ch.tv_content.setBackgroundResource(R.color.lu_white);
-		ch.tv_content.setTextColor(Color.WHITE);
-		ch.tv_content.setText(((List<Map<String, Object>>) tagList.get(groupPosition).get("template"))
-				.get(childPosition).get("temp_name").toString());
 
+		ch.tv_content.setTextColor(Color.WHITE);
+		ch.tv_content.setText(item.get("temp_name").toString());
+
+		if (isFouced(item.get("temp_id").toString())) {
+			ch.iv_temFou.setSelected(true);
+		} else {
+			ch.iv_temFou.setSelected(false);
+		}
+		ch.iv_temFou.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				// TODO Auto-generated method stub
+				if (v.isSelected()) {// 已收藏
+					((ImageView) v).setSelected(false);
+					((ImageView) v).setImageResource(R.drawable.icon_unmark);
+					UserTemFouceModel.getInstace().changeTemFouce(context, item.get("temp_id").toString(), userId, "2",
+							new onTemFouceCallBack() {
+
+						@Override
+						public void onTemFouceReturn(List<Map<String, Object>> maps) {
+							// TODO Auto-generated method stub
+							if (maps != null) {
+								temUserFouceList.clear();
+								temUserFouceList.addAll(maps);
+								notifyDataSetChanged();
+							}
+						}
+					});
+				} else {// 未收藏
+					((ImageView) v).setSelected(true);
+					((ImageView) v).setImageResource(R.drawable.icon_mark);
+					UserTemFouceModel.getInstace().changeTemFouce(context, item.get("temp_id").toString(), userId, "1",
+							new onTemFouceCallBack() {
+
+						@Override
+						public void onTemFouceReturn(List<Map<String, Object>> maps) {
+							// TODO Auto-generated method stub
+							if (maps != null) {
+								temUserFouceList.clear();
+								temUserFouceList.addAll(maps);
+								notifyDataSetChanged();
+							}
+						}
+					});
+				}
+
+			}
+		});
 		return convertView;
+	}
+
+	public boolean isFouced(String tempId) {
+
+		if (temUserFouceList != null) {
+			for (int i = 0; i < temUserFouceList.size(); i++) {
+				if (temUserFouceList.get(i).get("temp_id").toString().equals(tempId)) {
+					return true;
+				}
+
+			}
+		}
+		return false;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -153,6 +224,7 @@ public class ExpandDataTagAdapter extends BaseExpandableListAdapter {
 			convertView = View.inflate(context, R.layout.item_eplv_group, null);
 			gHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_item_content);
 			gHolder.iv_indicator = (ImageView) convertView.findViewById(R.id.iv_indicator);
+			gHolder.iv_temFouce = (ImageView) convertView.findViewById(R.id.iv_temfou);
 			convertView.setTag(gHolder);
 		}
 		gHolder = (GroupHolder) convertView.getTag();
@@ -165,6 +237,7 @@ public class ExpandDataTagAdapter extends BaseExpandableListAdapter {
 		} else {
 			gHolder.iv_indicator.setImageResource(R.drawable.icon_arrow_below);
 		}
+		gHolder.iv_temFouce.setVisibility(View.GONE);
 		return convertView;
 	}
 
@@ -173,6 +246,19 @@ public class ExpandDataTagAdapter extends BaseExpandableListAdapter {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	// private boolean isFouced(String tempId) {
+	//
+	// if (temUserFouceList != null) {
+	// for (int i = 0; i < temUserFouceList.size(); i++) {
+	// if (temUserFouceList.get(i).get("temp_id").toString().equals(tempId)) {
+	// return true;
+	// }
+	//
+	// }
+	// }
+	// return false;
+	// }
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
@@ -183,10 +269,11 @@ public class ExpandDataTagAdapter extends BaseExpandableListAdapter {
 	private class GroupHolder {
 		TextView tv_content;
 		ImageView iv_indicator;
+		ImageView iv_temFouce;
 	}
 
 	private class ChildHolder {
-
+		ImageView iv_temFou;
 		TextView tv_content;
 	}
 }

@@ -1,15 +1,18 @@
 package com.oil.activity;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.oilclient.R;
+import com.oil.bean.MyConfig;
+import com.oil.datamodel.HttpReqRecep;
+import com.oil.inter.OnReturnListener;
+import com.oil.weidget.XListView;
+
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,22 +21,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.example.oilclient.R;
-import com.oil.bean.MyConfig;
-import com.oil.datamodel.HttpReqRecep;
-import com.oil.event.FinishEvent;
-import com.oil.inter.OnReturnListener;
-import com.oil.weidget.XListView;
-
-import de.greenrobot.event.EventBus;
 
 public class ActivityProductName extends Activity {
 	XListView mListView;

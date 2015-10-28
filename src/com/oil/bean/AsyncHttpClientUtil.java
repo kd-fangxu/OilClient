@@ -1,9 +1,9 @@
 package com.oil.bean;
 
-import android.content.Context;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
+
+import android.content.Context;
 
 public class AsyncHttpClientUtil {
 	private static  AsyncHttpClient client;

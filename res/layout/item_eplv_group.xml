@@ -11,6 +11,16 @@
         android:orientation="horizontal"
         android:padding="3dp" >
 
+        <ImageView
+            android:id="@+id/iv_temfou"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_unmark" >
+        </ImageView>
+
         <TextView
             android:id="@+id/tv_item_content"
             android:layout_width="wrap_content"

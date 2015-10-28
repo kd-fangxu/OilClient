@@ -107,7 +107,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.oil.activity.CommonLineChartActivity"
+            android:name="com.oil.activity.CommonSingleLineChartActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
@@ -138,18 +138,25 @@
             android:name="com.oil.activity.SjListOfUserActivity"
             android:screenOrientation="portrait" >
         </activity>
-           <activity
+        <activity
             android:name="com.oil.activity.GqPublicActivity"
             android:screenOrientation="portrait" >
         </activity>
-           <activity
+        <activity
             android:name="com.oil.activity.ActivityProductName"
             android:screenOrientation="portrait" >
         </activity>
-        
-            <activity
+        <activity
             android:name="com.oil.activity.ShangjiMatachAct"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.oil.activity.ProHisDataListForScj"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.oil.activity.CommonMultiLineChartActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
     </application>
 

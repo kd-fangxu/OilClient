@@ -113,10 +113,12 @@ public class SearchPageActivity extends Activity implements OnClickListener {
 							try {
 								if (new JSONObject(jsString).get("status").equals("1")) {
 									showToast(getResources().getText(R.string.unMarkSucceed).toString());
-									UserFouceChangeEvent event = new UserFouceChangeEvent();
-									event.setAdded(true);
-									EventBus.getDefault().post(event);
+									// UserFouceChangeEvent event = new
+									// UserFouceChangeEvent();
+									// event.setAdded(true);
+									// EventBus.getDefault().post(event);
 									iv_add.setSelected(false);
+									userFouceModel.isNeedUpdate = true;
 								} else {
 									showToast(getResources().getText(R.string.unMarkUnSucceed).toString());
 								}
@@ -137,10 +139,12 @@ public class SearchPageActivity extends Activity implements OnClickListener {
 							try {
 								if (new JSONObject(jsString).get("status").equals("1")) {
 									showToast(getResources().getText(R.string.markSucceed).toString());
-									UserFouceChangeEvent event = new UserFouceChangeEvent();
-									event.setAdded(true);
-									EventBus.getDefault().post(event);
+									// UserFouceChangeEvent event = new
+									// UserFouceChangeEvent();
+									// event.setAdded(true);
+									// EventBus.getDefault().post(event);
 									iv_add.setSelected(true);
+									userFouceModel.isNeedUpdate = true;
 								} else {
 									showToast(getResources().getText(R.string.markUnSucceed).toString());
 								}

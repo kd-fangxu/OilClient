@@ -59,8 +59,7 @@ public class AppAboutActivty extends Activity {
 			PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
 			String version = info.versionName;
 			iv_appicon.setImageResource(info.applicationInfo.icon);
-			tv_appInfo.setText(this.getString(R.string.app_name) + "\nV"
-					+ version);
+			tv_appInfo.setText(this.getString(R.string.app_name) + "\nV" + version);
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-import android.R.string;
-import android.content.Context;
-import android.util.Log;
-
 import com.loopj.android.http.RequestParams;
 import com.oil.iface.OnDataReturnListener;
 import com.oil.inter.OnReturnListener;
@@ -15,6 +11,9 @@ import com.oil.utils.FileUtils;
 import com.oil.utils.HttpTool;
 import com.oil.utils.SharedPreferenceUtils;
 import com.oil.utils.StringUtils;
+
+import android.content.Context;
+import android.util.Log;
 
 /**
  * 数据缓存相关
@@ -80,27 +79,31 @@ public class AppDataCatchModel {
 	public void setOnDataReturnListener(String fileName, boolean isAutoCatched, boolean isCatchFirst,
 			OnDataReturnListener returnListener) {
 		// TODO Auto-generated method stub
-		this.returnListener = returnListener;
-		this.fileName = fileName;
-		Path = context.getExternalCacheDir().getAbsolutePath() + "/" + fileName;
-		if (fileName != null) {
-			if (isCatchFirst && isDataViaTimeCheck(fileName)) {
+		if (context != null) {
+			
+			this.returnListener = returnListener;
+			this.fileName = fileName;
+			Path = context.getExternalCacheDir().getAbsolutePath() + "/" + fileName;
+			if (fileName != null) {
+				if (isCatchFirst && isDataViaTimeCheck(fileName)) {
 
-				String content = getCatchData(fileName);
-				if (content == null) {
+					String content = getCatchData(fileName);
+					if (content == null) {
+						if (params != null && url != null) {
+							getNetData(isAutoCatched);
+						}
+
+					} else {
+//						Log.e("请求返回：", msg)
+						returnListener.onDataReturn(content);
+					}
+				} else {
 					if (params != null && url != null) {
 						getNetData(isAutoCatched);
 					}
+				}
 
-				} else {
-					returnListener.onDataReturn(content);
-				}
-			} else {
-				if (params != null && url != null) {
-					getNetData(isAutoCatched);
-				}
 			}
-
 		}
 
 	}
@@ -144,7 +147,7 @@ public class AppDataCatchModel {
 								System.currentTimeMillis());// 记录文件创建时间
 						new FileUtils().savaData(Path, StringUtils.convertStringToIs(jsString));
 
-						Log.e("timecheck", fileName + " Created ");
+//						Log.e("timecheck", fileName + " Created ");
 					}
 					returnListener.onDataReturn(jsString);
 

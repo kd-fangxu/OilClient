@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.view.LineChartView;
+import com.example.oilclient.R;
+import com.oil.weidget.OilContentViewPager;
+import com.oil.weidget.PagerSlidingTabStrip;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,10 +15,12 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ScrollView;
-
-import com.example.oilclient.R;
-import com.oil.weidget.OilContentViewPager;
-import com.oil.weidget.PagerSlidingTabStrip;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * Êý¾ÝÍ¼±íÒ³ (!!!!·ÏÆú)

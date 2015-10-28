@@ -1,6 +1,5 @@
 package com.oil.fragments;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +21,9 @@ import com.oil.iface.OnDataReturnListener;
 import com.oil.utils.ObjectConvertUtils;
 import com.oil.utils.TimeUtil;
 
-import android.R.integer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +31,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 /**
  * ∆Û“µΩÈ…‹

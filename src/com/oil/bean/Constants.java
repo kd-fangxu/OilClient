@@ -1,6 +1,7 @@
 package com.oil.bean;
 
 import android.os.Environment;
+import android.renderscript.ScriptIntrinsicYuvToRGB;
 
 public class Constants {
 
@@ -15,10 +16,11 @@ public class Constants {
 	 * url
 	 */
 	public static String baseIp = "http://192.168.1.91:8080/";
-	 public static String IP = baseIp + "oilWeb/"; //
-	//	public static String IP = "http://info.oilchem.net/";
+//		public static String IP = baseIp + "oilWeb/"; //
+	 public static String IP = "http://info.oilchem.net/";
+	public static String oilChemIp = "http://gl.oilchem.net/" + "oilchem/";
 
-	public static String oilChemIp = baseIp + "oilchem/";
+	// public static String oilChemIp = baseIp + "oilchem/";
 	public static final String LOGIN = IP + "app/user/mobileLogin";// 登录
 	public static final String REGIST = IP + "app/reg/regist"; // 注册
 	public static final String MULTI_ACCOUNT_LOGIN = IP + "app/user/selLogUser"; // 多用户选择登录
@@ -49,6 +51,9 @@ public class Constants {
 	public static final String URL_getGqPhone = IP + "app/gq/getPhone";// 获取供求电话
 
 	public static final String URL_getCompantNews = oilChemIp + "app/getCompanyNew";// 获取公司新闻动态
+	public static final String URL_ChangeTemFouce = IP + "app/oilinfo/changeUserTemFouce";// 添加
+																							// 删除用户数据组
+	public static final String URl_GetUserTemFou = IP + "app/oilinfo/getUserTemFouce";// 获取用户数据组关注
 	/**
 	 * sharedPreference
 	 */

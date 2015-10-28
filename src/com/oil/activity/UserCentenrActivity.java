@@ -1,5 +1,8 @@
 package com.oil.activity;
 
+import com.example.oilclient.R;
+import com.oil.bean.OilUser;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +11,6 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.example.oilclient.R;
-import com.oil.bean.OilUser;
 
 public class UserCentenrActivity extends Activity implements OnClickListener {
 	TextView tv_name, tv_realName, tv_phone, tv_comName;

@@ -7,14 +7,13 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.oil.bean.Constants;
-import com.oil.dialogs.IfaceCommonDialogInit;
 import com.oil.utils.FileUtils;
 import com.oil.utils.ObjectConvertUtils;
 import com.oil.utils.StringUtils;
 import com.oil.workmodel.AppInit;
+
+import android.util.Log;
 
 /**
  * 产品结构model

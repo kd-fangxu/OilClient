@@ -11,7 +11,6 @@ import com.oil.inter.OnReturnListener;
 import com.oil.utils.CommonUtil;
 import com.oil.utils.HttpTool;
 import com.oil.workmodel.AppVersionManager;
-import com.tencent.bugly.proguard.t;
 
 import android.app.Activity;
 import android.os.Bundle;

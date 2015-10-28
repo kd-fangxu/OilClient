@@ -5,12 +5,6 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.telephony.TelephonyManager;
-
 import com.example.oilclient.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.oil.activity.UserLoginActivity;
@@ -28,6 +22,11 @@ import com.oil.workmodel.UserRegisterManager;
 import com.oilchem.weixin.mp.aes.AesException;
 import com.oilchem.weixin.mp.aes.SHA1;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.telephony.TelephonyManager;
 import de.greenrobot.event.EventBus;
 
 public class OilUser implements Serializable {
