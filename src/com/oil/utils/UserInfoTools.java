@@ -1,11 +1,11 @@
 package com.oil.utils;
 
 
+import com.oil.bean.MyConfig;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.oil.bean.MyConfig;
 public class UserInfoTools {
 	
 	/**

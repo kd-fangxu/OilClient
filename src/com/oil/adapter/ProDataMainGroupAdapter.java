@@ -3,13 +3,13 @@ package com.oil.adapter;
 import java.util.List;
 import java.util.Map;
 
+import com.example.oilclient.R;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import com.example.oilclient.R;
 
 public class ProDataMainGroupAdapter extends BaseAdapter {
 	List<Map<String, Object>> dataList;

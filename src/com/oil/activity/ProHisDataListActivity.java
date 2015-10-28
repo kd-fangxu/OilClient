@@ -12,6 +12,23 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.oilclient.R;
+import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.oil.adapter.CommonAdapter;
+import com.oil.adapter.CommonViewHolder;
+import com.oil.bean.Constants;
+import com.oil.bean.MyRequestParams;
+import com.oil.bean.OilUser;
+import com.oil.inter.OnReturnListener;
+import com.oil.utils.HttpTool;
+import com.oil.utils.ObjectConvertUtils;
+import com.oil.utils.ToastUtils;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -29,22 +46,6 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.oilclient.R;
-import com.google.gson.Gson;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.loopj.android.http.RequestParams;
-import com.oil.adapter.CommonAdapter;
-import com.oil.adapter.CommonViewHolder;
-import com.oil.bean.Constants;
-import com.oil.bean.MyRequestParams;
-import com.oil.bean.OilUser;
-import com.oil.inter.OnReturnListener;
-import com.oil.utils.HttpTool;
-import com.oil.utils.ObjectConvertUtils;
-
 public class ProHisDataListActivity extends Activity {
 	String unitId = "";
 	String title = "";
@@ -52,6 +53,7 @@ public class ProHisDataListActivity extends Activity {
 	TextView tv_pagetitle;
 	ImageView iv_back, iv_linechart;
 	TextView tv_time_head, tv_time_end, tv_time_range;
+	String currentProId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class ProHisDataListActivity extends Activity {
 		Intent intent = getIntent();
 		unitId = intent.getStringExtra("unitId");
 		title = intent.getStringExtra("title");
+		currentProId = intent.getStringExtra("proId");
 		time_tag = String.valueOf(System.currentTimeMillis());
 		initWeideget();
 		initData();
@@ -76,10 +79,8 @@ public class ProHisDataListActivity extends Activity {
 	PopupWindow pWindow;
 
 	private void initPopuTimeSelect(final View v) {
-		View view = View.inflate(ProHisDataListActivity.this,
-				R.layout.view_datapicker, null);
-		Button btn_confirm = (Button) view
-				.findViewById(R.id.btn_common_confirm);
+		View view = View.inflate(ProHisDataListActivity.this, R.layout.view_datapicker, null);
+		Button btn_confirm = (Button) view.findViewById(R.id.btn_common_confirm);
 		btn_confirm.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -89,24 +90,20 @@ public class ProHisDataListActivity extends Activity {
 			}
 		});
 		DatePicker datePiceker = (DatePicker) view.findViewById(R.id.dp_select);
-		datePiceker.init(Calendar.getInstance().get(Calendar.YEAR), Calendar
-				.getInstance().get(Calendar.MONTH),
-				Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
-				new OnDateChangedListener() {
+		datePiceker.init(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH),
+				Calendar.getInstance().get(Calendar.DAY_OF_MONTH), new OnDateChangedListener() {
 
+					@SuppressLint("SimpleDateFormat")
 					@Override
-					public void onDateChanged(DatePicker view, int year,
-							int monthOfYear, int dayOfMonth) {
+					public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 						// TODO Auto-generated method stub
 						// String time = year + "-" + (monthOfYear + 1) + "-"
 						// + dayOfMonth;
 						// Date date1=new da
 						// Log.e("year", year + "");
 						@SuppressWarnings("deprecation")
-						Date date = new Date(year - 1900, monthOfYear,
-								dayOfMonth);
-						SimpleDateFormat dateFm = new SimpleDateFormat(
-								"yyyy-MM-dd");
+						Date date = new Date(year - 1900, monthOfYear, dayOfMonth);
+						SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd");
 
 						switch (v.getId()) {
 						case R.id.tv_time_head:
@@ -121,8 +118,7 @@ public class ProHisDataListActivity extends Activity {
 
 					}
 				});
-		pWindow = new PopupWindow(view, LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT);
+		pWindow = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		pWindow.setFocusable(true);
 		pWindow.setBackgroundDrawable(new ColorDrawable(0));
 		pWindow.setOutsideTouchable(true);
@@ -136,8 +132,7 @@ public class ProHisDataListActivity extends Activity {
 			@Override
 			public void onDismiss() {
 				// TODO Auto-generated method stub
-				if (tv_time_head.getText().toString().length() > 0
-						&& tv_time_end.getText().toString().length() > 0) {
+				if (tv_time_head.getText().toString().length() > 0 && tv_time_end.getText().toString().length() > 0) {
 					prListView.setRefreshing(true);
 					currentPage = 1;
 					updateData(currentPage);
@@ -175,10 +170,8 @@ public class ProHisDataListActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				String userId = OilUser.getCurrentUser(
-						ProHisDataListActivity.this).getCuuid();
-				Intent intent = new Intent(ProHisDataListActivity.this,
-						CommonLineChartActivity.class);
+				String userId = OilUser.getCurrentUser(ProHisDataListActivity.this).getCuuid();
+				Intent intent = new Intent(ProHisDataListActivity.this, CommonSingleLineChartActivity.class);
 				intent.putExtra("userId", userId);
 				intent.putExtra("title", title);
 				intent.putExtra("unitId", unitId);
@@ -204,17 +197,15 @@ public class ProHisDataListActivity extends Activity {
 		tv_content2.setText("数据");
 		tv_content3.setText("单位");
 		prListView = (PullToRefreshListView) findViewById(R.id.prlv_news);
-
 		prListView.setMode(Mode.BOTH);
-
 		prListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 				// TODO Auto-generated method stub
 
-				if (prListView.getRefreshableView().getLastVisiblePosition() == prListView
-						.getRefreshableView().getAdapter().getCount() - 1) {
+				if (prListView.getRefreshableView()
+						.getLastVisiblePosition() == prListView.getRefreshableView().getAdapter().getCount() - 1) {
 					// 加载更多
 					// Toast.makeText(ProHisDataListActivity.this, "加载",
 					// 0).show();
@@ -240,22 +231,17 @@ public class ProHisDataListActivity extends Activity {
 
 	private void initData() {
 		// TODO Auto-generated method stub
-		cAdapter = new CommonAdapter<Map<String, Object>>(
-				ProHisDataListActivity.this, mapContentList,
+		cAdapter = new CommonAdapter<Map<String, Object>>(ProHisDataListActivity.this, mapContentList,
 				R.layout.item_data_simple) {
 
 			@Override
-			public void convert(CommonViewHolder helper,
-					Map<String, Object> item, int positon) {
+			public void convert(CommonViewHolder helper, Map<String, Object> item, int positon) {
 				// TODO Auto-generated method stub
 				TextView tv1 = helper.getView(R.id.tv_item_content1);
 
-				helper.setText(R.id.tv_item_content1, item.get("data_time")
-						.toString());
-				helper.setText(R.id.tv_item_content2, item.get("unit_value")
-						.toString());
-				helper.setText(R.id.tv_item_content3, item.get("temp_unit")
-						.toString());
+				helper.setText(R.id.tv_item_content1, item.get("data_time").toString());
+				helper.setText(R.id.tv_item_content2, item.get("unit_value").toString());
+				helper.setText(R.id.tv_item_content3, item.get("temp_unit").toString());
 			}
 		};
 		prListView.setAdapter(cAdapter);
@@ -268,99 +254,80 @@ public class ProHisDataListActivity extends Activity {
 
 	private void updateData(final int pageIndex) {
 		String url = Constants.URL_GETPRODATALIST;
-		String userId = OilUser.getCurrentUser(ProHisDataListActivity.this)
-				.getCuuid();
-		MyRequestParams params = new MyRequestParams(
-				ProHisDataListActivity.this);
-		if (tv_time_head.getText().toString().length() > 0
-				&& tv_time_end.getText().toString().length() > 0) {
+		String userId = OilUser.getCurrentUser(ProHisDataListActivity.this).getCuuid();
+		MyRequestParams params = new MyRequestParams(ProHisDataListActivity.this);
+		if (tv_time_head.getText().toString().length() > 0 && tv_time_end.getText().toString().length() > 0) {
 			params.put("startTime", tv_time_head.getText().toString());
 			params.put("endTime", tv_time_end.getText().toString());
 		}
 		params.put("userId", userId);
 		params.put("unitId", Double.valueOf(unitId).intValue() + "");
-
+		params.put("proId", currentProId);
 		params.put("timetag", time_tag);
 		params.put("pageSize", 20 + "");
 		params.put("currentPage", pageIndex + "");
-		HttpTool.netRequestNoCheck(ProHisDataListActivity.this, params,
-				new OnReturnListener() {
+		HttpTool.netRequestNoCheck(ProHisDataListActivity.this, params, new OnReturnListener() {
 
-					@Override
-					public void onReturn(String jsString) {
-						// TODO Auto-generated method stub
+			@Override
+			public void onReturn(String jsString) {
+				// TODO Auto-generated method stub
 
-						Gson gson = new Gson();
-						ObjectConvertUtils<List<Map<String, Object>>> convertUtils = new ObjectConvertUtils<List<Map<String, Object>>>();
-						try {
-							if (pageIndex == 1) {
-								mapContentList.clear();
-							}
-							List<Map<String, Object>> temList = convertUtils
-									.convert(new JSONObject(jsString)
-											.getString("data"));
-							for (int i = 0; i < temList.size(); i++) {
-								Double data = Double.valueOf(temList.get(i)
-										.get("unit_value").toString());
-								Float a = Float.valueOf(temList.get(i)
-										.get("pro_id").toString()) % 8;
-								// Double time_tag
-								Double baseData = Double.valueOf(time_tag)
-										/ (Math.pow(10, a));
-								DecimalFormat df = new DecimalFormat(
-										"######0.00");
-								temList.get(i).put("unit_value",
-										df.format(data - baseData));
-							}
-							if (pageIndex > 1 && mapContentList.size() > 0
-									&& temList.size() > 0) {
+				Gson gson = new Gson();
+				ObjectConvertUtils<List<Map<String, Object>>> convertUtils = new ObjectConvertUtils<List<Map<String, Object>>>();
+				try {
+					if (pageIndex == 1) {
+						mapContentList.clear();
+					}
+					JSONObject jo = new JSONObject(jsString);
+					if (!jo.getString("status").equals("1")) {
+						ToastUtils.getInstance(ProHisDataListActivity.this).showText(jo.getString("reason"));
+					} else {
+						List<Map<String, Object>> temList = convertUtils.convert(jo.getString("data"));
+						for (int i = 0; i < temList.size(); i++) {
+							Double data = Double.valueOf(temList.get(i).get("unit_value").toString());
+							Float a = Float.valueOf(temList.get(i).get("pro_id").toString()) % 8;
+							// Double time_tag
+							Double baseData = Double.valueOf(time_tag) / (Math.pow(10, a));
+							DecimalFormat df = new DecimalFormat("######0.00");
+							temList.get(i).put("unit_value", df.format(data - baseData));
+						}
+						if (pageIndex > 1 && mapContentList.size() > 0 && temList.size() > 0) {
 
-								if (mapContentList
-										.get(mapContentList.size() - 1)
-										.get("data_time")
-										.toString()
-										.equals(temList.get(temList.size() - 1)
-												.get("data_time").toString())) {
-									prListView.onRefreshComplete();
-									if (mapContentList.size() > 0) {
-										tv_time_range.setText(mapContentList
-												.get(mapContentList.size() - 1)
-												.get("data_time").toString()
-												+ "--"
-												+ mapContentList.get(0)
-														.get("data_time")
-														.toString());
+							if (mapContentList.get(mapContentList.size() - 1).get("data_time").toString()
+									.equals(temList.get(temList.size() - 1).get("data_time").toString())) {
+								prListView.onRefreshComplete();
+								if (mapContentList.size() > 0) {
+									tv_time_range.setText(
+											mapContentList.get(mapContentList.size() - 1).get("data_time").toString()
+													+ "--" + mapContentList.get(0).get("data_time").toString());
 
-									}
-									Toast.makeText(ProHisDataListActivity.this,
-											"无更多数据", 0).show();
-
-									return;
 								}
+								Toast.makeText(ProHisDataListActivity.this, "无更多数据", 0).show();
+
+								return;
 							}
-
-							mapContentList.addAll(temList);
-							if (mapContentList.size() > 0) {
-								tv_time_range.setText(mapContentList
-										.get(mapContentList.size() - 1)
-										.get("data_time").toString()
-										+ "--"
-										+ mapContentList.get(0)
-												.get("data_time").toString());
-
-							}
-
-							cAdapter.notifyDataSetChanged();
-							prListView.onRefreshComplete();
-							// prListView.getRefreshableView().setSelection(
-							// 20 * (pageIndex - 1));
-
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
 						}
 
+						mapContentList.addAll(temList);
+						if (mapContentList.size() > 0) {
+							tv_time_range
+									.setText(mapContentList.get(mapContentList.size() - 1).get("data_time").toString()
+											+ "--" + mapContentList.get(0).get("data_time").toString());
+
+						}
+
+						cAdapter.notifyDataSetChanged();
+
+						// prListView.getRefreshableView().setSelection(
+						// 20 * (pageIndex - 1));
 					}
-				}, url, false);
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				prListView.onRefreshComplete();
+			}
+		}, url, false);
 	}
 }

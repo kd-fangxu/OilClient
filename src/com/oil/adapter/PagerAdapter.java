@@ -3,16 +3,13 @@ package com.oil.adapter;
 import java.util.HashMap;
 import java.util.List;
 
+import com.oil.fragments.ItemFraShangji;
+import com.oil.fragments.ItemFragDataNew;
+import com.oil.fragments.ItemFragmentNews;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
-import com.oil.bean.Constants;
-import com.oil.fragments.ItemFraShangji;
-import com.oil.fragments.ItemFragDataNew;
-import com.oil.fragments.ItemFragDataNewByTag;
-import com.oil.fragments.ItemFragmentData;
-import com.oil.fragments.ItemFragmentNews;
 
 /**
  * fragment  ≈‰¿‡

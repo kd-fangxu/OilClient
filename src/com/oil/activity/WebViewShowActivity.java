@@ -1,5 +1,7 @@
 package com.oil.activity;
 
+import com.example.oilclient.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +12,6 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.oilclient.R;
-import com.viewpagerindicator.TitlePageIndicator;
 
 /**
  * ндуботй╬

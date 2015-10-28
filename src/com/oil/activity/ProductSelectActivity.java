@@ -7,6 +7,17 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.oilclient.R;
+import com.oil.adapter.CommonAdapter;
+import com.oil.adapter.CommonViewHolder;
+import com.oil.bean.Constants;
+import com.oil.bean.OilUser;
+import com.oil.datamodel.OilProductStrucModel;
+import com.oil.event.UserFouceChangeEvent;
+import com.oil.inter.OnReturnListener;
+import com.oil.utils.HttpTool;
+import com.oil.workmodel.UserFouceModel;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,18 +31,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.oilclient.R;
-import com.oil.adapter.CommonAdapter;
-import com.oil.adapter.CommonViewHolder;
-import com.oil.bean.Constants;
-import com.oil.bean.OilUser;
-import com.oil.datamodel.OilProductStrucModel;
-import com.oil.event.UserFouceChangeEvent;
-import com.oil.inter.OnReturnListener;
-import com.oil.utils.HttpTool;
-import com.oil.workmodel.UserFouceModel;
-
 import de.greenrobot.event.EventBus;
 
 public class ProductSelectActivity extends Activity implements OnClickListener {
@@ -185,10 +184,12 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 							try {
 								if (new JSONObject(jsString).get("status").equals("1")) {
 									showToast(getResources().getText(R.string.unMarkSucceed).toString());
-									UserFouceChangeEvent event = new UserFouceChangeEvent();
-									event.setAdded(true);
-									EventBus.getDefault().post(event);
-									iv_add.setSelected(false);
+									// UserFouceChangeEvent event = new
+									// UserFouceChangeEvent();
+									// event.setAdded(true);
+									// EventBus.getDefault().post(event);
+									 iv_add.setSelected(false);
+									userFouceModel.isNeedUpdate = true;
 
 								} else {
 									showToast(getResources().getText(R.string.unMarkUnSucceed).toString());
@@ -210,10 +211,12 @@ public class ProductSelectActivity extends Activity implements OnClickListener {
 							try {
 								if (new JSONObject(jsString).get("status").equals("1")) {
 									showToast(getResources().getText(R.string.markSucceed).toString());
-									UserFouceChangeEvent event = new UserFouceChangeEvent();
-									event.setAdded(true);
-									EventBus.getDefault().post(event);
-									iv_add.setSelected(true);
+									// UserFouceChangeEvent event = new
+									// UserFouceChangeEvent();
+									// event.setAdded(true);
+									// EventBus.getDefault().post(event);
+									 iv_add.setSelected(true);
+									userFouceModel.isNeedUpdate = true;
 								} else {
 									showToast(getResources().getText(R.string.markUnSucceed).toString());
 								}

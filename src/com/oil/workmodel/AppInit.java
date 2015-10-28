@@ -3,13 +3,13 @@ package com.oil.workmodel;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 
-import android.content.Context;
-
 import com.oil.bean.Constants;
 import com.oil.inter.OnReturnListener;
 import com.oil.utils.FileUtils;
 import com.oil.utils.HttpTool;
 import com.oil.utils.StringUtils;
+
+import android.content.Context;
 
 /**
  * 应用初始化的相关操作

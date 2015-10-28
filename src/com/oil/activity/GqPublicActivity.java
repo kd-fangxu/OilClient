@@ -6,6 +6,15 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.oilclient.R;
+import com.oil.bean.MyConfig;
+import com.oil.bean.OilUser;
+import com.oil.bean.ProductBean;
+import com.oil.datamodel.HttpReqRecep;
+import com.oil.event.FinishEvent;
+import com.oil.inter.OnReturnListener;
+import com.oil.utils.JsonReader;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,17 +40,6 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.oilclient.R;
-import com.oil.bean.MyConfig;
-import com.oil.bean.OilUser;
-import com.oil.bean.ProductBean;
-import com.oil.datamodel.HttpReqRecep;
-import com.oil.event.FinishEvent;
-import com.oil.inter.OnReturnListener;
-import com.oil.utils.HttpTool;
-import com.oil.utils.JsonReader;
-
 import de.greenrobot.event.EventBus;
 
 //发布或查看供求

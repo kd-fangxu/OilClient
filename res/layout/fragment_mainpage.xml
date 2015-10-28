@@ -5,11 +5,9 @@
     android:background="@null"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00ee3b3b"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content" >
 
         <ImageView
             android:id="@+id/iv_mainback"
@@ -20,26 +18,69 @@
             android:scaleType="fitXY"
             android:src="@drawable/biz_main_back_normal" />
 
-        <EditText
-            android:id="@+id/et_search"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="7dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="7dp"
-            android:background="@drawable/selector_searchview"
-            android:cursorVisible="false"
-            android:drawableLeft="@drawable/icon_find"
-            android:gravity="center"
-            android:hint="请输入搜索内容"
-            android:imeOptions="actionSearch"
-            android:paddingLeft="15dp"
-            android:singleLine="true"
-            android:textColorHint="@color/whitesmoke"
-            android:textSize="17sp" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:background="#00ee3b3b"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/selector_searchview"
+                android:cursorVisible="false"
+                android:drawableLeft="@drawable/icon_find"
+                android:gravity="center"
+                android:hint="请输入搜索内容"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="15dp"
+                android:singleLine="true"
+                android:textColorHint="@color/whitesmoke"
+                android:textSize="17sp"
+                android:visibility="gone" />
+
+            <RadioGroup
+                android:id="@+id/rg_pageRadio"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/selector_searchview"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/rb_allpro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/sel_pagebar_whi_gray_left"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="全部"
+                    android:textColor="@drawable/sel_pagebar_text" />
+
+                <RadioButton
+                    android:id="@+id/rb_userFou"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/sel_pagebar_whi_gray_right"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="关注"
+                    android:textColor="@drawable/sel_pagebar_text" />
+            </RadioGroup>
+        </LinearLayout>
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/fl_showpage"

@@ -3,15 +3,14 @@ package com.oil.application;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.app.Application;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.oil.activity.MainActivity;
 import com.oil.workmodel.AppInit;
 import com.oil.workmodel.InstallInfoManager;
 import com.oil.workmodel.UserRegisterManager;
 import com.tencent.bugly.crashreport.CrashReport;
+
+import android.app.Application;
 
 public class OilApplication extends Application {
 	private Map<String, String> TempleDataMap = new HashMap<String, String>();

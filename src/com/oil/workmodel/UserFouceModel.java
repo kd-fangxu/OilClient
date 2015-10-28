@@ -12,7 +12,6 @@ import com.oil.utils.FileUtils;
 import com.oil.utils.StringUtils;
 
 import android.content.Context;
-import android.text.TextDirectionHeuristic;
 
 /**
  * 用户收藏操作
@@ -21,7 +20,7 @@ import android.text.TextDirectionHeuristic;
  *
  */
 public class UserFouceModel {
-
+	public boolean isNeedUpdate = false;// 是否需要更新
 	List<HashMap<String, String>> fouceList;
 	String path;
 	Context context;

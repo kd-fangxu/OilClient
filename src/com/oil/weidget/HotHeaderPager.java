@@ -5,6 +5,13 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.example.oilclient.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.oil.adapter.HeadPageAdapter;
+import com.oil.weidget.FouceViewPager.OnSingleTouchListener;
+import com.viewpagerindicator.CirclePageIndicator;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
@@ -16,13 +23,6 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.example.oilclient.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.oil.adapter.HeadPageAdapter;
-import com.oil.weidget.FouceViewPager.OnSingleTouchListener;
-import com.viewpagerindicator.CirclePageIndicator;
 
 public class HotHeaderPager<T> extends LinearLayout {
 	List<T> contentList;

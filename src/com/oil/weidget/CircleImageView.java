@@ -1,5 +1,7 @@
 package com.oil.weidget;
 
+import com.example.oilclient.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -15,8 +17,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
-import com.example.oilclient.R;
 
 public class CircleImageView extends ImageView {
 

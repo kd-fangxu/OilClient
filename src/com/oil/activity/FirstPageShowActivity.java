@@ -3,15 +3,15 @@ package com.oil.activity;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.example.oilclient.R;
+import com.oil.bean.Constants;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
-
-import com.example.oilclient.R;
-import com.oil.bean.Constants;
 
 public class FirstPageShowActivity extends Activity {
 	Handler handler;

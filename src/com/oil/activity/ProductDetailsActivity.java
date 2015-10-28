@@ -5,13 +5,12 @@ import java.util.Map;
 
 import com.example.oilclient.R;
 import com.oil.datamodel.OilProductStrucModel;
-import com.oil.fragments.ItemFragmentData;
+import com.oil.fragments.ItemFragDataNew;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -62,7 +61,7 @@ public class ProductDetailsActivity extends FragmentActivity implements
 		dataMap.put("chan_id", dataConvert(chan_id));
 		dataMap.put("wang_id", dataConvert(wang_id));
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.replace(R.id.fl_content, new ItemFragmentData(1, dataMap));
+		ft.replace(R.id.fl_content, new ItemFragDataNew(1, dataMap));
 		ft.commit();
 	}
 

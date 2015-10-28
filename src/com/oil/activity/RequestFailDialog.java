@@ -1,5 +1,9 @@
 package com.oil.activity;
 
+import com.example.oilclient.R;
+import com.oil.bean.Constants;
+import com.oil.bean.OilUser;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,10 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
-
-import com.example.oilclient.R;
-import com.oil.bean.Constants;
-import com.oil.bean.OilUser;
 
 public class RequestFailDialog extends Activity {
 

@@ -40,7 +40,7 @@ import com.example.oilclient.R;
  * @author xu
  *
  */
-public class CommonLineChartActivity extends Activity {
+public class CommonSingleLineChartActivity extends Activity {
 	LineChartView lineChar;
 	PreviewLineChartView preLinechart;
 	String userId;
@@ -83,8 +83,8 @@ public class CommonLineChartActivity extends Activity {
 
 	private void updateChartData() {
 		// TODO Auto-generated method stub
-		List<AxisValue> axisValues = new ArrayList<AxisValue>();
-		List<PointValue> values = new ArrayList<PointValue>();
+		List<AxisValue> axisValues = new ArrayList<AxisValue>();// 横轴标签列
+		List<PointValue> values = new ArrayList<PointValue>();// 图表值
 		for (int i = 0; i < chartModel.getMapList().size(); i++) {
 			PointValue pValue = new PointValue(i,
 					Float.valueOf(chartModel.getMapList().get(i).get("unit_value").toString()));
@@ -114,7 +114,6 @@ public class CommonLineChartActivity extends Activity {
 		predata.setAxisYLeft(new Axis().setName(chartModel.getChartName()).setHasLines(true).setInside(true));
 		lineChar.setLineChartData(lineChartData);
 		preLinechart.setLineChartData(predata);
-
 		preLinechart.setViewportChangeListener(new ViewportChangeListener() {
 
 			@Override
@@ -229,7 +228,7 @@ public class CommonLineChartActivity extends Activity {
 
 	private void initMenuPop() {
 		// TODO Auto-generated method stub
-		pmenu = new PopupMenu(CommonLineChartActivity.this, iv_more);
+		pmenu = new PopupMenu(CommonSingleLineChartActivity.this, iv_more);
 		pmenu.getMenuInflater().inflate(R.menu.popu_menu_chart, pmenu.getMenu());
 		pmenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 

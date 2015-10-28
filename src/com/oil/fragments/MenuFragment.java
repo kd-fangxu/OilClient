@@ -1,20 +1,5 @@
 package com.oil.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.example.oilclient.R;
 import com.oil.activity.AppAboutActivty;
 import com.oil.activity.UserCentenrActivity;
@@ -29,6 +14,19 @@ import com.oil.datamodel.OilMenuItem;
 import com.oil.dialogs.CommontitleDialog;
 import com.oil.dialogs.CommontitleDialog.onComDialogBtnClick;
 import com.oil.weidget.CircleImageView;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * ���˵�����

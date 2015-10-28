@@ -10,6 +10,22 @@ import org.askerov.dynamicgrid.DynamicGridView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.oilclient.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.RequestParams;
+import com.oil.activity.ProductSelectActivity;
+import com.oil.adapter.CheeseDynamicAdapter;
+import com.oil.adapter.PagerAdapter;
+import com.oil.bean.Constants;
+import com.oil.bean.OilUser;
+import com.oil.event.UserFouceChangeEvent;
+import com.oil.inter.OnReturnListener;
+import com.oil.utils.HttpTool;
+import com.oil.weidget.OilContentViewPager;
+import com.oil.weidget.PagerSlidingTabStrip;
+import com.oil.workmodel.UserFouceModel;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -29,23 +45,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
-
-import com.example.oilclient.R;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.RequestParams;
-import com.oil.activity.ProductSelectActivity;
-import com.oil.adapter.CheeseDynamicAdapter;
-import com.oil.adapter.PagerAdapter;
-import com.oil.bean.Constants;
-import com.oil.bean.OilUser;
-import com.oil.event.UserFouceChangeEvent;
-import com.oil.inter.OnReturnListener;
-import com.oil.utils.HttpTool;
-import com.oil.weidget.OilContentViewPager;
-import com.oil.weidget.PagerSlidingTabStrip;
-import com.oil.workmodel.UserFouceModel;
-
 import de.greenrobot.event.EventBus;
 
 /**
@@ -107,12 +106,12 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		return view;
 	}
 
-	boolean isNeedUpdate = false;
+	// boolean isNeedUpdate = false;
 	UserFouceChangeEvent event;
 
 	public void onEvent(UserFouceChangeEvent event) {
 		this.event = event;
-		isNeedUpdate = true;
+		// isNeedUpdate = true;
 		int changedPosition = event.getChangedPosition();
 		if (event.isAdded()) {
 			// tianjia
@@ -133,10 +132,14 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 		// fouceAdd();
 		if (pWindow != null) {
-			pWindow.dismiss();
-		}
+			if (pWindow.isShowing()) {
+				pWindow.dismiss();
+				getUserFouce();
+			}
 
-		getUserFouce();
+		} else if (userFouceModel.isNeedUpdate) {
+			getUserFouce();
+		}
 
 		super.onResume();
 
@@ -187,6 +190,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 
 				JSONObject js;
 				try {
+					userFouceModel.isNeedUpdate = false;
 					js = new JSONObject(jsString);
 					List<Map<String, String>> templeMaplist = new ArrayList<Map<String, String>>();
 
