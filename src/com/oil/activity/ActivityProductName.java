@@ -31,7 +31,7 @@ import android.widget.TextView;
 public class ActivityProductName extends Activity {
 	XListView mListView;
 	Myadapter mAdapter;
-	String productid = "0";
+	String productid = "0";// haha
 	String productname = "";
 	ArrayList<String[]> productList = new ArrayList<String[]>();
 
