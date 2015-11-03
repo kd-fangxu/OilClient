@@ -212,6 +212,35 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_uc_editip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:background="@drawable/shape_uc_infoitem_up"
+                    android:clickable="true"
+                    android:padding="10dp" >
+
+                    <TextView
+                        style="@style/text_stytle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1:是234  2：是生产机" />
+
+                    <TextView
+                        style="@style/text_stytle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:src="@drawable/ic_back_dark" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/ll_uc_checkupdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

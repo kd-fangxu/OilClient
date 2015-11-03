@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.oil.bean.Constants;
+import com.oil.utils.SharedPreferenceUtils;
 import com.oil.workmodel.AppInit;
 import com.oil.workmodel.InstallInfoManager;
 import com.oil.workmodel.UserRegisterManager;
@@ -15,6 +17,7 @@ import android.app.Application;
 public class OilApplication extends Application {
 	private Map<String, String> TempleDataMap = new HashMap<String, String>();
 	private static OilApplication OilApplication;
+	public static boolean isDebug = false;// ÊÇ·ñÎªµ÷ÊÔ×´Ì¬
 
 	public static OilApplication getinstance() {
 		if (null == OilApplication) {
@@ -27,12 +30,22 @@ public class OilApplication extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		ImageLoader.getInstance().init(
-				ImageLoaderConfiguration.createDefault(this));
+		initConfig();
+		ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
 		new AppInit(this).initProductStruct();
 		initCrashReport();
 		new InstallInfoManager(this).doPostInstallInfo();
 		new UserRegisterManager(this).doAutoPost();
+	}
+
+	private void initConfig() {
+		// TODO Auto-generated method stub
+		if (isDebug) {
+			String ip = (String) SharedPreferenceUtils.getParam(this, "ipconfig", "ip", "http://info.oilchem.net/");
+			if (ip != null) {
+				Constants.IP = ip;
+			}
+		}
 	}
 
 	private void initCrashReport() {

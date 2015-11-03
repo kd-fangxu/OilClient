@@ -15,9 +15,9 @@ public class Constants {
 	/**
 	 * url
 	 */
-	public static String baseIp = "http://192.168.1.91:8080/";
-		public static String IP = baseIp + "oilWeb/"; //
-//	 public static String IP = "http://info.oilchem.net/";
+	public static String baseIp = "http://192.168.1.234:8080/";
+	// public static String IP = baseIp + "oilWeb/"; //
+	public static String IP = "http://info.oilchem.net/";
 	public static String oilChemIp = "http://gl.oilchem.net/" + "oilchem/";
 
 	// public static String oilChemIp = baseIp + "oilchem/";

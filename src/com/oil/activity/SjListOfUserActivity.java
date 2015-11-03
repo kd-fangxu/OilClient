@@ -214,7 +214,7 @@ public class SjListOfUserActivity extends Activity {
 							.setBackgroundResource(R.drawable.selector_selected_textview);
 					tv_buType.setText("Çó");
 				}
-				String conName = item.get("corpname").toString();
+				String conName = (String)item.get("corpname");
 				if (conName != null) {
 					tv_comName.setText(conName);
 

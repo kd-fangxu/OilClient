@@ -221,6 +221,7 @@ public class ItemFraShangji extends Fragment {
 				try {
 					JSONObject jo = new JSONObject(jsString);
 					String data = jo.getJSONObject("data").getString("message");
+					// jo.getJSONArray(name)
 					// jaArray.
 					List<Map<String, Object>> temMapList;
 					ObjectConvertUtils<List<Map<String, Object>>> ocUtils = new ObjectConvertUtils<List<Map<String, Object>>>();

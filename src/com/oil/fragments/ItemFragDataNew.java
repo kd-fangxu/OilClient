@@ -450,10 +450,8 @@ public class ItemFragDataNew extends Fragment {
 								e.printStackTrace();
 							}
 							String id = Float.valueOf(clasId).intValue() + "";
-							if (id.equals("26") || id.equals("28") || id.equals("31") || id.equals("30")) {
-								tagGroupInit();// 26 28 30
-												// 31国内出厂价，主营批发价，国内市场价，国际市场价
-												// //以Tag为分组依据进行分组
+							if (tagList.size() > 0) {
+								tagGroupInit();
 							} else {
 								normalGroupInit();
 							}
