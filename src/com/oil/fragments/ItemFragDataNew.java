@@ -51,12 +51,13 @@ import android.widget.LinearLayout;
 import de.greenrobot.event.EventBus;
 
 /**
- * page to show price or data
+ * page to show price or data （价格库 数据库）
  * 
  * @author user
  *
  */
 public class ItemFragDataNew extends Fragment {
+	final String PriceTag = "19";// 国内市场价clasid
 	int type = 0; // 0:price 1:data
 	HashMap<String, String> map;
 	PullToRefreshExpandableListView ptep_lv;
@@ -99,7 +100,13 @@ public class ItemFragDataNew extends Fragment {
 		return view;
 	}
 
+	/**
+	 * 监听界面 全部 或 关注的 事件
+	 * 
+	 * @param temChangedEvent
+	 */
 	public void onEvent(UserTemChangedEvent temChangedEvent) {
+		// Log.e("UserTemChangedEvent", "UserTemChangedEvent onEvent");
 		setGroupSelPos(groupSelectPosition);
 	}
 
@@ -339,7 +346,7 @@ public class ItemFragDataNew extends Fragment {
 
 				// String clasId = mapItem.get("clas_id").toString();
 				String intClasId = Float.valueOf(clasId).intValue() + "";
-				if (intClasId.equals("30")) {
+				if (intClasId.equals(PriceTag)) {
 					// when clas is 国内市场价 page to another Activity
 					Intent intent = new Intent(getActivity(), ProHisDataListForScj.class);
 					intent.putExtra("unitList", unitList);
@@ -460,6 +467,9 @@ public class ItemFragDataNew extends Fragment {
 							ptep_lv.onRefreshComplete();
 						}
 
+						/**
+						 * 过滤用户关注
+						 */
 						private void doShowUserFouceOnly() {
 							// TODO Auto-generated method stub
 							int currentListSize = currentGroupMapList.size();
@@ -501,9 +511,14 @@ public class ItemFragDataNew extends Fragment {
 											}
 										}
 									}
+									if (temList.size() == 0) {
+										tagList.remove(i);
+										i--;
+									} else {
+										tagList.get(i).put("template", temList);// 将获取到的template
+										// 按标签放在标签列同级别中
+									}
 
-									tagList.get(i).put("template", temList);// 将获取到的template
-																			// 按标签放在标签列同级别中
 								}
 
 							}
@@ -514,4 +529,10 @@ public class ItemFragDataNew extends Fragment {
 		}
 	}
 
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		EventBus.getDefault().unregister(this);
+		super.onDestroy();
+	}
 }

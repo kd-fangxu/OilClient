@@ -36,11 +36,10 @@ public class MainActivity extends SlidingFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initSlidingMenu();
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		EventBus.getDefault().register(this);
-	
+
 		AppVersionManager.doCheckUpdate(MainActivity.this);// ¼ì²é¸üÐÂ
 	}
 
@@ -85,8 +84,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			if (!isQuit) {
-				Toast.makeText(getApplicationContext(),
-						getResources().getText(R.string.demo1), 1).show();
+				Toast.makeText(getApplicationContext(), getResources().getText(R.string.demo1), 1).show();
 				isQuit = true;
 				new Timer().schedule(new TimerTask() {
 					@Override

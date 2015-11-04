@@ -63,6 +63,9 @@ public class Constants {
 	public static final String ACCESS_TOKEN = "accessToken";
 	public static final String LOGIN_STATE = "isLogin"; // µÇÂ¼×´Ì¬ true:ÒÑµÇÂ¼
 	public static final String CUUID = "cuuid";
+	public static final String khStatus = "khStatus";
+	public static final String authEndtime = "authEndtime";
+
 	public static final String TIME_GAP = "timeGap";
 	public static final String NAME = "name";
 	public static final String CORP_NAME = "corpName";

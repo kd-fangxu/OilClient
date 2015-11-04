@@ -34,6 +34,24 @@ public class OilUser implements Serializable {
 	public static String Shared_Key_currentUser = "currentUser";
 	String userName, phone, cuuid, name, corpName, corpprovince;
 	String accountPwd;
+	String authEndtime;// 到期时间
+	String khStatus;// 账户状态
+
+	public String getAuthEndtime() {
+		return authEndtime;
+	}
+
+	public void setAuthEndtime(String authEndtime) {
+		this.authEndtime = authEndtime;
+	}
+
+	public String getKhStatus() {
+		return khStatus;
+	}
+
+	public void setKhStatus(String khStatus) {
+		this.khStatus = khStatus;
+	}
 
 	public OilUser() {
 	};
@@ -200,12 +218,18 @@ public class OilUser implements Serializable {
 				"");
 		String pwd = (String) SharedPreferenceUtils.getParam(context, Constants.USER_INFO_SHARED, Constants.USER_PWD,
 				"");
+		String ks = (String) SharedPreferenceUtils.getParam(context, Constants.USER_INFO_SHARED, Constants.khStatus,
+				"");
+		String au = (String) SharedPreferenceUtils.getParam(context, Constants.USER_INFO_SHARED, Constants.authEndtime,
+				"");
 		oilUser.setName(name);
 		oilUser.setCorpName(corpName);
 		oilUser.setCuuid(cuuid);
 		oilUser.setPhone(userPhone);
 		oilUser.setUserName(userName);
 		oilUser.setAccountPwd(pwd);
+		oilUser.setKhStatus(ks);
+		oilUser.setAuthEndtime(au);
 		return oilUser;
 	}
 

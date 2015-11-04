@@ -28,14 +28,11 @@ public class FirstPageShowActivity extends Activity {
 				// TODO Auto-generated method stub
 				switch (msg.what) {
 				case 0:
-					if (getSharedPreferences(Constants.USER_INFO_SHARED,
-							Activity.MODE_PRIVATE).getBoolean(
-							Constants.LOGIN_STATE, false)) {
-						startActivity(new Intent(FirstPageShowActivity.this,
-								MainActivity.class));
+					if (getSharedPreferences(Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE)
+							.getBoolean(Constants.LOGIN_STATE, false)) {
+						startActivity(new Intent(FirstPageShowActivity.this, MainActivity.class));
 					} else {
-						startActivity(new Intent(FirstPageShowActivity.this,
-								UserLoginActivity.class));
+						startActivity(new Intent(FirstPageShowActivity.this, UserLoginActivity.class));
 					}
 					finish();
 					break;

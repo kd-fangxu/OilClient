@@ -69,8 +69,11 @@ public class ProHisDataListForScj extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_prodatalist_scj);
+		String title;
 		Intent intent = getIntent();
 		if (intent != null) {
+			title = intent.getStringExtra("title");
+			currentProId = intent.getStringExtra("proId");
 			unitList = (ArrayList<Map<String, Object>>) intent.getSerializableExtra("unitList");
 			if (unitList != null) {
 				if (unitList.size() == 3) {
@@ -80,8 +83,7 @@ public class ProHisDataListForScj extends Activity {
 				}
 
 			}
-			String title = intent.getStringExtra("title");
-			currentProId = intent.getStringExtra("proId");
+
 			tv_pagetitle = (TextView) findViewById(R.id.tv_page_title);
 			tv_pagetitle.setText(title);
 		}
@@ -358,7 +360,7 @@ public class ProHisDataListForScj extends Activity {
 					if (!jo.getString("status").equals("1")) {
 						ToastUtils.getInstance(ProHisDataListForScj.this).showText(jo.getString("reason"));
 					} else {
-						GdList.addAll(ocu.convert(jo.getString("data")));
+						DdList.addAll(ocu.convert(jo.getString("data")));
 					}
 					onDataLoaded();
 				} catch (JSONException e) {
@@ -407,7 +409,7 @@ public class ProHisDataListForScj extends Activity {
 					if (!jo.getString("status").equals("1")) {
 						ToastUtils.getInstance(ProHisDataListForScj.this).showText(jo.getString("reason"));
 					} else {
-						GdList.addAll(ocu.convert(jo.getString("data")));
+						ZlList.addAll(ocu.convert(jo.getString("data")));
 					}
 					onDataLoaded();
 				} catch (JSONException e) {
@@ -445,9 +447,10 @@ public class ProHisDataListForScj extends Activity {
 					}
 				}
 			}
-
-			tv_time_range.setText(ZlList.get(ZlList.size() - 1).get("data_time").toString() + "--"
-					+ ZlList.get(0).get("data_time").toString());
+			if (ZlList.size() > 0) {
+				tv_time_range.setText(ZlList.get(ZlList.size() - 1).get("data_time").toString() + "--"
+						+ ZlList.get(0).get("data_time").toString());
+			}
 
 			commonAdapter.notifyDataSetChanged();
 			lv_data.onRefreshComplete();

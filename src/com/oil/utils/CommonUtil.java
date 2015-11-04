@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.oilclient.R;
+import com.google.gson.Gson;
 import com.oil.activity.MainActivity;
 import com.oil.activity.MultiAccount;
 import com.oil.bean.Constants;
@@ -45,10 +46,8 @@ public class CommonUtil {
 		HashMap<String, String> map = new HashMap<String, String>();
 		try {
 			String pkName = context.getPackageName();
-			String versionName = context.getPackageManager().getPackageInfo(
-					pkName, 0).versionName;
-			int versionCode = context.getPackageManager().getPackageInfo(
-					pkName, 0).versionCode;
+			String versionName = context.getPackageManager().getPackageInfo(pkName, 0).versionName;
+			int versionCode = context.getPackageManager().getPackageInfo(pkName, 0).versionCode;
 			map.put("name", versionName);
 			map.put("code", versionCode + "");
 		} catch (Exception e) {
@@ -75,8 +74,7 @@ public class CommonUtil {
 		ImageView spaceshipImage = (ImageView) v.findViewById(R.id.img);
 		TextView tipTextView = (TextView) v.findViewById(R.id.tipTextView);// 鎻愮ず鏂囧瓧
 		// 鍔犺浇鍔ㄧ敾
-		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(
-				context, R.anim.loading_animation);
+		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(context, R.anim.loading_animation);
 		// 浣跨敤ImageView鏄剧ず鍔ㄧ敾
 		spaceshipImage.startAnimation(hyperspaceJumpAnimation);
 		tipTextView.setText(msg);// 璁剧疆鍔犺浇淇℃伅
@@ -84,8 +82,7 @@ public class CommonUtil {
 		Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 鍒涘缓鑷畾涔夋牱寮廳ialog
 
 		loadingDialog.setCancelable(true);// 涓嶅彲浠ョ敤鈥滆繑鍥為敭鈥濆彇锟�?
-		loadingDialog.setContentView(layout, new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
+		loadingDialog.setContentView(layout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
 				LinearLayout.LayoutParams.FILL_PARENT));// 璁剧疆甯冨眬
 		LoadingDialog = loadingDialog;
 		runningDiaList.add(loadingDialog);
@@ -110,8 +107,7 @@ public class CommonUtil {
 	 */
 
 	public static boolean isNetAvailable(Context context) {
-		ConnectivityManager cm = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (cm == null) {
 		} else {
 			NetworkInfo[] info = cm.getAllNetworkInfo();
@@ -134,26 +130,20 @@ public class CommonUtil {
 	 * @param context
 	 * 
 	 */
-	public static void loginSuccess(String jsString, Context context,
-			String destination, String tag) {
+	public static void loginSuccess(String jsString, Context context, String destination, String tag) {
 		JSONObject js;
 		try {
 			js = new JSONObject(jsString).getJSONObject("data");
 
 			String accessToken = js.getString("accessToken");
 			String timeStamp = js.getString("timestamp");
-			ArrayList<OilUser> accountList = getAccountList(js
-					.getJSONArray("users"));
+			ArrayList<OilUser> accountList = getAccountList(js.getJSONArray("users"));
 
 			if (accountList.size() == 1) {
 
-				ToastUtils.getInstance(context)
-						.showText(
-								context.getResources().getString(
-										R.string.loginSuccess));
+				ToastUtils.getInstance(context).showText(context.getResources().getString(R.string.loginSuccess));
 
-				saveUserInfo(context, accessToken, timeStamp,
-						accountList.get(0), destination);
+				saveUserInfo(context, accessToken, timeStamp, accountList.get(0), destination);
 			} else {
 				// 存在多个用户
 
@@ -182,7 +172,8 @@ public class CommonUtil {
 				account.setName(obj.getString("name"));
 				account.setCorpName(obj.getString("corpName"));
 				account.setPhone(obj.getString("phone"));
-
+				account.setAuthEndtime(obj.getString("authEndtime"));
+				account.setKhStatus(obj.getString("khStatus"));
 				accountList.add(account);
 			}
 		} catch (JSONException e) {
@@ -195,11 +186,11 @@ public class CommonUtil {
 	/**
 	 * 
 	 */
-	public static void saveUserInfo(Context context, String accessToken,
-			String timeStamp, OilUser user, String destination) {
+	public static void saveUserInfo(Context context, String accessToken, String timeStamp, OilUser user,
+			String destination) {
 
-		SharedPreferences.Editor editor = context.getSharedPreferences(
-				Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE).edit();
+		SharedPreferences.Editor editor = context
+				.getSharedPreferences(Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE).edit();
 		editor.putBoolean(Constants.LOGIN_STATE, true);
 		editor.putString(Constants.ACCESS_TOKEN, accessToken);
 		editor.putString(Constants.NAME, user.getName());
@@ -207,6 +198,8 @@ public class CommonUtil {
 		editor.putString(Constants.USER_PHONE, user.getPhone());
 		editor.putString(Constants.USER_NAME, user.getUserName());
 		editor.putString(Constants.CUUID, user.getCuuid());
+		editor.putString(Constants.khStatus, user.getKhStatus());
+		editor.putString(Constants.authEndtime, user.getAuthEndtime());
 		long timeGap = Long.parseLong(timeStamp) - System.currentTimeMillis();
 		editor.putLong(Constants.TIME_GAP, timeGap);
 		editor.commit();

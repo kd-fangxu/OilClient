@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 import com.oil.activity.ProductSelectActivity;
+import com.oil.activity.SearchPageActivity;
 import com.oil.adapter.CheeseDynamicAdapter;
 import com.oil.adapter.PagerAdapter;
 import com.oil.bean.Constants;
@@ -288,6 +289,7 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 	DynamicGridView dgView;
 	CheeseDynamicAdapter cDynamicAdapter;
 	Button btn_edit_com;
+	ImageView iv_pop_find;
 	LinearLayout ll_item1, ll_item2, ll_item3, ll_item4, ll_item5, ll_item6, ll_item7, ll_item8, ll_item9;;
 	List<String> fouceList = new ArrayList<String>();
 
@@ -299,6 +301,15 @@ public class TabFragmetLzDataPage extends Fragment implements OnClickListener {
 		// }
 		View popuView = View.inflate(getActivity(), R.layout.view_popu_userfouce, null);
 		dgView = (DynamicGridView) popuView.findViewById(R.id.dynamic_grid);
+		iv_pop_find = (ImageView) popuView.findViewById(R.id.iv_dia_find);
+		iv_pop_find.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(getActivity(), SearchPageActivity.class));
+			}
+		});
 		dgView.setOnTouchListener(new OnTouchListener() {
 
 			@Override

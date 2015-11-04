@@ -55,8 +55,7 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 		btn_login.setOnClickListener(this);
 		btn_register.setOnClickListener(this);
 		tv_smslogin.setOnClickListener(this);
-		mySharedPreferences = getSharedPreferences(Constants.USER_INFO_SHARED,
-				Activity.MODE_PRIVATE);
+		mySharedPreferences = getSharedPreferences(Constants.USER_INFO_SHARED, Activity.MODE_PRIVATE);
 		et_name.setText(mySharedPreferences.getString(Constants.USER_PHONE, ""));
 	}
 
@@ -69,13 +68,11 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 
 			break;
 		case R.id.btn_register:
-			startActivityForResult(new Intent(UserLoginActivity.this,
-					UserRegisterActivity.class), 1);
+			startActivityForResult(new Intent(UserLoginActivity.this, UserRegisterActivity.class), 1);
 
 			break;
 		case R.id.tv_smslogin:
-			startActivity(new Intent(UserLoginActivity.this,
-					UserSmsLoginActivity.class));
+			startActivity(new Intent(UserLoginActivity.this, UserSmsLoginActivity.class));
 			// finish();
 			break;
 		default:
@@ -87,46 +84,39 @@ public class UserLoginActivity extends Activity implements OnClickListener {
 		String name = et_name.getText().toString();
 		final String pwd = et_pwd.getText().toString();
 		if (!name.equals("") && !pwd.equals("")) {
-			OilUser.Login(UserLoginActivity.this, name, pwd,
-					new onLoginListener() {
+			OilUser.Login(UserLoginActivity.this, name, pwd, new onLoginListener() {
+
+				@Override
+				public void onSuccess(String resCode, String response) {
+					// TODO Auto-generated method stub
+					CommonUtil.loginSuccess(response, UserLoginActivity.this, "main", "");
+					Editor editor = mySharedPreferences.edit();
+					editor.putString(Constants.USER_PWD, pwd);
+					editor.commit();
+				}
+
+				@Override
+				public void onError(String resCode, String errorReason) {
+					// TODO Auto-generated method stub
+					ToastUtils.getInstance(UserLoginActivity.this).showText(errorReason);
+					final CommontitleDialog comDialog = new CommontitleDialog(UserLoginActivity.this);
+					comDialog.Init("提示", "是否通过短信登陆", new onComDialogBtnClick() {
 
 						@Override
-						public void onSuccess(String resCode, String response) {
+						public void onConfirmClick() {
 							// TODO Auto-generated method stub
-							CommonUtil.loginSuccess(response,
-									UserLoginActivity.this, "main", "");
-							Editor editor = mySharedPreferences.edit();
-							editor.putString(Constants.USER_PWD, pwd);
-							editor.commit();
+							startActivity(new Intent(UserLoginActivity.this, UserSmsLoginActivity.class));
+							// finish();
 						}
 
 						@Override
-						public void onError(String resCode, String errorReason) {
+						public void onCancelClick() {
 							// TODO Auto-generated method stub
-							ToastUtils.getInstance(UserLoginActivity.this)
-									.showText(errorReason);
-							final CommontitleDialog comDialog = new CommontitleDialog(
-									UserLoginActivity.this);
-							comDialog.Init("提示", "是否通过短信登陆",
-									new onComDialogBtnClick() {
-
-										@Override
-										public void onConfirmClick() {
-											// TODO Auto-generated method stub
-											startActivity(new Intent(
-													UserLoginActivity.this,
-													UserSmsLoginActivity.class));
-											// finish();
-										}
-
-										@Override
-										public void onCancelClick() {
-											// TODO Auto-generated method stub
-											comDialog.disMiss();
-										}
-									});
+							comDialog.disMiss();
 						}
 					});
+				}
+			});
 		}
 	}
 

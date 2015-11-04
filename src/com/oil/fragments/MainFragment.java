@@ -23,8 +23,9 @@ import de.greenrobot.event.EventBus;
 
 public class MainFragment extends Fragment {
 	RadioGroup rg_tab;
-	ImageView iv_mainback;
+	ImageView iv_mainback, iv_find;
 	EditText et_search;
+
 	RadioGroup rg_pageSel;
 	RadioButton rb_allpro, rb_userFou;
 
@@ -45,8 +46,17 @@ public class MainFragment extends Fragment {
 		rb_userFou = (RadioButton) view.findViewById(R.id.rb_userFou);
 		rg_tab = (RadioGroup) view.findViewById(R.id.rg_tab);
 		iv_mainback = (ImageView) view.findViewById(R.id.iv_mainback);
-		et_search = (EditText) view.findViewById(R.id.et_search);
-		et_search.setOnClickListener(new OnClickListener() {
+		// et_search = (EditText) view.findViewById(R.id.et_search);
+		// et_search.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// // TODO Auto-generated method stub
+		// startActivity(new Intent(getActivity(), SearchPageActivity.class));
+		// }
+		// });
+		iv_find = (ImageView) view.findViewById(R.id.iv_find);
+		iv_find.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

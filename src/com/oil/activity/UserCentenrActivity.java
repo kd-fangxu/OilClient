@@ -41,8 +41,9 @@ public class UserCentenrActivity extends Activity implements OnClickListener {
 		ImageView iv_back;
 		TextView tv_pagetitle;
 		tv_userinfo = (TextView) findViewById(R.id.tv_userinfo);
-		tv_userinfo.setText(OilUser.getCurrentUser(UserCentenrActivity.this)
-				.getUserName() + "\n" + "试阅用户" + "\n" + "到期时间：2015/10/01");
+		OilUser temUser = OilUser.getCurrentUser(UserCentenrActivity.this);
+		tv_userinfo.setText(
+				temUser.getUserName() + "\n" + temUser.getKhStatus() + "\n" + "到期时间:" + temUser.getAuthEndtime());
 		iv_back = (ImageView) findViewById(R.id.iv_pageback);
 		iv_back.setOnClickListener(new OnClickListener() {
 
@@ -67,8 +68,7 @@ public class UserCentenrActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.ll_uc_changepwd:
-			startActivity(new Intent(UserCentenrActivity.this,
-					UserResetPwdActivity.class));
+			startActivity(new Intent(UserCentenrActivity.this, UserResetPwdActivity.class));
 			break;
 
 		default:
